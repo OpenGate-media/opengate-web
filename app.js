@@ -96,7 +96,7 @@ if (cv) {
 }
 
 // ---- Animaciones ----
-const roto = $('roto'), intro = $('intro');
+const roto = $('portal'), intro = $('intro');
 // Siempre empezar arriba en la portada (evita quedar a mitad del zoom al recargar)
 if (roto) { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; scrollTo(0, 0); }
 if (window.gsap && !reduce) {
@@ -104,23 +104,37 @@ if (window.gsap && !reduce) {
   const E = 'expo.out';
 
   if (roto) {
-    // Intro + aparición del roto
+    // Geometría del roto: tamaño base, centro y punto de entrada (dentro del roto, junto a los ojos)
+    const st = { intro: .82, zoom: 1 }, OX = .38, OY = .40;
+    const hero = document.querySelector('.hero-stick'), eyes = $('eyes');
+    function apply() {
+      const W = hero.clientWidth, H = hero.clientHeight, vmin = Math.min(W, H), desk = W >= 900;
+      const S0 = desk ? Math.min(vmin * .78, 640) : Math.min(vmin * .86, 680);
+      const cx = desk ? W - W * .06 - S0 / 2 : W / 2;
+      const cy = desk ? H / 2 : H / 2 - H * .13;
+      const k = st.intro * st.zoom, S = S0 * k;
+      const px = cx - S0 / 2 + OX * S0, py = cy - S0 / 2 + OY * S0;
+      const x = px - OX * S, y = py - OY * S;
+      for (const el of [roto, eyes]) { el.style.setProperty('--ms', S + 'px'); el.style.setProperty('--mx', x + 'px'); el.style.setProperty('--my', y + 'px'); }
+    }
+    apply(); addEventListener('resize', apply);
+
     const tl = gsap.timeline();
     if (intro) {
       tl.to('#intro img', { opacity: 1, scale: 1.04, duration: .9, ease: 'power2.out' })
         .to('#intro img', { opacity: 0, scale: .9, duration: .5, delay: .35 })
         .to('#intro', { opacity: 0, duration: .5, onComplete: () => intro.remove() }, '<.2');
     }
-    tl.from('.roto-in', { scale: .8, filter: 'blur(14px)', duration: 1.3, ease: E }, '<')
+    tl.to(st, { intro: 1, duration: 1.3, ease: E, onUpdate: apply }, '<')
       .from('.hero h1', { yPercent: 30, opacity: 0, duration: 1.1, ease: E }, '-=1')
       .from('.hero-copy .btn,.hero-copy .mono', { y: 16, opacity: 0, stagger: .07, duration: .8, ease: E }, '-=.8');
 
-    // Scroll: entrar por el roto hasta la imagen de adentro
+    // Scroll: entrar por el roto hasta la imagen de adentro (sin transformar capas gigantes)
     const z = gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom bottom', scrub: .6 } });
-    z.fromTo('#heroCopy,.hint-wrap', { opacity: 1, y: 0, filter: 'blur(0px)' }, { opacity: 0, y: -40, filter: 'blur(8px)', duration: .18, ease: 'none', immediateRender: false }, 0)
-     .fromTo(roto, { scale: 1 }, { scale: 42, duration: 1, ease: 'power2.in', immediateRender: false }, 0)
+    z.fromTo('#heroCopy,.hint-wrap', { opacity: 1, y: 0 }, { opacity: 0, y: -40, duration: .18, ease: 'none', immediateRender: false }, 0)
+     .fromTo(st, { zoom: 1 }, { zoom: 40, duration: 1, ease: 'power2.in', onUpdate: apply, immediateRender: false }, 0)
      .fromTo('.inside-img', { scale: 1.6, filter: 'blur(10px)' }, { scale: 1, filter: 'blur(0px)', duration: 1, ease: 'power2.out' }, 0)
-     .fromTo('.portal', { opacity: 1 }, { opacity: 0, duration: .08, ease: 'none', immediateRender: false }, .92);
+     .fromTo('.portal,#eyes', { opacity: 1 }, { opacity: 0, duration: .08, ease: 'none', immediateRender: false }, .92);
   }
 
   gsap.utils.toArray('.rv,.card,.reel,.pf .it,.svc .row,.door').forEach((el, i) => gsap.from(el, { y: 40, opacity: 0, filter: 'blur(8px)', duration: 1.1, ease: E, delay: (i % 4) * .06, scrollTrigger: { trigger: el, start: 'top 92%' } }));
