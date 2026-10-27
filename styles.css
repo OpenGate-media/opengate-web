@@ -26,7 +26,7 @@ nav ul{display:none;gap:28px;list-style:none;font-size:14px}
 .rec{display:inline-flex;align-items:center;gap:8px}
 .rec::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;animation:bl 1.4s infinite}
 @keyframes bl{50%{opacity:.15}}
-.hud{position:fixed;left:16px;bottom:16px;z-index:40;padding:5px 9px;background:color-mix(in srgb,var(--bg) 70%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.hud{position:fixed;left:16px;bottom:16px;z-index:40;text-shadow:0 0 8px var(--bg),0 0 2px var(--bg)}
 @media(min-width:768px){.hud{left:40px;bottom:26px}}
 /* hero: entrar por el roto */
 .hero{height:260vh;position:relative}
@@ -173,7 +173,8 @@ nav a.on{text-decoration:underline;text-underline-offset:6px}
 .sheet-card .det .det-top{margin-bottom:6px}
 .sheet-x{position:absolute;right:14px;top:14px;border:1.5px solid #0A0A0A;background:none;width:38px;height:38px;font:500 18px 'Archivo';color:#0A0A0A;cursor:pointer}
 @media (hover:none),(max-width:899px){.card .img .det{display:none}.card .img::after{content:"toca · notas"}.card:hover .img svg{filter:none;opacity:1;transform:none}}
-footer ul.f-big li{margin:2px 0}
-footer ul.f-big a{font-weight:900;font-size:clamp(32px,3.6vw,48px);letter-spacing:-.04em;line-height:1;color:var(--fg);transition:opacity .3s}
+footer .f-sec{display:flex;align-items:center}
+footer ul.f-big li{margin:6px 0}
+footer ul.f-big a{font-weight:900;font-size:17px;letter-spacing:-.02em;color:var(--fg);transition:opacity .3s}
 footer ul.f-big a:hover{opacity:.55}
 footer ul:not(.f-big) li{text-transform:lowercase}
