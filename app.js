@@ -104,16 +104,16 @@ if (window.gsap && !reduce) {
         .to('#intro img', { opacity: 0, scale: .9, duration: .5, delay: .35 })
         .to('#intro', { opacity: 0, duration: .5, onComplete: () => intro.remove() }, '<.2');
     }
-    tl.from(roto, { scale: .6, opacity: 0, filter: 'blur(14px)', duration: 1.3, ease: E }, '<')
+    tl.from('.roto-in', { scale: .8, filter: 'blur(14px)', duration: 1.3, ease: E }, '<')
       .from('.hero h1', { yPercent: 30, opacity: 0, duration: 1.1, ease: E }, '-=1')
       .from('.hero-copy .btn,.hero-copy .mono,.scroll-hint', { y: 16, opacity: 0, stagger: .07, duration: .8, ease: E }, '-=.8');
 
     // Scroll: entrar por el roto hasta la imagen de adentro
     const z = gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom bottom', scrub: .6 } });
-    z.to('#heroCopy,.scroll-hint', { opacity: 0, y: -40, filter: 'blur(8px)', duration: .18, ease: 'none' }, 0)
-     .to(roto, { scale: 42, duration: 1, ease: 'power3.in' }, 0)
+    z.fromTo('#heroCopy,.scroll-hint', { opacity: 1, y: 0, filter: 'blur(0px)' }, { opacity: 0, y: -40, filter: 'blur(8px)', duration: .18, ease: 'none', immediateRender: false }, 0)
+     .fromTo(roto, { scale: 1 }, { scale: 42, duration: 1, ease: 'power2.in', immediateRender: false }, 0)
      .fromTo('.inside-img', { scale: 1.6, filter: 'blur(10px)' }, { scale: 1, filter: 'blur(0px)', duration: 1, ease: 'power2.out' }, 0)
-     .to('.portal', { opacity: 0, duration: .08, ease: 'none' }, .92);
+     .fromTo('.portal', { opacity: 1 }, { opacity: 0, duration: .08, ease: 'none', immediateRender: false }, .92);
   }
 
   gsap.utils.toArray('.rv,.card,.reel,.pf .it,.svc .row,.door').forEach((el, i) => gsap.from(el, { y: 40, opacity: 0, filter: 'blur(8px)', duration: 1.1, ease: E, delay: (i % 4) * .06, scrollTrigger: { trigger: el, start: 'top 92%' } }));
