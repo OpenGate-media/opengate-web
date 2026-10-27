@@ -61,12 +61,17 @@ if ($('pf')) $('pf').innerHTML = ['proyecto 01','proyecto 02','proyecto 03','pro
 if ($('svc')) $('svc').innerHTML = ['servicio 01','servicio 02','servicio 03','servicio 04'].map((v, i) => `<div class="row"><span class="mono">0${i + 1}</span><h3>${v}</h3><span class="mono">→</span></div>`).join('');
 if ($('reels')) $('reels').innerHTML = ['toma 01','toma 02','toma 03','toma 04'].map((r, i) => `<div class="reel"><div class="ph"><img src="/logo-negro.jpg" alt=""></div><div class="tc mono"><span class="rec">REC</span><span>00:00:0${i + 1}:12</span></div><div class="cap"><span class="mono">Video 0${i + 1}</span><b>${r}</b></div></div>`).join('');
 
-// Timecode con el scroll
+// Timecode REC: tiempo que lleva el visitante en la página (hh:mm:ss:frames)
 const f2 = n => String(n).padStart(2, '0');
-addEventListener('scroll', () => {
-  const f = Math.floor(scrollY / 4);
-  if ($('tc')) $('tc').textContent = `00:${f2(Math.floor(f / 1440) % 60)}:${f2(Math.floor(f / 24) % 60)}:${f2(f % 24)}`;
-}, { passive: true });
+const t0 = performance.now();
+(function tick() {
+  const el = $('tc');
+  if (el) {
+    const ms = performance.now() - t0, s = Math.floor(ms / 1000);
+    el.textContent = `${f2(Math.floor(s / 3600))}:${f2(Math.floor(s / 60) % 60)}:${f2(s % 60)}:${f2(Math.floor((ms % 1000) / 1000 * 24))}`;
+  }
+  requestAnimationFrame(tick);
+})();
 
 // Aerosol en canvas (prdct)
 let dens = .2;
