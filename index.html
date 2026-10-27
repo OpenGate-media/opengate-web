@@ -3,206 +3,44 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Open Gate</title>
+<meta name="description" content="Open Gate: portafolio, servicios audiovisuales y productos.">
+<link rel="icon" href="/logo-blanco.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<style>
-:root{--bg:#000;--fg:#F2F0EC;--mute:#8a8884;--line:#262626;--card:#0d0d0d}
-@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#000}}
-:root[data-theme="light"]{--bg:#000}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--fg);font-family:'Archivo',system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background .8s,color .8s}
-body.studio{--bg:#F2F0EC;--fg:#0A0A0A;--mute:#6b6964;--line:#d6d3cc;--card:#e8e5de}
-a{color:inherit;text-decoration:none}
-.wrap{max-width:1320px;margin:0 auto;padding:0 16px}
-@media(min-width:768px){.wrap{padding:0 40px}}
-.mono{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
-h1,h2,h3{font-weight:900;letter-spacing:-.035em;line-height:.9;text-transform:lowercase}
-body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.09;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.proposal{position:fixed;top:0;left:0;right:0;z-index:95;background:var(--fg);color:var(--bg);text-align:center;padding:6px 12px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.12em;text-transform:uppercase}
-/* intro */
-.intro{position:fixed;inset:0;z-index:100;background:#000;display:grid;place-items:center}
-.intro img{width:min(46vw,280px);opacity:0}
-/* nav */
-nav{position:fixed;top:26px;left:0;right:0;z-index:50;padding:14px 0}
-nav .wrap{display:flex;justify-content:space-between;align-items:center}
-.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:20px;letter-spacing:-.03em}
-.brand img{width:38px;height:38px;border-radius:50%;object-fit:cover}
-.brand .n{display:none}body.studio .brand .b{display:none}body.studio .brand .n{display:block}
-nav ul{display:none;gap:28px;list-style:none;font-size:14px}
-@media(min-width:768px){nav ul{display:flex}}
-.rec{display:inline-flex;align-items:center;gap:8px}
-.rec::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;animation:bl 1.4s infinite}
-@keyframes bl{50%{opacity:.15}}
-.hud{position:fixed;left:16px;bottom:16px;z-index:40}
-@media(min-width:768px){.hud{left:40px;bottom:26px}}
-/* hero */
-.hero{height:220vh;position:relative}
-.hero-stick{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;place-items:center}
-.gate{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 50%,#5a5a58 0%,#2a2a29 45%,#1a1a1a 80%)}
-@media(min-width:900px){.gate{justify-items:end;padding-right:12vw}}
-.gate-logo{width:min(70vw,520px);mix-blend-mode:screen;margin-bottom:28vh}
-@media(min-width:900px){.gate-logo{margin:0}}
-.doors{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
-.gate svg.bottle{height:30vh;margin-bottom:32vh;}
-@media(min-width:900px){.gate svg.bottle{margin:0;height:58vh}}
-.gate svg.bottle{max-height:560px;filter:drop-shadow(0 30px 60px rgba(0,0,0,.6))}
-.hero-copy{position:absolute;left:16px;right:16px;bottom:9vh;z-index:3;mix-blend-mode:difference;color:#fff}
-@media(min-width:768px){.hero-copy{left:40px;right:auto;max-width:640px}}
-.hero h1{font-size:clamp(52px,8.4vw,124px)}
-.hero p{margin:16px 0 22px;max-width:400px;font-size:15px;line-height:1.5}
-.scroll-hint{position:absolute;right:16px;bottom:9vh;z-index:3}
-@media(min-width:768px){.scroll-hint{right:40px}}
-.btn{display:inline-flex;gap:10px;align-items:center;padding:14px 24px;border:1.5px solid var(--fg);font-weight:500;font-size:14px;transition:all .45s cubic-bezier(.22,1,.36,1);cursor:pointer;background:none;color:var(--fg);font-family:inherit}
-.btn:hover,.btn.solid{background:var(--fg);color:var(--bg)}
-.btn.solid:hover{background:transparent;color:var(--fg)}
-.hero .btn{border-color:#fff;color:#fff}.hero .btn:hover{background:#fff;color:#000}
-/* pillars */
-.pillars{display:grid;grid-template-columns:1fr;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-@media(min-width:768px){.pillars{grid-template-columns:repeat(3,1fr)}}
-.pillar{padding:34px 16px;border-bottom:1px solid var(--line)}
-@media(min-width:768px){.pillar{padding:44px 40px;border:0;border-right:1px solid var(--line)}.pillar:last-child{border:0}}
-.pillar h3{font-size:34px;margin:12px 0 8px}
-.pillar p{color:var(--mute);font-size:14px;line-height:1.55}
-.sec{padding:110px 0}
-.head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:18px;margin-bottom:40px}
-.head h2{font-size:clamp(46px,7.5vw,120px)}
-.chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{border:1px solid var(--line);background:none;color:var(--mute);padding:9px 16px;font:500 12px 'Archivo';cursor:pointer;transition:.35s}
-.chip.on,.chip:hover{border-color:var(--fg);color:var(--fg)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(min-width:900px){.grid{grid-template-columns:repeat(4,1fr);gap:18px}}
-.card .img{position:relative;aspect-ratio:4/5;background:var(--card);display:grid;place-items:center;overflow:hidden}
-.card .img::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,#2c2c2c,transparent 65%);clip-path:var(--star);transform:scale(.0);transition:transform .9s cubic-bezier(.22,1,.36,1)}
-.card:hover .img::before{transform:scale(1.15)}
-.card svg{height:60%;position:relative;transition:transform 1s cubic-bezier(.22,1,.36,1)}
-.card:hover svg{transform:translateY(-6px) scale(1.04)}
-.badge{position:absolute;top:12px;left:12px;font:500 9px 'JetBrains Mono';letter-spacing:.16em;border:1px solid var(--fg);padding:4px 7px}
-.info{display:flex;justify-content:space-between;gap:8px;padding:12px 2px}
-.info h4{font-weight:800;font-size:17px;letter-spacing:-.02em}
-.info .mono{font-size:9.5px;margin-top:4px}
-.price{font-size:13px;white-space:nowrap}
-.card.hide{display:none}
-/* notas */
-.notes{height:300vh}
-.notes-stick{position:sticky;top:0;height:100svh;display:flex;align-items:center}
-.ng{display:grid;grid-template-columns:1fr;gap:28px;width:100%;align-items:center}
-@media(min-width:900px){.ng{grid-template-columns:1fr 1fr;gap:60px}}
-.layers{position:relative;height:260px}
-@media(min-width:900px){.layers{height:380px}}
-.layer{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center}
-.layer h3{font-size:clamp(54px,8vw,124px);margin:12px 0}
-.layer p{color:var(--mute);max-width:380px;line-height:1.6}
-.bar{height:1px;background:var(--line);max-width:380px;margin-top:24px;position:relative}
-.bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--fg)}
-.nv{position:relative;aspect-ratio:1;max-height:70vh;display:grid;place-items:center}
-#spray{position:absolute;inset:0;width:100%;height:100%}
-.nv svg.bottle{height:58%;position:relative}
-/* marquee */
-.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:24px 0}
-.track{display:flex;gap:60px;width:max-content;animation:mq 40s linear infinite}
-.track span{font-weight:900;font-size:42px;letter-spacing:-.03em;color:var(--mute);opacity:.5;white-space:nowrap;text-transform:lowercase}
-@keyframes mq{to{transform:translateX(-50%)}}
-.prdct-h{font-size:clamp(46px,7.5vw,120px);margin-top:12px}
-.pf{display:grid;grid-template-columns:1fr;gap:12px}
-@media(min-width:900px){.pf{grid-template-columns:repeat(6,1fr);gap:16px}.pf .it:nth-child(1){grid-column:span 4;aspect-ratio:2.39/1}.pf .it:nth-child(2){grid-column:span 2}.pf .it:nth-child(n+3){grid-column:span 2}}
-.pf .it{position:relative;aspect-ratio:4/5;background:var(--card);overflow:hidden}
-.pf .it .ph{position:absolute;inset:0;display:grid;place-items:center}
-.pf .it .ph img{width:28%;opacity:.12;mix-blend-mode:multiply;transition:transform 1s cubic-bezier(.22,1,.36,1)}
-.pf .it:hover .ph img{transform:scale(1.15) rotate(-6deg)}
-.pf .it .lb{position:absolute;left:14px;right:14px;bottom:14px;display:flex;justify-content:space-between;align-items:end}
-.pf .it b{display:block;margin-top:4px;font-weight:900;font-size:24px;letter-spacing:-.03em}
-.svc{border-top:1px solid var(--line)}
-.svc .row{display:grid;grid-template-columns:60px 1fr auto;gap:16px;align-items:center;padding:26px 0;border-bottom:1px solid var(--line);transition:padding .5s cubic-bezier(.22,1,.36,1)}
-.svc .row:hover{padding-left:14px}
-.svc .row h3{font-size:clamp(34px,5vw,72px)}
-/* studio */
-.studio-sec{padding:120px 0}
-.reels{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
-.reel{flex:0 0 66%;aspect-ratio:9/16;background:var(--card);position:relative;scroll-snap-align:start;overflow:hidden}
-@media(min-width:900px){.reel{flex:1}}
-.reel .tc{position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between}
-.reel .cap{position:absolute;left:16px;bottom:16px}
-.reel .cap b{display:block;font-weight:900;font-size:26px;letter-spacing:-.03em;text-transform:lowercase}
-.reel .ph{position:absolute;inset:0;display:grid;place-items:center}
-.reel .ph img{width:44%;opacity:.12;mix-blend-mode:multiply}
-.cta{padding:130px 0;text-align:center}
-.cta h2{font-size:clamp(50px,9vw,140px);margin:18px 0 32px}
-.cta .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-footer{border-top:1px solid var(--line);padding:50px 0 90px}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-@media(min-width:900px){.cols{grid-template-columns:2fr 1fr 1fr 1fr}}
-footer li{list-style:none;font-size:14px;margin:8px 0;color:var(--mute)}
-footer h5{margin-bottom:12px}
-@media (prefers-reduced-motion:reduce){.track{animation:none}.hero,.notes{height:auto}.hero-stick,.notes-stick{position:relative;min-height:100svh}.layer{position:relative}.layers{height:auto}.intro{display:none}}
-</style>
+<link rel="stylesheet" href="/styles.css">
 </head>
-<body>
+<body class="">
 <svg width="0" height="0" style="position:absolute"><defs><linearGradient id="gl" x1="0" x2="1"><stop offset="0" stop-color="#e9e7e2" stop-opacity=".9"/><stop offset=".3" stop-color="#6d6c69" stop-opacity=".85"/><stop offset=".75" stop-color="#1c1c1c" stop-opacity=".95"/><stop offset="1" stop-color="#050505"/></linearGradient><linearGradient id="cp" x1="0" x2="1"><stop offset="0" stop-color="#f2f0ec"/><stop offset=".5" stop-color="#7a7a7a"/><stop offset="1" stop-color="#111"/></linearGradient><linearGradient id="sh" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".6"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs></svg>
 <div class="proposal">Prototipo · propuesta para revisión · contenido de ejemplo</div>
-<div class="intro" id="intro"><img src="logo-blanco.jpg" alt="Open Gate"></div>
-
+<div class="intro" id="intro"><img src="/logo-blanco.jpg" alt="Open Gate"></div>
 <nav><div class="wrap">
-  <a href="#" class="brand"><img class="b" src="logo-blanco.jpg" alt=""><img class="n" src="logo-negro.jpg" alt=""><span>opengate</span></a>
-  <ul><li><a href="#prtflo">prtflo</a></li><li><a href="#stdo">stdo</a></li><li><a href="#prdct">prdct</a></li></ul>
+  <a href="/" class="brand"><img class="b" src="/logo-blanco.jpg" alt=""><img class="n" src="/logo-negro.jpg" alt=""><span>opengate</span></a>
+  <ul><li><a href="/prtflo/">prtflo</a></li><li><a href="/stdo/">stdo</a></li><li><a href="/prdct/">prdct</a></li></ul>
   <a href="#contacto" class="mono" style="color:var(--fg)">Contacto</a>
 </div></nav>
 <div class="hud mono rec" id="tc">00:00:00:00</div>
 
 <header class="hero"><div class="hero-stick">
   <div class="gate" id="gate">
-    <img class="gate-logo" src="logo-blanco.jpg" alt="Símbolo Open Gate">
+    <img class="gate-logo" src="/logo-blanco.jpg" alt="Símbolo Open Gate">
   </div>
   <div class="hero-copy">
     <div class="mono" style="color:#fff">Open Gate · opengate.media</div>
     <h1 style="margin-top:12px">mira lo<br>que hay<br>del otro lado</h1>
-    <div class="doors"><a href="#prtflo" class="btn">prtflo</a><a href="#stdo" class="btn">stdo</a><a href="#prdct" class="btn">prdct</a></div>
+    <div class="doors"><a href="/prtflo/" class="btn">prtflo</a><a href="/stdo/" class="btn">stdo</a><a href="/prdct/" class="btn">prdct</a></div>
   </div>
   <div class="scroll-hint mono" style="color:#fff">Scroll para abrir ↓</div>
 </div></header>
 
-<section class="sec world" id="prtflo"><div class="wrap">
-  <div class="head"><div><span class="mono rec">01 · prtflo</span><h2 style="margin-top:12px">portafolio</h2></div>
-    <div class="chips"><button class="chip on">Todo</button><button class="chip">Video</button><button class="chip">Foto</button><button class="chip">Diseño</button></div></div>
-  <div class="pf" id="pf"></div>
-  <p class="mono" style="margin-top:20px">* Espacios de ejemplo. Aquí van los proyectos reales del equipo.</p>
+<section class="sec" id="secciones"><div class="wrap">
+  <span class="mono">Open Gate</span><h2 class="prdct-h">secciones</h2>
+  <div class="door-grid">
+    <a class="door rv" href="/prtflo/"><span class="mono">01</span><b>prtflo</b><span class="mono">Portafolio →</span></a>
+    <a class="door rv" href="/stdo/"><span class="mono">02</span><b>stdo</b><span class="mono">Servicios audiovisuales →</span></a>
+    <a class="door rv" href="/prdct/"><span class="mono">03</span><b>prdct</b><span class="mono">Productos · perfumes →</span></a>
+  </div>
 </div></section>
-
-<section class="sec world" id="stdo"><div class="wrap">
-  <div class="head"><div><span class="mono rec">02 · stdo</span><h2 style="margin-top:12px">servicios</h2></div>
-    <a class="btn" href="https://www.instagram.com/og.stdo" target="_blank" rel="noopener">@og.stdo →</a></div>
-  <div class="svc" id="svc"></div>
-  <p class="mono" style="margin:20px 0 60px">* Servicios por definir con el equipo.</p>
-  <div class="reels" id="reels"></div>
-</div></section>
-
-<section id="prdct" style="padding-top:110px"><div class="wrap"><span class="mono rec">03 · prdct</span><h2 class="prdct-h">productos</h2><p class="mono" style="margin:8px 0 40px">Por ahora: perfumes 100% originales</p></div></section>
-<section class="wrap"><div class="pillars">
-  <div class="pillar rv"><span class="mono">01</span><h3>originales</h3><p>Solo perfumes originales de distribuidores autorizados. Nada de réplicas.</p></div>
-  <div class="pillar rv"><span class="mono">02</span><h3>envío a colombia</h3><p>Te decimos el tiempo de entrega real de cada pedido desde el primer mensaje.</p></div>
-  <div class="pillar rv"><span class="mono">03</span><h3>pago seguro</h3><p>Pagos protegidos y atención directa por WhatsApp.</p></div>
-</div></section>
-
-<section class="sec" id="coleccion"><div class="wrap">
-  <div class="head"><div><span class="mono">prdct · colección</span><h2 style="margin-top:12px">perfumes</h2></div>
-    <div class="chips"><button class="chip on" data-f="all">Todos</button><button class="chip" data-f="el">Él</button><button class="chip" data-f="ella">Ella</button><button class="chip" data-f="uni">Unisex</button></div></div>
-  <div class="grid" id="grid"></div>
-  <p class="mono" style="margin-top:20px">* Productos y precios de ejemplo. Aquí va el catálogo real de Shopify.</p>
-</div></section>
-
-<section class="notes" id="notas"><div class="notes-stick"><div class="wrap" style="width:100%"><div class="ng">
-  <div><span class="mono">Anatomía de una fragancia</span>
-    <div class="layers">
-      <div class="layer"><span class="mono rec">Salida · 0–15 min</span><h3>cítricos</h3><p>Lo primero que se siente. Notas frescas y ligeras que se evaporan rápido.</p></div>
-      <div class="layer"><span class="mono rec">Corazón · 15 min – 4 h</span><h3>flores y especias</h3><p>El carácter del perfume. Aparece cuando la salida se va.</p></div>
-      <div class="layer"><span class="mono rec">Fondo · 4 h +</span><h3>maderas</h3><p>Lo que se queda en la piel. Maderas, resinas y almizcles.</p></div>
-    </div><div class="bar"><i id="nbar"></i></div></div>
-  <div class="nv"><canvas id="spray"></canvas><svg class="bottle" viewBox="0 0 200 360" id="nbottle"><rect x="70" y="10" width="60" height="70" rx="3" fill="url(#cp)"/><rect x="84" y="80" width="32" height="22" fill="#333"/><rect x="20" y="100" width="160" height="250" rx="10" fill="url(#gl)" stroke="rgba(242,240,236,.35)"/><rect x="36" y="114" width="14" height="222" rx="7" fill="url(#sh)" opacity=".7"/></svg></div>
-</div></div></div></section>
-
-<div class="marquee"><div class="track" id="track"></div></div>
-
-
 
 <section class="cta" id="contacto"><div class="wrap">
   <span class="mono rec">Contacto</span>
@@ -211,65 +49,11 @@ footer h5{margin-bottom:12px}
 </div></section>
 
 <footer><div class="wrap"><div class="cols">
-  <div><div class="brand"><img class="b" src="logo-blanco.jpg" alt=""><img class="n" src="logo-negro.jpg" alt="">opengate</div></div>
-  <div><h5 class="mono">Secciones</h5><ul><li><a href="#prtflo">prtflo</a></li><li><a href="#stdo">stdo</a></li><li><a href="#prdct">prdct</a></li></ul></div>
+  <div><div class="brand"><img class="b" src="/logo-blanco.jpg" alt=""><img class="n" src="/logo-negro.jpg" alt="">opengate</div></div>
+  <div><h5 class="mono">Secciones</h5><ul><li><a href="/prtflo/">prtflo</a></li><li><a href="/stdo/">stdo</a></li><li><a href="/prdct/">prdct</a></li></ul></div>
   <div><h5 class="mono">Ayuda</h5><ul><li>Envíos</li><li>Autenticidad</li><li>Devoluciones</li></ul></div>
   <div><h5 class="mono">Canales</h5><ul><li>Instagram</li><li>WhatsApp</li><li>Mercado Libre</li></ul></div>
 </div></div></footer>
-
-<script>
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-// roto: estrella de 10 puntas irregular (abertura), como clip-path
-const spikes=[1,.82,1.05,.9,1,.78,1.08,.86,.95,.84];
-function star(r,cx=50,cy=50){let p=[];for(let i=0;i<20;i++){const a=-Math.PI/2+i*Math.PI/10+.12;const rr=i%2?r*.42:r*spikes[i/2];p.push(`${(cx+Math.cos(a)*rr).toFixed(2)}% ${(cy+Math.sin(a)*rr).toFixed(2)}%`)}return`polygon(${p.join(',')})`}
-document.documentElement.style.setProperty('--star',star(48));
-
-const b=(t)=>`<svg viewBox="0 0 200 360"><rect x="72" y="20" width="56" height="62" rx="3" fill="url(#cp)"/><rect x="85" y="82" width="30" height="20" fill="#333"/><rect x="24" y="100" width="152" height="246" rx="${t}" fill="url(#gl)" stroke="rgba(242,240,236,.25)"/><rect x="40" y="116" width="12" height="214" rx="6" fill="url(#sh)" opacity=".6"/></svg>`;
-const P=[['Fragancia 01','Maderoso · EDP · 100 ml','el','$ 000.000',10],['Fragancia 02','Floral · EDP · 90 ml','ella','$ 000.000',40],['Fragancia 03','Ámbar · EDP · 100 ml','uni','$ 000.000',4],['Fragancia 04','Cítrico · EDT · 100 ml','el','$ 000.000',18],['Fragancia 05','Gourmand · EDP · 80 ml','ella','$ 000.000',60],['Fragancia 06','Oud · Parfum · 75 ml','uni','$ 000.000',2],['Fragancia 07','Aromático · EDT · 125 ml','el','$ 000.000',12],['Fragancia 08','Almizcle · EDP · 100 ml','ella','$ 000.000',30]];
-grid.innerHTML=P.map(p=>`<article class="card" data-g="${p[2]}"><div class="img"><span class="badge">ORIGINAL</span>${b(p[4])}</div><div class="info"><div><h4>${p[0]}</h4><div class="mono">${p[1]}</div></div><div class="price">${p[3]}</div></div></article>`).join('');
-document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');document.querySelectorAll('.card').forEach(k=>k.classList.toggle('hide',c.dataset.f!=='all'&&k.dataset.g!==c.dataset.f))});
-const M=['marca 01','marca 02','marca 03','marca 04','marca 05','marca 06'];
-track.innerHTML=[...M,...M].map(m=>`<span>${m}</span><span>✶</span>`).join('');
-pf.innerHTML=['proyecto 01','proyecto 02','proyecto 03','proyecto 04','proyecto 05'].map((p,i)=>`<div class="it"><div class="ph"><img src="logo-negro.jpg" alt=""></div><div class="lb"><div><span class="mono">Cliente · 2026</span><b>${p}</b></div><span class="mono">0${i+1}</span></div></div>`).join('');
-svc.innerHTML=['servicio 01','servicio 02','servicio 03','servicio 04'].map((v,i)=>`<div class="row"><span class="mono">0${i+1}</span><h3>${v}</h3><span class="mono">→</span></div>`).join('');
-reels.innerHTML=['luz lateral','macro de vidrio','unboxing','detrás de cámara'].map((r,i)=>`<div class="reel"><div class="ph"><img src="logo-negro.jpg" alt=""></div><div class="tc mono"><span class="rec">REC</span><span>00:00:0${i+1}:12</span></div><div class="cap"><span class="mono">Toma 0${i+1}</span><b>${r}</b></div></div>`).join('');
-
-const f2=n=>String(n).padStart(2,'0');
-addEventListener('scroll',()=>{const f=Math.floor(scrollY/4);tc.textContent=`00:${f2(Math.floor(f/1440)%60)}:${f2(Math.floor(f/24)%60)}:${f2(f%24)}`},{passive:true});
-
-// aerosol en canvas
-const cv=document.getElementById('spray'),cx=cv.getContext('2d');let dens=.2;
-function fit(){cv.width=cv.offsetWidth*devicePixelRatio;cv.height=cv.offsetHeight*devicePixelRatio}fit();addEventListener('resize',fit);
-const parts=Array.from({length:900},()=>({a:Math.random()*6.283,r:Math.pow(Math.random(),.6),s:Math.random()*1.6+.3,v:Math.random()*.002+.0005}));
-(function draw(){const w=cv.width,h=cv.height;cx.clearRect(0,0,w,h);const col=getComputedStyle(document.body).getPropertyValue('--fg');cx.fillStyle=col;
- parts.forEach(p=>{p.a+=p.v;const R=p.r*Math.min(w,h)*.48*(.6+dens*.6);const x=w/2+Math.cos(p.a)*R,y=h/2+Math.sin(p.a)*R*.9;cx.globalAlpha=(1-p.r)*.7*dens+.05;cx.fillRect(x,y,p.s*devicePixelRatio,p.s*devicePixelRatio)});
- if(!reduce)requestAnimationFrame(draw)})();
-
-if(window.gsap&&!reduce){
- gsap.registerPlugin(ScrollTrigger);const E='expo.out';
- const o={r:0,x:0};const gate=document.getElementById('gate');
- const setG=()=>gate.style.clipPath=star(o.r+o.x,innerWidth>=900?68:50,innerWidth>=900?50:34);setG();
- gsap.timeline()
-  .to('#intro img',{opacity:1,scale:1.04,duration:.9,ease:'power2.out'})
-  .to('#intro img',{opacity:0,scale:.9,duration:.5,delay:.35})
-  .to('#intro',{opacity:0,duration:.5,onComplete:()=>intro.remove()},'<.2')
-  .to(o,{r:30,duration:1.3,ease:E,onUpdate:setG},'<')
-  .from('.hero h1',{yPercent:30,opacity:0,duration:1.1,ease:E},'-=1')
-  .from('.hero-copy p,.hero-copy .btn,.hero-copy .mono,.scroll-hint',{y:16,opacity:0,stagger:.07,duration:.8,ease:E},'-=.8');
- gsap.fromTo(o,{x:0},{x:90,immediateRender:false,ease:'none',onUpdate:setG,scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom bottom',scrub:.5}});
- gsap.to('.gate-logo',{scale:1.15,rotate:-4,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom bottom',scrub:.5}});
- gsap.to('.scroll-hint',{opacity:0,scrollTrigger:{trigger:'.hero',start:'top top',end:'15% top',scrub:true}});
- gsap.utils.toArray('.rv,.card,.reel,.pf .it,.svc .row').forEach((el,i)=>gsap.from(el,{y:40,opacity:0,filter:'blur(8px)',duration:1.1,ease:E,delay:(i%4)*.06,scrollTrigger:{trigger:el,start:'top 88%'}}));
- gsap.utils.toArray('.head h2,.cta h2').forEach(el=>gsap.from(el,{yPercent:25,opacity:0,duration:1.1,ease:E,scrollTrigger:{trigger:el,start:'top 85%'}}));
- const L=gsap.utils.toArray('.layer');gsap.set(L,{opacity:0,y:40});gsap.set(L[0],{opacity:1,y:0});
- const d={v:.2};
- gsap.timeline({scrollTrigger:{trigger:'.notes',start:'top top',end:'bottom bottom',scrub:.6}})
-  .to('#nbar',{width:'33%',duration:1}).to(L[0],{opacity:0,y:-40,duration:.5}).to(L[1],{opacity:1,y:0,duration:.5},'<.2').to('#nbar',{width:'66%',duration:1},'<')
-  .to(L[1],{opacity:0,y:-40,duration:.5}).to(L[2],{opacity:1,y:0,duration:.5},'<.2').to('#nbar',{width:'100%',duration:1},'<')
-  .to(d,{v:1,duration:3,ease:'none',onUpdate:()=>dens=d.v},0).to('#nbottle',{rotate:-6,duration:3,ease:'none'},0);
- // cambio de mundo: prtflo + stdo (blanco, logo negro) / prdct (negro, logo blanco)
- ScrollTrigger.create({trigger:'#prtflo',endTrigger:'#stdo',start:'top 55%',end:'bottom 45%',onToggle:s=>document.body.classList.toggle('studio',s.isActive)});
-} else {document.getElementById('intro').remove();document.getElementById('gate').style.clipPath='none'}
-</script>
+<script src="/app.js"></script>
 </body>
 </html>
