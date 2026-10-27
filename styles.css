@@ -29,7 +29,10 @@ nav ul{display:none;gap:28px;list-style:none;font-size:14px}
 .hud{position:fixed;left:16px;bottom:16px;z-index:40;padding:5px 9px;background:color-mix(in srgb,var(--bg) 70%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 @media(min-width:768px){.hud{left:40px;bottom:26px}}
 /* hero: entrar por el roto */
-.hero{height:320vh;position:relative}
+.hero{height:260vh;position:relative}
+.hint-wrap{position:absolute;right:0;bottom:0;left:0;height:0}
+.scroll-hint{animation:hintIn 1s 2.6s both}
+@keyframes hintIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .hero-stick{position:sticky;top:0;height:100svh;overflow:hidden}
 .inside{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 50%,#5a5a58 0%,#2a2a29 45%,#141414 85%)}
 .inside-img{width:min(64vmin,560px);mix-blend-mode:screen;margin-bottom:26vh}
@@ -128,7 +131,7 @@ footer h5{margin-bottom:12px}
 @media (prefers-reduced-motion:reduce){.track{animation:none}.hero,.notes{height:auto}.hero-stick,.notes-stick{position:relative;min-height:100svh}.layer{position:relative}.layers{height:auto}.intro{display:none}}
 
 .page-top{padding-top:150px}.page-top-s{padding-top:150px}
-.door-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:40px}
+.door-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:0}
 @media(min-width:900px){.door-grid{grid-template-columns:repeat(3,1fr);gap:18px}}
 .door{border:1px solid var(--line);padding:28px 22px;min-height:260px;display:flex;flex-direction:column;justify-content:space-between;transition:background .5s cubic-bezier(.22,1,.36,1),color .5s}
 .door b{font-weight:900;font-size:clamp(54px,7vw,104px);letter-spacing:-.04em;line-height:.9}
