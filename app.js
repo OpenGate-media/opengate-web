@@ -34,7 +34,19 @@ if ($('grid')) {
       </div>
     </div>
     <div class="info"><div><h4>${p.n}</h4><div class="mono">${p.b} · ${p.c} · ${p.ml} ml</div></div><div class="price">${p.p}</div></div></article>`).join('');
-  document.querySelectorAll('.card').forEach(c => c.addEventListener('click', () => c.classList.toggle('open')));
+  const touch = () => matchMedia('(hover: none), (max-width: 899px)').matches;
+  const sheet = document.createElement('div');
+  sheet.className = 'sheet'; sheet.innerHTML = '<div class="sheet-card" role="dialog" aria-modal="true"><button class="sheet-x" aria-label="Cerrar">×</button><div id="sheetBody"></div></div>';
+  document.body.appendChild(sheet);
+  const close = () => sheet.classList.remove('on');
+  sheet.addEventListener('click', e => { if (e.target === sheet || e.target.closest('.sheet-x')) close(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  document.querySelectorAll('.card').forEach((c, i) => c.addEventListener('click', () => {
+    if (!touch()) { c.classList.toggle('open'); return; }
+    const p = P[i];
+    $('sheetBody').innerHTML = `<span class="mono" style="color:#6b6964">${p.cat} · ${p.b}</span><h4>${p.n}</h4>` + c.querySelector('.det').outerHTML;
+    sheet.classList.add('on');
+  }));
   document.querySelectorAll('#coleccion .chip').forEach(c => c.onclick = () => {
     document.querySelectorAll('#coleccion .chip').forEach(x => x.classList.remove('on'));
     c.classList.add('on');
@@ -79,27 +91,29 @@ if (cv) {
 }
 
 // ---- Animaciones ----
-const gate = $('gate'), intro = $('intro');
+const roto = $('roto'), intro = $('intro');
 if (window.gsap && !reduce) {
   gsap.registerPlugin(ScrollTrigger);
   const E = 'expo.out';
 
-  if (gate) {
-    const o = { r: 0, x: 0 };
-    const setG = () => gate.style.clipPath = star(o.r + o.x, innerWidth >= 900 ? 68 : 50, innerWidth >= 900 ? 50 : 34);
-    setG();
+  if (roto) {
+    // Intro + aparición del roto
     const tl = gsap.timeline();
     if (intro) {
       tl.to('#intro img', { opacity: 1, scale: 1.04, duration: .9, ease: 'power2.out' })
         .to('#intro img', { opacity: 0, scale: .9, duration: .5, delay: .35 })
         .to('#intro', { opacity: 0, duration: .5, onComplete: () => intro.remove() }, '<.2');
     }
-    tl.to(o, { r: 30, duration: 1.3, ease: E, onUpdate: setG }, '<')
+    tl.from(roto, { scale: .6, opacity: 0, filter: 'blur(14px)', duration: 1.3, ease: E }, '<')
       .from('.hero h1', { yPercent: 30, opacity: 0, duration: 1.1, ease: E }, '-=1')
       .from('.hero-copy .btn,.hero-copy .mono,.scroll-hint', { y: 16, opacity: 0, stagger: .07, duration: .8, ease: E }, '-=.8');
-    gsap.fromTo(o, { x: 0 }, { x: 90, immediateRender: false, ease: 'none', onUpdate: setG, scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom bottom', scrub: .5 } });
-    gsap.to('.gate-logo', { scale: 1.15, rotate: -4, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom bottom', scrub: .5 } });
-    gsap.to('.scroll-hint', { opacity: 0, scrollTrigger: { trigger: '.hero', start: 'top top', end: '15% top', scrub: true } });
+
+    // Scroll: entrar por el roto hasta la imagen de adentro
+    const z = gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom bottom', scrub: .6 } });
+    z.to('#heroCopy,.scroll-hint', { opacity: 0, y: -40, filter: 'blur(8px)', duration: .18, ease: 'none' }, 0)
+     .to(roto, { scale: 42, duration: 1, ease: 'power3.in' }, 0)
+     .fromTo('.inside-img', { scale: 1.6, filter: 'blur(10px)' }, { scale: 1, filter: 'blur(0px)', duration: 1, ease: 'power2.out' }, 0)
+     .to('.portal', { opacity: 0, duration: .08, ease: 'none' }, .92);
   }
 
   gsap.utils.toArray('.rv,.card,.reel,.pf .it,.svc .row,.door').forEach((el, i) => gsap.from(el, { y: 40, opacity: 0, filter: 'blur(8px)', duration: 1.1, ease: E, delay: (i % 4) * .06, scrollTrigger: { trigger: el, start: 'top 92%' } }));
@@ -116,5 +130,4 @@ if (window.gsap && !reduce) {
   }
 } else {
   if (intro) intro.remove();
-  if (gate) gate.style.clipPath = 'none';
 }
