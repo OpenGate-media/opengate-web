@@ -29,6 +29,13 @@
     $$('.save-btn').forEach(b => { const on = list.includes(+b.dataset.i); b.classList.toggle('on', on); b.querySelector('span').textContent = on ? 'en tu lista' : 'guardar en mi lista'; });
   }
 
+  // ---------- Pago: checkout de Shopify con los productos ya en el carrito ----------
+  const checkout = items => {
+    const parts = items.filter(o => o.p.vid).map(o => `${o.p.vid}:${o.q}`);
+    if (!SHOP || !parts.length) { toast('El pago en línea aún no está activo. Escríbenos y te ayudamos.'); return; }
+    location.href = `https://${SHOP}/cart/${parts.join(',')}`;
+  };
+
   // ---------- Mensaje y canales ----------
   function send(text) {
     if (WHATSAPP) { window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank', 'noopener'); return; }
@@ -119,7 +126,7 @@
         </div>
 
         <div class="ask">
-          <span class="mono">arma tu mensaje</span>
+          <span class="mono">compra o pregunta</span>
           <div class="qs">
             ${['¿Está disponible?', '¿Cuánto tarda la entrega?', '¿Formas de pago?', '¿Hacen envío a mi ciudad?'].map((q, k) => `<button class="q${k === 0 ? ' on' : ''}">${q}</button>`).join('')}
           </div>
@@ -128,7 +135,9 @@
             <input class="city" placeholder="Tu ciudad (opcional)" autocomplete="address-level2">
           </div>
           <pre class="msg" aria-live="polite"></pre>
-          <button class="btn solid send">${WHATSAPP ? 'Pedir por WhatsApp' : 'Pedir por Instagram'} →</button>
+          <button class="btn solid pay">Pagar ahora · ${p.p}</button>
+          <div class="pay-note mono">Pago seguro con Mercado Pago · tarjeta, PSE y más</div>
+          <button class="btn send">${WHATSAPP ? 'Preguntar por WhatsApp' : 'Preguntar por Instagram'} →</button>
           <button class="save-btn" data-i="${i}"><b>♡</b><span>guardar en mi lista</span></button>
         </div>
 
@@ -148,9 +157,12 @@
       msg.textContent = `Hola OG 👋 Me interesa:\n${qty} × ${p.n} (${p.b}, ${p.c} ${p.ml} ml) · ${p.p}${city ? `\nCiudad: ${city}` : ''}${qs.length ? '\n' + qs.join('\n') : ''}`;
     };
     $$('.q', body).forEach(b => b.onclick = () => { b.classList.toggle('on'); compose(); });
-    $$('.qty button', body).forEach(b => b.onclick = () => { qty = Math.max(1, Math.min(9, qty + +b.dataset.d)); $('.qty output', body).textContent = qty; compose(); });
+    $$('.qty button', body).forEach(b => b.onclick = () => { qty = Math.max(1, Math.min(9, qty + +b.dataset.d)); $('.qty output', body).textContent = qty; compose(); paintPay(); });
     $('.city', body).oninput = compose;
     $('.send', body).onclick = () => send(msg.textContent);
+    $('.pay', body).onclick = () => checkout([{ p, q: qty }]);
+    const payBtn = $('.pay', body);
+    const paintPay = () => payBtn.textContent = `Pagar ahora · ${fmt(p.pn * qty)}`;
     $('.save-btn', body).onclick = () => { list = list.includes(i) ? list.filter(x => x !== i) : [...list, i]; saveList(); toast(list.includes(i) ? `${p.n} guardado en tu lista` : `${p.n} salió de tu lista`); };
     $$('.rel-it', body).forEach(b => b.onclick = () => { body.scrollTop = 0; $('.dr-panel', dr).scrollTop = 0; open(+b.dataset.j); });
     compose(); paintList();
@@ -185,8 +197,12 @@
     b.innerHTML = `<span class="mono">og.prdct</span><h3>mi lista</h3>${items.length ? `
       <ul class="lp-ul">${list.map(i => `<li><div class="mini">${bottle3d(P[i], false)}</div><div><b>${P[i].n}</b><span class="mono">${P[i].b} · ${P[i].c} · ${P[i].ml} ml</span></div><span>${P[i].p}</span><button data-i="${i}" aria-label="Quitar">×</button></li>`).join('')}</ul>
       <div class="lp-tot"><span class="mono">total aprox.</span><b>${fmt(total)}</b></div>
-      <button class="btn solid lp-send">${WHATSAPP ? 'Pedir todo por WhatsApp' : 'Pedir todo por Instagram'} →</button>` : `<p class="lp-empty">Todavía no guardas perfumes. Abre uno y toca <b>♡ guardar en mi lista</b>.</p>`}`;
+      <button class="btn solid lp-pay">Pagar todo · ${fmt(total)}</button>
+      <div class="pay-note mono">Pago seguro con Mercado Pago</div>
+      <button class="btn lp-send">${WHATSAPP ? 'Preguntar por WhatsApp' : 'Preguntar por Instagram'} →</button>` : `<p class="lp-empty">Todavía no guardas perfumes. Abre uno y toca <b>♡ guardar en mi lista</b>.</p>`}`;
     $$('.lp-ul button', b).forEach(x => x.onclick = () => { list = list.filter(i => i !== +x.dataset.i); saveList(); openList(); });
+    const pb = $('.lp-pay', b);
+    if (pb) pb.onclick = () => checkout(items.map(p => ({ p, q: 1 })));
     const s = $('.lp-send', b);
     if (s) s.onclick = () => send(`Hola OG 👋 Quiero pedir:\n${items.map(p => `• ${p.n} (${p.b}, ${p.c} ${p.ml} ml) · ${p.p}`).join('\n')}\nTotal aprox.: ${fmt(total)}\n¿Están disponibles?`);
     lp.classList.add('on'); lp.setAttribute('aria-hidden', 'false'); document.documentElement.classList.add('lock');

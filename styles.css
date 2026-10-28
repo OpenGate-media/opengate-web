@@ -335,3 +335,7 @@ nav.topbar .wrap{gap:12px}
 .lp-empty{color:#6b6964;line-height:1.6}
 .toast{position:fixed;left:50%;bottom:24px;z-index:200;transform:translate(-50%,30px);opacity:0;background:#F2F0EC;color:#0A0A0A;padding:12px 18px;font:500 13px 'Archivo';box-shadow:0 10px 30px rgba(0,0,0,.4);transition:all .4s cubic-bezier(.22,1,.36,1);pointer-events:none;max-width:90vw;text-align:center}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+.pay-note{text-align:center;font-size:9.5px;color:#6b6964;margin-top:-4px}
+.drawer .btn.send,.drawer .btn.lp-send{background:none;color:#0A0A0A;border-color:#0A0A0A;justify-content:center;padding:14px}
+.drawer .btn.send:hover,.drawer .btn.lp-send:hover{background:#0A0A0A;color:#F2F0EC}
+.lp-body .btn{width:100%;margin-bottom:8px}

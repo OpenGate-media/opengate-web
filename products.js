@@ -5,9 +5,12 @@
 // Número de WhatsApp para pedidos (con indicativo, sin +). Vacío = se usa Instagram.
 const WHATSAPP = '';
 const IG = 'og.prdct';
+// Tienda Shopify (checkout con Mercado Pago). "vid" = id de la variante en Shopify.
+const SHOP = 'w9akid-2m.myshopify.com';
 const P = [
  {
   "n": "9 PM Rebel",
+  "vid": 67842845213037,
   "b": "Afnan",
   "c": "EDP",
   "ml": 100,
@@ -40,6 +43,7 @@ const P = [
  },
  {
   "n": "Liquid Brun",
+  "vid": 67842845245805,
   "b": "French Avenue",
   "c": "EDP",
   "ml": 100,
@@ -72,6 +76,7 @@ const P = [
  },
  {
   "n": "Atlas",
+  "vid": 67842845278573,
   "b": "Lattafa",
   "c": "EDP",
   "ml": 55,
@@ -102,6 +107,7 @@ const P = [
  },
  {
   "n": "Khamrah",
+  "vid": 67842845311341,
   "b": "Lattafa",
   "c": "EDP",
   "ml": 100,
@@ -134,6 +140,7 @@ const P = [
  },
  {
   "n": "Hawas Ice",
+  "vid": 67842845376877,
   "b": "Rasasi",
   "c": "EDP",
   "ml": 100,
@@ -167,6 +174,7 @@ const P = [
  },
  {
   "n": "Cedrus Blanc",
+  "vid": 67842848260461,
   "b": "Rayhaan",
   "c": "EDP",
   "ml": 100,
@@ -194,6 +202,7 @@ const P = [
  },
  {
   "n": "Nocturno Elixir",
+  "vid": 67842848751981,
   "b": "Rayhaan",
   "c": "EDP",
   "ml": 100,
@@ -223,6 +232,7 @@ const P = [
  },
  {
   "n": "Terra",
+  "vid": 67842848817517,
   "b": "Rayhaan",
   "c": "EDP",
   "ml": 100,
@@ -259,6 +269,7 @@ const P = [
  },
  {
   "n": "Wolf",
+  "vid": 67842849309037,
   "b": "Rayhaan",
   "c": "EDP",
   "ml": 100,
@@ -284,6 +295,7 @@ const P = [
  },
  {
   "n": "Black XS",
+  "vid": 67842849538413,
   "b": "Paco Rabanne",
   "c": "EDT",
   "ml": 100,
