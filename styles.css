@@ -206,7 +206,8 @@ nav.topbar .wrap{gap:12px}
 
 /* ================= frasco 3D (muestra hasta tener fotos) ================= */
 .b3d{--w:96px;--h:140px;--d:46px;--cw:44px;--ch:40px;--cd:34px;position:relative;width:var(--w);height:calc(var(--h) + var(--ch) + 10px);transform-style:preserve-3d;transform:rotateX(var(--rx,-6deg)) rotateY(var(--ry,-24deg));transition:transform .18s ease-out}
-.b3d .f{position:absolute;display:block;backface-visibility:hidden}
+.b3d .f{position:absolute;display:block;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.b3d,.b3d-body,.b3d-cap{-webkit-transform-style:preserve-3d}
 .b3d-body{position:absolute;left:0;bottom:0;width:var(--w);height:var(--h);transform-style:preserve-3d}
 .b3d-body .fr,.b3d-body .bk{width:var(--w);height:var(--h);left:0;top:0;border-radius:6px;background:linear-gradient(100deg,color-mix(in srgb,var(--c1) 70%,#fff) 0%,var(--c1) 22%,var(--c2) 78%,#000 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
 .b3d-body .fr{transform:translateZ(calc(var(--d)/2))}
@@ -339,3 +340,23 @@ nav.topbar .wrap{gap:12px}
 .drawer .btn.send,.drawer .btn.lp-send{background:none;color:#0A0A0A;border-color:#0A0A0A;justify-content:center;padding:14px}
 .drawer .btn.send:hover,.drawer .btn.lp-send:hover{background:#0A0A0A;color:#F2F0EC}
 .lp-body .btn{width:100%;margin-bottom:8px}
+
+/* ===== Compatibilidad Safari / navegadores sin color-mix ===== */
+@supports not (color: color-mix(in srgb, red, blue)) {
+  nav::before{background:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.8) 55%,transparent 100%)}
+  body.studio nav::before{background:linear-gradient(to bottom,#F2F0EC 0%,rgba(242,240,236,.85) 55%,transparent 100%)}
+  .tabs{border-color:rgba(242,240,236,.2);background:rgba(0,0,0,.55)}
+  body.studio .tabs{border-color:rgba(10,10,10,.2);background:rgba(242,240,236,.6)}
+  .nav-cta,.list-btn{border-color:rgba(242,240,236,.2)}
+  .list-count{background:rgba(242,240,236,.2)}
+  .prog{background:rgba(242,240,236,.1)}
+  .card:hover .img{background:#1a1a1a}
+  .b3d-body .fr,.b3d-body .bk{background:linear-gradient(100deg,#d9d6cf 0%,var(--c1) 22%,var(--c2) 78%,#000 100%)}
+  .b3d-body .lf,.b3d-body .rt{background:linear-gradient(90deg,var(--c2),var(--c1))}
+  .b3d-body .tp{background:var(--c1)}
+}
+/* Safari: evita parpadeos y texto borroso en capas 3D y animadas */
+.b3d,.ph-bottle,.stage{-webkit-font-smoothing:antialiased}
+.portal,.eyes{-webkit-transform:translateZ(0)}
+.dr-turn,.dr-turn *{-webkit-user-select:none;user-select:none}
+.ph-copy h1 em{paint-order:stroke fill}
