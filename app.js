@@ -16,43 +16,6 @@ document.documentElement.style.setProperty('--star', star(48));
 document.documentElement.style.setProperty('--star0', star(0));
 document.documentElement.style.setProperty('--starX', star(210));
 
-// ---- Contenido de ejemplo ----
-const bottle = (t) => `<svg viewBox="0 0 200 360"><rect x="72" y="20" width="56" height="62" rx="3" fill="url(#cp)"/><rect x="85" y="82" width="30" height="20" fill="#333"/><rect x="24" y="100" width="152" height="246" rx="${t}" fill="url(#gl)" stroke="rgba(242,240,236,.25)"/><rect x="40" y="116" width="12" height="214" rx="6" fill="url(#sh)" opacity=".6"/></svg>`;
-const P = [{"n": "9 PM Rebel", "b": "Afnan", "c": "EDP", "ml": 100, "g": "uni", "gen": "Unisex", "p": "$ 266.666", "fam": "Frutal amaderado", "top": ["Piña", "manzana verde", "mandarina"], "heart": ["Musgo de roble", "cedro", "vainilla"], "base": ["Maderas secas", "ámbar gris", "caramelo", "almizcle"], "rx": 10, "cat": "Árabe"}, {"n": "Liquid Brun", "b": "French Avenue", "c": "EDP", "ml": 100, "g": "el", "gen": "Hombre", "p": "$ 277.777", "fam": "Oriental especiado", "top": ["Bergamota", "canela", "cardamomo", "azahar"], "heart": ["Vainilla bourbon", "elemí"], "base": ["Almizcle", "praliné", "ambroxan", "guayaco"], "rx": 40, "cat": "Árabe"}, {"n": "Atlas", "b": "Lattafa", "c": "EDP", "ml": 55, "g": "uni", "gen": "Unisex", "p": "$ 188.888", "fam": "Acuático amaderado", "top": ["Sal", "notas marinas", "limón"], "heart": ["Iris", "davana"], "base": ["Ámbar gris", "sándalo", "musgo de roble"], "rx": 4, "cat": "Árabe"}, {"n": "Khamrah", "b": "Lattafa", "c": "EDP", "ml": 100, "g": "uni", "gen": "Unisex", "p": "$ 199.999", "fam": "Oriental dulce especiado", "top": ["Canela", "nuez moscada", "bergamota"], "heart": ["Dátiles", "praliné", "nardo"], "base": ["Vainilla", "haba tonka", "ámbar", "mirra"], "rx": 18, "cat": "Árabe"}, {"n": "Hawas Ice", "b": "Rasasi", "c": "EDP", "ml": 100, "g": "el", "gen": "Hombre", "p": "$ 233.333", "fam": "Fresco frutal", "top": ["Manzana helada", "bergamota", "limón", "anís estrellado"], "heart": ["Azahar", "ciruela", "cardamomo"], "base": ["Musgo", "madera flotante", "ámbar", "almizcle"], "rx": 60, "cat": "Árabe"}, {"n": "Cedrus Blanc", "b": "Rayhaan", "c": "EDP", "ml": 100, "g": "uni", "gen": "Unisex", "p": "$ 377.777", "fam": "Amaderado cítrico", "top": ["Bergamota", "aldehídos"], "heart": ["Azahar"], "base": ["Cedro", "almizcle blanco"], "rx": 2, "cat": "Árabe"}, {"n": "Nocturno Elixir", "b": "Rayhaan", "c": "EDP", "ml": 100, "g": "el", "gen": "Hombre", "p": "$ 199.999", "fam": "Amaderado aromático", "top": ["Limón", "pomelo", "menta"], "heart": ["Jengibre", "nuez moscada"], "base": ["Sándalo", "cedro"], "rx": 12, "cat": "Árabe"}, {"n": "Terra", "b": "Rayhaan", "c": "EDP", "ml": 100, "g": "uni", "gen": "Unisex", "p": "$ 233.333", "fam": "Oriental amaderado", "top": ["Cardamomo", "elemí", "limón", "pimienta de Sichuan", "bergamota"], "heart": ["Pachulí", "azafrán", "rosa", "geranio"], "base": ["Incienso", "ámbar", "vainilla", "oud", "almizcle"], "rx": 30, "cat": "Árabe"}, {"n": "Wolf", "b": "Rayhaan", "c": "EDP", "ml": 100, "g": "el", "gen": "Hombre", "p": "$ 222.222", "fam": "Amaderado oriental", "top": ["Jengibre"], "heart": ["Maderas"], "base": ["Vainilla bourbon"], "rx": 8, "cat": "Árabe"}, {"n": "Black XS", "b": "Paco Rabanne", "c": "EDT", "ml": 100, "g": "el", "gen": "Hombre", "p": "$ 277.777", "fam": "Oriental especiado", "top": ["Limón de Calabria", "calamansi"], "heart": ["Canela", "praliné"], "base": ["Ámbar negro", "pachulí"], "rx": 24, "cat": "Diseñador"}];
-
-if ($('grid')) {
-  $('grid').innerHTML = P.map(p => `<article class="card" data-g="${p.g}" tabindex="0">
-    <div class="img"><span class="badge">${p.cat.toUpperCase()}</span>${bottle(p.rx)}
-      <div class="det">
-        <div class="det-top"><span>${p.fam}</span><span class="rec">${p.c} · ${p.ml} ml</span></div>
-        <ol>
-          <li><i>01 · salida</i><b>${p.top.join(' · ')}</b></li>
-          <li><i>02 · corazón</i><b>${p.heart.join(' · ')}</b></li>
-          <li><i>03 · fondo</i><b>${p.base.join(' · ')}</b></li>
-        </ol>
-        <div class="det-bot"><span>${p.gen}</span><span>${p.p}</span></div>
-      </div>
-    </div>
-    <div class="info"><div><h4>${p.n}</h4><div class="mono">${p.b} · ${p.c} · ${p.ml} ml</div></div><div class="price">${p.p}</div></div></article>`).join('');
-  const touch = () => matchMedia('(hover: none), (max-width: 899px)').matches;
-  const sheet = document.createElement('div');
-  sheet.className = 'sheet'; sheet.innerHTML = '<div class="sheet-card" role="dialog" aria-modal="true"><button class="sheet-x" aria-label="Cerrar">×</button><div id="sheetBody"></div></div>';
-  document.body.appendChild(sheet);
-  const close = () => sheet.classList.remove('on');
-  sheet.addEventListener('click', e => { if (e.target === sheet || e.target.closest('.sheet-x')) close(); });
-  addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-  document.querySelectorAll('.card').forEach((c, i) => c.addEventListener('click', () => {
-    if (!touch()) { c.classList.toggle('open'); return; }
-    const p = P[i];
-    $('sheetBody').innerHTML = `<span class="mono" style="color:#6b6964">${p.cat} · ${p.b}</span><h4>${p.n}</h4>` + c.querySelector('.det').outerHTML;
-    sheet.classList.add('on');
-  }));
-  document.querySelectorAll('#coleccion .chip').forEach(c => c.onclick = () => {
-    document.querySelectorAll('#coleccion .chip').forEach(x => x.classList.remove('on'));
-    c.classList.add('on');
-    document.querySelectorAll('.card').forEach(k => k.classList.toggle('hide', c.dataset.f !== 'all' && k.dataset.g !== c.dataset.f));
-  });
-}
 if ($('track')) {
   const M = ['marca 01','marca 02','marca 03','marca 04','marca 05','marca 06'];
   $('track').innerHTML = [...M, ...M].map(m => `<span>${m}</span><span>✶</span>`).join('');
@@ -137,7 +100,7 @@ if (window.gsap && !reduce) {
      .fromTo('.portal,#eyes', { opacity: 1 }, { opacity: 0, duration: .08, ease: 'none', immediateRender: false }, .92);
   }
 
-  gsap.utils.toArray('.rv,.card,.reel,.pf .it,.svc .row,.door').forEach((el, i) => gsap.from(el, { y: 40, opacity: 0, filter: 'blur(8px)', duration: 1.1, ease: E, delay: (i % 4) * .06, scrollTrigger: { trigger: el, start: 'top 92%' } }));
+  gsap.utils.toArray('.rv,.reel,.pf .it,.svc .row,.door').forEach((el, i) => gsap.from(el, { y: 40, opacity: 0, filter: 'blur(8px)', duration: 1.1, ease: E, delay: (i % 4) * .06, scrollTrigger: { trigger: el, start: 'top 92%' } }));
   gsap.utils.toArray('.head h2,.cta h2,.prdct-h').forEach(el => gsap.from(el, { yPercent: 25, opacity: 0, duration: 1.1, ease: E, scrollTrigger: { trigger: el, start: 'top 90%' } }));
 
   const L = gsap.utils.toArray('.layer');
@@ -152,3 +115,31 @@ if (window.gsap && !reduce) {
 } else {
   if (intro) intro.remove();
 }
+
+// ---- Barra superior: píldora que sigue al cursor, progreso de lectura y modo compacto ----
+(() => {
+  const tabs = document.querySelector('.tabs'), nav = document.querySelector('nav.topbar');
+  if (!tabs || !nav) return;
+  const pill = tabs.querySelector('.pill'), links = [...tabs.querySelectorAll('a')];
+  const active = links.find(a => a.classList.contains('on'));
+  const moveTo = a => {
+    if (!a) { pill.style.width = '0px'; return; }
+    pill.style.width = a.offsetWidth + 'px';
+    pill.style.transform = `translateX(${a.offsetLeft}px)`;
+    links.forEach(l => l.classList.toggle('hov', l === a && l !== active));
+  };
+  const rest = () => { moveTo(active); links.forEach(l => l.classList.remove('hov')); };
+  links.forEach(a => { a.addEventListener('pointerenter', () => moveTo(a)); a.addEventListener('focus', () => moveTo(a)); });
+  tabs.addEventListener('pointerleave', rest);
+  tabs.addEventListener('focusout', rest);
+  requestAnimationFrame(() => { rest(); requestAnimationFrame(() => tabs.classList.add('ready')); });
+  addEventListener('resize', rest);
+  if (document.fonts) document.fonts.ready.then(rest);
+  const prog = nav.querySelector('.prog');
+  const onScroll = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    prog.style.setProperty('--p', max > 0 ? (scrollY / max).toFixed(4) : 0);
+    nav.classList.toggle('min', scrollY > 40);
+  };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+})();
