@@ -394,3 +394,8 @@ h1 .w{display:inline-block;font-size:1.12em;line-height:.86}
 .brand img.wm{width:auto;height:42px;border-radius:0;object-fit:contain}
 footer .brand img.wm{height:44px}
 @media(max-width:600px){.brand img.wm{height:34px}}
+
+/* ajustes: una sola palabra ancha por título; secciones en Archivo; pestaña activa visible */
+.tabs a.on.away{color:var(--fg)}
+h1 .w{white-space:nowrap}
+.door b{font-family:'Archivo',sans-serif;font-weight:900;font-stretch:100%;font-variation-settings:'wdth' 100;text-transform:lowercase;letter-spacing:-.04em}

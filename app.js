@@ -126,9 +126,9 @@ if (window.gsap && !reduce) {
     if (!a) { pill.style.width = '0px'; return; }
     pill.style.width = a.offsetWidth + 'px';
     pill.style.transform = `translateX(${a.offsetLeft}px)`;
-    links.forEach(l => l.classList.toggle('hov', l === a && l !== active));
+    links.forEach(l => { l.classList.toggle('hov', l === a && l !== active); l.classList.toggle('away', l === active && a !== active); });
   };
-  const rest = () => { moveTo(active); links.forEach(l => l.classList.remove('hov')); };
+  const rest = () => { moveTo(active); links.forEach(l => l.classList.remove('hov', 'away')); };
   links.forEach(a => { a.addEventListener('pointerenter', () => moveTo(a)); a.addEventListener('focus', () => moveTo(a)); });
   tabs.addEventListener('pointerleave', rest);
   tabs.addEventListener('focusout', rest);
