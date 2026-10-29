@@ -74,7 +74,7 @@
   }
   const checkout = items => {
     const parts = items.filter(o => o.p.vid).map(o => `${o.p.vid}:${o.q}`);
-    if (!SHOP || !parts.length) { toast('Este perfume aún no tiene pago en línea. Pregúntanos y te ayudamos.'); return; }
+    if (!SHOP || !parts.length) { toast('Este producto aún no tiene pago en línea. Pregúntanos y te ayudamos.'); return; }
     location.href = `https://${SHOP}/cart/${parts.join(',')}${coupon ? `?discount=${encodeURIComponent(coupon)}` : ''}`;
   };
 
@@ -111,7 +111,7 @@
   // ---------- Tarjetas ----------
   const grid = $('#grid');
   if (grid) {
-    const card = (p, i) => `<article class="card" data-g="${p.g}" data-i="${i}" tabindex="0" aria-label="${p.n}, ${p.b}. Ver ficha">
+    const card = (p, i) => `<article class="card" data-g="${p.g}" data-k="${p.k || 'perfumes'}" data-i="${i}" tabindex="0" aria-label="${p.n}, ${p.b}. Ver ficha">
       <div class="img"><span class="badge">${p.cat.toUpperCase()}</span>${p.enc ? '<span class="badge enc">ENCARGO</span>' : ''}${p.enc ? '' : `<span class="num mono">${String(i + 1).padStart(3, '0')}</span>`}
         <div class="stage">${visual(p)}</div>
         <span class="explore mono">explorar ↗</span>
@@ -145,7 +145,14 @@
     const gOn = () => gbtns.find(b => b.classList.contains('on'));
     const gPlace = () => { const b = gOn(); if (gline && b) { gline.style.width = b.offsetWidth + 'px'; gline.style.transform = `translateX(${b.offsetLeft}px)`; } };
     const gCount = () => { const enc = !!($('#grid2') && !$('#grid2').hidden); gbtns.forEach(b => { $('sup', b).textContent = P.filter(p => !!p.enc === enc && fits(p.g, b.dataset.f)).length; }); };
-    const gApply = () => { const f = gOn().dataset.f; $$('#coleccion .card').forEach(k => k.classList.toggle('hide', !fits(k.dataset.g, f))); };
+    let cat = 'all';
+    const gApply = () => { const f = gOn().dataset.f; $$('#coleccion .card').forEach(k => k.classList.toggle('hide', !fits(k.dataset.g, f) || (cat !== 'all' && k.dataset.k !== cat))); };
+    $$('.cats .cat').forEach(c => c.onclick = () => {
+      if (c.classList.contains('soon')) { toast(`${c.firstChild.textContent.trim()}: muy pronto. Si buscas algo en especial, escríbenos y te lo conseguimos.`); return; }
+      $$('.cats .cat').forEach(x => x.classList.toggle('on', x === c)); cat = c.dataset.k; gApply();
+      const vis = $$('#coleccion .grid:not([hidden]) .card:not(.hide)').slice(0, 10);
+      if (window.gsap) gsap.fromTo(vis, { opacity: 0, y: 20, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: .8, ease: 'expo.out', stagger: .04, clearProps: 'filter,transform' });
+    });
     window.__gCount = gCount;
     gbtns.forEach(c => c.onclick = () => {
       gbtns.forEach(x => x.classList.toggle('on', x === c)); gPlace(); gApply();
@@ -299,7 +306,7 @@
       <ul class="lp-ul">${list.map(i => `<li><div class="mini">${P[i].img ? visual(P[i]) : bottle3d(P[i], false)}</div><div><b>${P[i].n}</b><span class="mono">${P[i].b} · ${P[i].c}${mlTxt(P[i])}</span></div><span>${P[i].p}</span><button data-i="${i}" aria-label="Quitar">×</button></li>`).join('')}</ul>
       <div class="lp-tot"><span class="mono">total aprox.</span><b class="lp-total"></b></div>
       ${payable.length ? `<button class="btn solid lp-pay"></button>` : ''}
-      <button class="btn lp-send">${WHATSAPP ? 'Preguntar por WhatsApp' : 'Preguntar por Instagram'} →</button>` : `<p class="lp-empty">Todavía no guardas perfumes. Abre uno y toca <b>♡ guardar en mi lista</b>.</p>`}`;
+      <button class="btn lp-send">${WHATSAPP ? 'Preguntar por WhatsApp' : 'Preguntar por Instagram'} →</button>` : `<p class="lp-empty">Todavía no guardas productos. Abre uno y toca <b>♡ guardar en mi lista</b>.</p>`}`;
     $$('.lp-ul button', b).forEach(x => x.onclick = () => { list = list.filter(i => i !== +x.dataset.i); saveList(); openList(); });
     const pb = $('.lp-pay', b);
     const t0 = $('.lp-total', b); if (t0) t0.innerHTML = fmt(total);
@@ -328,11 +335,11 @@
         <div class="c-mid"><span class="mono">${p.b}${p.enc ? ' · por encargo' : ''}</span><b>${p.n}</b>
           <div class="qty sm"><button data-d="-1" aria-label="Menos">−</button><output>${o.q}</output><button data-d="1" aria-label="Más">+</button></div></div>
         <div class="c-end"><span class="c-price">${fmt(p.pn * o.q)}</span><button class="c-rm" aria-label="Quitar">quitar</button></div></li>`; }).join('')}</ul>
-      <div class="lp-tot"><span class="mono">${cartN()} ${cartN() === 1 ? 'perfume' : 'perfumes'} · total</span><b class="lp-total"></b></div>
+      <div class="lp-tot"><span class="mono">${cartN()} ${cartN() === 1 ? 'producto' : 'productos'} · total</span><b class="lp-total"></b></div>
       ${couponBox()}
       <button class="btn solid c-pay"></button>
-      <div class="pay-note mono">Pago seguro con Mercado Pago · tarjeta, PSE y más · envío gratis a toda Colombia${hasEnc ? '<br>Los perfumes por encargo llegan en 10–15 días hábiles' : ''}</div>
-      <button class="btn c-more">Seguir comprando</button>` : `<p class="lp-empty">Tu carrito está vacío. Toca <b>+</b> en un perfume o <b>Agregar al carrito</b> en su ficha.</p><button class="btn c-more">Ver perfumes</button>`}`;
+      <div class="pay-note mono">Pago seguro con Mercado Pago · tarjeta, PSE y más · envío gratis a toda Colombia${hasEnc ? '<br>Los productos por encargo llegan en 10–15 días hábiles' : ''}</div>
+      <button class="btn c-more">Seguir comprando</button>` : `<p class="lp-empty">Tu carrito está vacío. Toca <b>+</b> en un producto o <b>Agregar al carrito</b> en su ficha.</p><button class="btn c-more">Ver perfumes</button>`}`;
     const paint = () => { const t = $('.lp-total', b); if (t) t.innerHTML = coupon ? `<s>${fmt(sub)}</s> ${fmt(disc(sub))}` : fmt(sub); const pb = $('.c-pay', b); if (pb) pb.textContent = `Pagar · ${fmt(disc(sub))}`; };
     paint();
     $$('.cart-ul li', b).forEach(li => {
