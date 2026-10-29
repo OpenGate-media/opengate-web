@@ -90,11 +90,11 @@
   const grid = $('#grid');
   if (grid) {
     const card = (p, i) => `<article class="card" data-g="${p.g}" data-i="${i}" tabindex="0" aria-label="${p.n}, ${p.b}. Ver ficha">
-      <div class="img"><span class="badge">${p.cat.toUpperCase()}</span>${p.enc ? '<span class="badge enc">POR ENCARGO</span>' : ''}<span class="num mono">${String(i + 1).padStart(3, '0')}</span>
+      <div class="img"><span class="badge">${p.cat.toUpperCase()}</span>${p.enc ? '<span class="badge enc">ENCARGO</span>' : ''}${p.enc ? '' : `<span class="num mono">${String(i + 1).padStart(3, '0')}</span>`}
         <div class="stage">${visual(p)}</div>
         <span class="explore mono">explorar ↗</span>
       </div>
-      <div class="info"><div><h4>${p.n}</h4><div class="mono">${p.b} · ${p.c}${mlTxt(p)}</div><div class="fam">${p.fam}</div></div><div class="price${p.pn ? '' : ' tbd'}">${p.p}</div></div></article>`;
+      <div class="info"><span class="mono">${p.b}</span><h4>${p.n}</h4><div class="i-row"><span class="fam">${p.c}${mlTxt(p)}</span><span class="price${p.pn ? '' : ' tbd'}">${p.p}</span></div></div></article>`;
     const grid2 = $('#grid2');
     grid.innerHTML = P.map((p, i) => p.enc ? '' : card(p, i)).join('');
     if (grid2) grid2.innerHTML = P.map((p, i) => p.enc ? card(p, i) : '').join('');
@@ -115,10 +115,20 @@
       card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); } });
     });
 
-    $$('#coleccion .chip').forEach(c => c.onclick = () => {
-      $$('#coleccion .chip').forEach(x => x.classList.remove('on')); c.classList.add('on');
-      $$('#coleccion .card').forEach(k => k.classList.toggle('hide', c.dataset.f !== 'all' && k.dataset.g !== c.dataset.f));
+    // ---- Hombres / Mujeres / Unisex (los unisex aparecen también en Hombres y Mujeres) ----
+    const gtabs = $('.gtabs'), gbtns = gtabs ? $$('.chip', gtabs) : [], gline = gtabs && $('.g-line', gtabs);
+    const fits = (g, f) => f === 'all' || g === f || g === 'uni';
+    const gOn = () => gbtns.find(b => b.classList.contains('on'));
+    const gPlace = () => { const b = gOn(); if (gline && b) { gline.style.width = b.offsetWidth + 'px'; gline.style.transform = `translateX(${b.offsetLeft}px)`; } };
+    const gCount = () => { const enc = !!($('#grid2') && !$('#grid2').hidden); gbtns.forEach(b => { $('sup', b).textContent = P.filter(p => !!p.enc === enc && fits(p.g, b.dataset.f)).length; }); };
+    const gApply = () => { const f = gOn().dataset.f; $$('#coleccion .card').forEach(k => k.classList.toggle('hide', !fits(k.dataset.g, f))); };
+    window.__gCount = gCount;
+    gbtns.forEach(c => c.onclick = () => {
+      gbtns.forEach(x => x.classList.toggle('on', x === c)); gPlace(); gApply();
+      const vis = $$('#coleccion .grid:not([hidden]) .card:not(.hide)').slice(0, 10);
+      if (window.gsap && !matchMedia('(prefers-reduced-motion: reduce)').matches) gsap.fromTo(vis, { opacity: 0, y: 20, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: .8, ease: 'expo.out', stagger: .04, clearProps: 'filter,transform' });
     });
+    gCount(); requestAnimationFrame(gPlace); addEventListener('resize', gPlace); if (document.fonts) document.fonts.ready.then(gPlace);
     // ---- Disponible / Por encargo: selector con píldora deslizante y entrada "enfoque" de las tarjetas ----
     const mode = $('.mode');
     if (mode && grid2) {
@@ -136,7 +146,7 @@
         place(b);
         const show = $('#' + b.dataset.m), hide = show === grid ? grid2 : grid;
         const swap = () => {
-          hide.hidden = true; show.hidden = false;
+          hide.hidden = true; show.hidden = false; if (window.__gCount) window.__gCount();
           const cards = $$('.card:not(.hide)', show).slice(0, 12);
           if (window.gsap && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
             gsap.fromTo(cards, { opacity: 0, y: 30, scale: 1.04, filter: 'blur(12px)' }, { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: .9, ease: 'expo.out', stagger: .05, clearProps: 'filter,transform' });

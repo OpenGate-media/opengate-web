@@ -458,3 +458,37 @@ img.ph{display:block;object-fit:contain;background:#fff;border-radius:14px}
 }
 @media(min-width:900px){.ph-bottle .b3d{--w:160px;--h:228px;--d:72px;--cw:70px;--ch:60px;--cd:54px}}
 .card .stage img.ph{width:70%}
+
+/* ===== Colección: diagramación ===== */
+.col-top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px}
+.col-top h2{font-size:clamp(46px,7vw,110px);margin-top:10px}
+.col-top{flex-direction:column;align-items:flex-start}
+.mode{margin-bottom:18px}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 28px;padding-bottom:0;border-bottom:1px solid var(--line)}
+.gtabs{position:relative;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.gtabs::-webkit-scrollbar{display:none}
+.gtabs .chip{border:0;background:none;padding:14px 14px 16px;font:500 15px 'Archivo';color:var(--mute);white-space:nowrap;transition:color .35s}
+.gtabs .chip.on,.gtabs .chip:hover{color:var(--fg)}
+.gtabs .chip sup{font-size:10px;margin-left:2px;opacity:.6}
+.g-line{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:var(--fg);transition:transform .6s cubic-bezier(.22,1,.36,1),width .6s cubic-bezier(.22,1,.36,1)}
+.sel{appearance:none;-webkit-appearance:none;border:1px solid var(--line);background:transparent;color:var(--fg);padding:9px 30px 9px 14px;border-radius:999px;font:500 13px 'Archivo';background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 16px) 52%,calc(100% - 11px) 52%;background-size:5px 5px;background-repeat:no-repeat;cursor:pointer;flex:none}
+.sel option{color:#0A0A0A}
+/* tarjeta: marca · nombre · formato y precio */
+.card .info{display:block;padding:14px 2px 6px}
+.card .info .mono{font-size:9.5px;margin:0;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .info h4{margin:5px 0 8px;line-height:1;font-size:clamp(18px,2vw,24px)}
+.i-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.i-row .fam{margin:0;font-size:12px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.i-row .price{font:600 14px 'Archivo';white-space:nowrap}
+.badge.enc{left:auto;right:12px;top:12px;bottom:auto}
+.grid{row-gap:34px}
+@media(max-width:600px){
+  .bar{flex-wrap:wrap;border-bottom:0;gap:8px}
+  .gtabs{width:100%;border-bottom:1px solid var(--line)}
+  .gtabs .chip{padding:12px 10px 14px;font-size:14px;flex:1}
+  .sel{margin-left:auto}
+  .card .info h4{font-size:17px}
+  .i-row{flex-direction:column;gap:2px}
+  .i-row .price{font-size:13px}
+  .grid{gap:22px 12px}
+}
