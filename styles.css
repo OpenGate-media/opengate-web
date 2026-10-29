@@ -385,3 +385,12 @@ h1,h2{line-height:.92}
 .drip,h1 em.drip,.ph-copy h1 em.drip{font-family:'Dripdrop',var(--display);font-style:normal;font-weight:400;letter-spacing:0;text-transform:none;color:var(--fg);-webkit-text-stroke:0;display:inline-block;font-size:1.32em;line-height:.9;transform:rotate(-4deg);transform-origin:left center;margin-top:.04em}
 .hero h1 em.drip{color:#fff}
 .drip-x{font-family:'Dripdrop Extras';font-weight:400}
+
+/* ---- Títulos en MAYÚSCULA, como el logo: OPEN (ancho/normal) + GATE (agrupado/condensado) ---- */
+h1,h2,h3,.door b,.info h4,.sheet-card h4,footer ul.f-big a{text-transform:uppercase}
+.wide,.w,.cta h2,.door b{font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;font-variation-settings:'wdth' 125;letter-spacing:-.025em}
+h1 .w{display:inline-block;font-size:1.06em;line-height:.86}
+.cta h2,.door b{line-height:.88}
+.brand img.wm{width:auto;height:30px;border-radius:0;object-fit:contain}
+footer .brand img.wm{height:44px}
+@media(max-width:600px){.brand img.wm{height:24px}}
