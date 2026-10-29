@@ -200,6 +200,42 @@
     };
   }
 
+
+  // ---------- Lo que dicen los compradores (encuesta a compradores verificados) ----------
+  function statsBlock(p) {
+    const t = p.st; if (!t) return '';
+    const bar = (lab, l, r, v, cls) => `<div class="sb ${cls}"><div class="sb-h"><b>${lab}</b></div><div class="sb-lr"><span>${l}</span><span>${r}</span></div><div class="sb-track"><i style="left:${v}%"></i></div></div>`;
+    const g = t.g || [0, 0, 0], gt = g[0] + g[1] + g[2] || 1;
+    const S = t.s || {}, keys = [['Day', 'Día'], ['Summer', 'Verano'], ['Fall', 'Otoño'], ['Night', 'Noche'], ['Winter', 'Invierno'], ['Spring', 'Primavera']];
+    const R = 70, C = 100, pt = (k, v) => { const a = -Math.PI / 2 + k * Math.PI / 3, r = R * v / 100; return [C + Math.cos(a) * r, C + Math.sin(a) * r]; };
+    const ring = f => keys.map((_, k) => pt(k, f).join(',')).join(' ');
+    const poly = keys.map(([k], j) => pt(j, S[k] || 0).map(n => n.toFixed(1)).join(',')).join(' ');
+    const labels = keys.map(([k, es], j) => { const [x, y] = pt(j, 128); return `<text x="${x.toFixed(1)}" y="${(y + 3).toFixed(1)}" text-anchor="middle"><tspan class="rl">${es}</tspan><tspan class="rv" x="${x.toFixed(1)}" dy="11">${S[k] ?? 0}</tspan></text>`; }).join('');
+    const pct = Math.max(0, Math.min(100, t.r / 5 * 100)), circ = 2 * Math.PI * 42;
+    return `<div class="stats">
+      <span class="mono">lo que dicen los compradores</span>
+      <div class="st-top">
+        <div class="st-score"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" class="trk"/><circle cx="50" cy="50" r="42" class="val" stroke-dasharray="${(circ * pct / 100).toFixed(1)} ${circ.toFixed(1)}"/></svg><div><b>${t.r.toFixed(1)}</b><span>de 5</span></div></div>
+        <div class="st-bars">
+          ${bar('Valoración', 'no me gusta', 'me encanta', t.rt, 'b-rt')}
+          ${bar('Estela', 'mínima', 'máxima', t.si, 'b-si')}
+          ${bar('Duración', 'poca', 'todo el día', t.lo, 'b-lo')}
+        </div>
+      </div>
+      <div class="sb b-g"><div class="sb-h"><b>Lo usan</b></div><div class="g-split"><i style="flex:${g[0]}"></i><i style="flex:${g[1]}"></i><i style="flex:${g[2]}"></i></div>
+        <div class="sb-lr g-lr"><span>Hombres ${Math.round(g[0] / gt * 100)}%</span><span>Neutral ${Math.round(g[1] / gt * 100)}%</span><span>Mujeres ${Math.round(g[2] / gt * 100)}%</span></div></div>
+      <div class="st-radar"><b class="sb-h">Cuándo usarlo</b>
+        <svg viewBox="-40 -30 280 270" role="img" aria-label="Uso por temporada y momento del día">
+          ${[1, .66, .33].map(f => `<polygon points="${ring(f * 100)}" class="rg"/>`).join('')}
+          ${keys.map((_, k) => `<line x1="${C}" y1="${C}" x2="${pt(k, 100)[0]}" y2="${pt(k, 100)[1]}" class="rg"/>`).join('')}
+          <polygon points="${poly}" class="rp"/>
+          ${keys.map(([k], j) => { const [x, y] = pt(j, S[k] || 0); return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.6" class="rd"/>`; }).join('')}
+          ${labels}
+        </svg>
+      </div>
+      <p class="st-src">Encuesta a ${t.v} compradores verificados en EE. UU.</p>
+    </div>`;
+  }
   // ---------- Ficha (drawer) ----------
   const dr = document.createElement('div');
   dr.className = 'drawer'; dr.setAttribute('aria-hidden', 'true');
@@ -226,6 +262,7 @@
           ${(p.heart.length || p.base.length ? [['01', 'salida', '0–15 min', p.top], ['02', 'corazón', '15 min – 4 h', p.heart], ['03', 'fondo', '4 h +', p.base]] : [['··', 'notas principales', '', p.top]]).filter(t => t[3].length).map((t, k) =>
             `<button class="tier${k === 0 ? ' on' : ''}" role="tab" aria-selected="${k === 0}"><i>${t[0]} · ${t[1]}</i><b>${t[3].join(' · ')}</b><em>${t[2]}</em></button>`).join('')}
         </div>
+        ${statsBlock(p)}
 
         <div class="ask">
           <span class="mono">compra o pregunta</span>
