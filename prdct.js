@@ -30,6 +30,8 @@
   }
 
   // ---------- Carrito ----------
+  // Disponibles: 1 unidad en stock. Por encargo: hasta 9.
+  const maxQ = p => p.enc ? 9 : 1;
   let cart = [];
   try { cart = JSON.parse(localStorage.getItem('og-carrito') || '[]').filter(o => P[o.i]); } catch (e) {}
   const saveCart = () => { try { localStorage.setItem('og-carrito', JSON.stringify(cart)); } catch (e) {} paintCart(); };
@@ -39,7 +41,9 @@
   }
   function addToCart(i, q = 1) {
     const o = cart.find(x => x.i === i);
-    if (o) o.q = Math.min(9, o.q + q); else cart.push({ i, q });
+    const m = maxQ(P[i]);
+    if (o && o.q >= m) { toastAction(`Solo hay ${m} unidad de ${P[i].n} y ya está en tu carrito`, 'ver carrito', () => openCart()); return; }
+    if (o) o.q = Math.min(m, o.q + q); else cart.push({ i, q: Math.min(m, q) });
     saveCart(); paintCart(true);
     toastAction(`${P[i].n} en tu carrito`, 'ver carrito', () => openCart());
   }
@@ -248,7 +252,7 @@
       msg.textContent = `Hola OG 👋 Me interesa:\n${qty} × ${p.n} (${p.b}, ${p.c}${mlTxt(p)})${p.pn ? ' · ' + fmt(disc(p.pn) * qty) + (coupon ? ` (cupón ${coupon})` : '') : ''}${city ? `\nCiudad: ${city}` : ''}${qs.length ? '\n' + qs.join('\n') : ''}`;
     };
     $$('.q', body).forEach(b => b.onclick = () => { b.classList.toggle('on'); compose(); });
-    $$('.qty button', body).forEach(b => b.onclick = () => { qty = Math.max(1, Math.min(9, qty + +b.dataset.d)); $('.qty output', body).textContent = qty; compose(); paintPay(); });
+    $$('.qty button', body).forEach(b => b.onclick = () => { if (+b.dataset.d > 0 && qty >= maxQ(p)) { toast(`Solo hay ${maxQ(p)} unidad disponible de ${p.n}`); return; } qty = Math.max(1, Math.min(maxQ(p), qty + +b.dataset.d)); $('.qty output', body).textContent = qty; compose(); paintPay(); });
     $('.city', body).oninput = compose;
     $('.send', body).onclick = () => send(msg.textContent);
     const payBtn = $('.pay', body), priceEl = $('.dr-price', body);
@@ -333,7 +337,7 @@
     paint();
     $$('.cart-ul li', b).forEach(li => {
       const i = +li.dataset.i, o = cart.find(x => x.i === i);
-      $$('.qty button', li).forEach(x => x.onclick = () => { o.q = Math.max(1, Math.min(9, o.q + +x.dataset.d)); saveCart(); openCart(); });
+      $$('.qty button', li).forEach(x => x.onclick = () => { const m = maxQ(P[i]); if (+x.dataset.d > 0 && o.q >= m) { toast(`Solo hay ${m} unidad disponible. Si quieres más, pídelo por encargo.`); return; } o.q = Math.max(1, Math.min(m, o.q + +x.dataset.d)); saveCart(); openCart(); });
       $('.c-rm', li).onclick = () => { cart = cart.filter(x => x.i !== i); saveCart(); openCart(); };
     });
     const pb = $('.c-pay', b); if (pb) { pb.onclick = () => checkout(cart.map(o => ({ p: P[o.i], q: o.q }))); wireCoupon(b, paint); }
