@@ -225,7 +225,7 @@
       <div class="sb b-g"><div class="sb-h"><b>Lo usan</b></div><div class="g-split"><i style="flex:${g[0]}"></i><i style="flex:${g[1]}"></i><i style="flex:${g[2]}"></i></div>
         <div class="sb-lr g-lr"><span>Hombres ${Math.round(g[0] / gt * 100)}%</span><span>Neutral ${Math.round(g[1] / gt * 100)}%</span><span>Mujeres ${Math.round(g[2] / gt * 100)}%</span></div></div>
       <div class="st-radar"><b class="sb-h">Cuándo usarlo</b>
-        <svg viewBox="-40 -30 280 270" role="img" aria-label="Uso por temporada y momento del día">
+        <svg viewBox="-24 -4 248 212" role="img" aria-label="Uso por temporada y momento del día">
           ${[1, .66, .33].map(f => `<polygon points="${ring(f * 100)}" class="rg"/>`).join('')}
           ${keys.map((_, k) => `<line x1="${C}" y1="${C}" x2="${pt(k, 100)[0]}" y2="${pt(k, 100)[1]}" class="rg"/>`).join('')}
           <polygon points="${poly}" class="rp"/>

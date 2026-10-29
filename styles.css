@@ -588,7 +588,7 @@ img.ph{display:block;object-fit:contain;background:#fff;border-radius:14px}
 .g-split i:nth-child(1){background:#0A0A0A}.g-split i:nth-child(2){background:#9a968f}.g-split i:nth-child(3){background:#d8b9c0}
 .g-lr span:nth-child(2){text-align:center}
 .st-radar{margin:4px 0 0}
-.st-radar svg{display:block;width:100%;max-width:300px;margin:4px auto 0}
+.st-radar svg{display:block;width:100%;max-width:330px;margin:4px auto 0}
 .st-radar .rg{fill:none;stroke:#d2cec6;stroke-width:1}
 .st-radar .rp{fill:rgba(10,10,10,.12);stroke:#0A0A0A;stroke-width:1.6;stroke-linejoin:round}
 .st-radar .rd{fill:#0A0A0A}
