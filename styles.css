@@ -382,6 +382,6 @@ h1,h2{line-height:.92}
 /* ---- Dripdrop: complementos y acentos (trazo líquido) ---- */
 @font-face{font-family:'Dripdrop';src:url(/fonts/dripdrop-solid.woff) format('woff');font-display:swap}
 @font-face{font-family:'Dripdrop Extras';src:url(/fonts/dripdrop-extras.woff) format('woff');font-display:swap}
-.drip,h1 em.drip,.ph-copy h1 em.drip{font-family:'Dripdrop',var(--display);font-style:normal;font-weight:400;letter-spacing:0;text-transform:none;color:var(--fg);-webkit-text-stroke:0;display:inline-block;font-size:1.08em;line-height:1;transform:rotate(-3deg);transform-origin:left center;margin-top:.04em}
+.drip,h1 em.drip,.ph-copy h1 em.drip{font-family:'Dripdrop',var(--display);font-style:normal;font-weight:400;letter-spacing:0;text-transform:none;color:var(--fg);-webkit-text-stroke:0;display:inline-block;font-size:1.32em;line-height:.9;transform:rotate(-4deg);transform-origin:left center;margin-top:.04em}
 .hero h1 em.drip{color:#fff}
 .drip-x{font-family:'Dripdrop Extras';font-weight:400}
