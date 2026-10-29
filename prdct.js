@@ -203,7 +203,7 @@
         </div>
 
         <div class="rel"><span class="mono">si te gusta este, mira</span>
-          <div class="rel-row">${rel.map(o => `<button class="rel-it" data-j="${o.j}"><div class="mini">${bottle3d(o.q, false)}</div><b>${o.q.n}</b><span>${o.q.p}</span></button>`).join('')}</div>
+          <div class="rel-row">${rel.map(o => `<button class="rel-it" data-j="${o.j}"><div class="mini">${o.q.img ? visual(o.q) : bottle3d(o.q, false)}</div><b>${o.q.n}</b><span>${o.q.p}</span></button>`).join('')}</div>
         </div>
       </div>`;
 
@@ -260,7 +260,7 @@
     const b = $('.lp-body', lp), items = list.map(i => P[i]).filter(Boolean);
     const total = items.reduce((s, p) => s + p.pn, 0), payable = items.filter(p => p.vid);
     b.innerHTML = `<span class="mono">og.prdct</span><h3>mi lista</h3>${items.length ? `
-      <ul class="lp-ul">${list.map(i => `<li><div class="mini">${bottle3d(P[i], false)}</div><div><b>${P[i].n}</b><span class="mono">${P[i].b} · ${P[i].c}${mlTxt(P[i])}</span></div><span>${P[i].p}</span><button data-i="${i}" aria-label="Quitar">×</button></li>`).join('')}</ul>
+      <ul class="lp-ul">${list.map(i => `<li><div class="mini">${P[i].img ? visual(P[i]) : bottle3d(P[i], false)}</div><div><b>${P[i].n}</b><span class="mono">${P[i].b} · ${P[i].c}${mlTxt(P[i])}</span></div><span>${P[i].p}</span><button data-i="${i}" aria-label="Quitar">×</button></li>`).join('')}</ul>
       <div class="lp-tot"><span class="mono">total aprox.</span><b class="lp-total"></b></div>
       ${payable.length ? `${couponBox()}<button class="btn solid lp-pay"></button>
       <div class="pay-note mono">Pago seguro con Mercado Pago${payable.length < items.length ? ' · los perfumes con precio por confirmar se consultan aparte' : ''}</div>` : ''}
