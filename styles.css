@@ -418,3 +418,21 @@ h1 em.drip{margin-top:.12em}
 .badge.enc{left:auto;right:12px;top:auto;bottom:12px;background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .enc-note{display:inline-block;margin:6px 0 2px;padding:6px 10px;border:1px solid #0A0A0A;font:600 12px 'Archivo';letter-spacing:.04em;text-transform:uppercase;color:#0A0A0A}
 .enc-note.ok{background:#0A0A0A;color:#F2F0EC}
+
+/* Selector Disponible / Por encargo */
+.mode{position:sticky;top:78px;z-index:20;display:grid;grid-template-columns:1fr 1fr;padding:6px;margin:0 0 40px;border:1px solid color-mix(in srgb,var(--fg) 22%,transparent);border-radius:999px;background:color-mix(in srgb,var(--bg) 70%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+@supports not (color-mix(in srgb,red 50%,blue)){.mode{border-color:rgba(242,240,236,.22);background:rgba(10,10,10,.7)}}
+.mode button{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:16px 10px 14px;border:0;border-radius:999px;background:none;color:var(--fg);cursor:pointer;transition:color .45s cubic-bezier(.22,1,.36,1)}
+.mode .mode-t{font-family:var(--display);font-size:clamp(26px,4vw,52px);line-height:.9;text-transform:uppercase;letter-spacing:.005em}
+.mode sup{font:600 .32em 'Archivo';vertical-align:top;margin-left:4px;opacity:.7}
+.mode small{font:500 12px 'Archivo';letter-spacing:.06em;text-transform:uppercase;opacity:.65}
+.mode button.on{color:var(--bg)}
+.mode button:not(.on):hover .mode-t{transform:translateY(-2px)}
+.mode .mode-t{transition:transform .4s cubic-bezier(.22,1,.36,1)}
+.mode-pill{position:absolute;z-index:0;top:6px;bottom:6px;left:0;width:0;border-radius:999px;background:var(--fg);opacity:0;transition:transform .7s cubic-bezier(.22,1,.36,1),width .7s cubic-bezier(.22,1,.36,1),opacity .3s}
+.mode.ready .mode-pill{opacity:1}
+@media(max-width:600px){.mode{top:68px}.mode button{padding:12px 6px 10px}.mode small{font-size:9.5px;letter-spacing:.03em}}
+.grid[hidden]{display:none}
+/* Nombres de perfume: primera letra en mayúscula, sin forzar todo en mayúsculas */
+.info h4,.sheet-card h4,.dr-name,.rel-it b,.lp-ul li b{text-transform:none}
+#drName{text-transform:none}

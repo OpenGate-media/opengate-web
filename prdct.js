@@ -119,6 +119,37 @@
       $$('#coleccion .chip').forEach(x => x.classList.remove('on')); c.classList.add('on');
       $$('#coleccion .card').forEach(k => k.classList.toggle('hide', c.dataset.f !== 'all' && k.dataset.g !== c.dataset.f));
     });
+    // ---- Disponible / Por encargo: selector con píldora deslizante y entrada "enfoque" de las tarjetas ----
+    const mode = $('.mode');
+    if (mode && grid2) {
+      $('#nDisp').textContent = P.filter(p => !p.enc).length;
+      $('#nEnc').textContent = P.filter(p => p.enc).length;
+      const pill = $('.mode-pill', mode), btns = $$('button', mode);
+      const place = b => { pill.style.width = b.offsetWidth + 'px'; pill.style.transform = `translateX(${b.offsetLeft}px)`; };
+      const cur = () => btns.find(b => b.classList.contains('on'));
+      requestAnimationFrame(() => { place(cur()); requestAnimationFrame(() => mode.classList.add('ready')); });
+      addEventListener('resize', () => place(cur()));
+      if (document.fonts) document.fonts.ready.then(() => place(cur()));
+      btns.forEach(b => b.onclick = () => {
+        if (b.classList.contains('on')) return;
+        btns.forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', x === b); });
+        place(b);
+        const show = $('#' + b.dataset.m), hide = show === grid ? grid2 : grid;
+        const swap = () => {
+          hide.hidden = true; show.hidden = false;
+          const cards = $$('.card:not(.hide)', show).slice(0, 12);
+          if (window.gsap && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            gsap.fromTo(cards, { opacity: 0, y: 30, scale: 1.04, filter: 'blur(12px)' }, { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: .9, ease: 'expo.out', stagger: .05, clearProps: 'filter,transform' });
+            if (window.ScrollTrigger) ScrollTrigger.refresh();
+          }
+          const top = mode.getBoundingClientRect().top + scrollY - 90;
+          if (scrollY > top) scrollTo({ top, behavior: 'smooth' });
+        };
+        if (window.gsap && !hide.hidden) gsap.to($$('.card', hide), { opacity: 0, y: -16, filter: 'blur(8px)', duration: .28, ease: 'power2.in', stagger: .01, onComplete: () => { gsap.set($$('.card', hide), { clearProps: 'all' }); swap(); } });
+        else swap();
+      });
+      if (location.hash === '#encargo') btns[1].click();
+    }
     const sort = $('#sort');
     if (sort) sort.onchange = () => {
       const v = sort.value;
