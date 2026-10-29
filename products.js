@@ -18,7 +18,7 @@ const P = [
   "ml": 100,
   "g": "uni",
   "gen": "Unisex",
-  "p": "$ 266.666",
+  "p": "$ 255.555",
   "fam": "Frutal amaderado",
   "top": [
    "Piña",
@@ -41,7 +41,7 @@ const P = [
   "c2": "#0c0d10",
   "img": "",
   "frames": [],
-  "pn": 266666
+  "pn": 255555
  },
  {
   "n": "Liquid Brun",
@@ -51,7 +51,7 @@ const P = [
   "ml": 100,
   "g": "el",
   "gen": "Hombre",
-  "p": "$ 277.777",
+  "p": "$ 255.555",
   "fam": "Oriental especiado",
   "top": [
    "Bergamota",
@@ -74,7 +74,7 @@ const P = [
   "c2": "#1a100a",
   "img": "",
   "frames": [],
-  "pn": 277777
+  "pn": 255555
  },
  {
   "n": "Atlas",
@@ -84,7 +84,7 @@ const P = [
   "ml": 55,
   "g": "uni",
   "gen": "Unisex",
-  "p": "$ 188.888",
+  "p": "$ 166.666",
   "fam": "Acuático amaderado",
   "top": [
    "Sal",
@@ -105,7 +105,7 @@ const P = [
   "c2": "#151b1f",
   "img": "",
   "frames": [],
-  "pn": 188888
+  "pn": 166666
  },
  {
   "n": "Khamrah",
@@ -115,7 +115,7 @@ const P = [
   "ml": 100,
   "g": "uni",
   "gen": "Unisex",
-  "p": "$ 199.999",
+  "p": "$ 177.777",
   "fam": "Oriental dulce especiado",
   "top": [
    "Canela",
@@ -138,7 +138,7 @@ const P = [
   "c2": "#20120a",
   "img": "",
   "frames": [],
-  "pn": 199999
+  "pn": 177777
  },
  {
   "n": "Hawas Ice",
@@ -148,7 +148,7 @@ const P = [
   "ml": 100,
   "g": "el",
   "gen": "Hombre",
-  "p": "$ 233.333",
+  "p": "$ 211.111",
   "fam": "Fresco frutal",
   "top": [
    "Manzana helada",
@@ -172,7 +172,7 @@ const P = [
   "c2": "#26343b",
   "img": "",
   "frames": [],
-  "pn": 233333
+  "pn": 211111
  },
  {
   "n": "Cedrus Blanc",
@@ -182,7 +182,7 @@ const P = [
   "ml": 100,
   "g": "uni",
   "gen": "Unisex",
-  "p": "$ 377.777",
+  "p": "$ 344.444",
   "fam": "Amaderado cítrico",
   "top": [
    "Bergamota",
@@ -200,7 +200,7 @@ const P = [
   "c2": "#77736b",
   "img": "",
   "frames": [],
-  "pn": 377777
+  "pn": 344444
  },
  {
   "n": "Nocturno Elixir",
@@ -210,7 +210,7 @@ const P = [
   "ml": 100,
   "g": "el",
   "gen": "Hombre",
-  "p": "$ 199.999",
+  "p": "$ 188.888",
   "fam": "Amaderado aromático",
   "top": [
    "Limón",
@@ -230,7 +230,7 @@ const P = [
   "c2": "#08090d",
   "img": "",
   "frames": [],
-  "pn": 199999
+  "pn": 188888
  },
  {
   "n": "Terra",
@@ -240,7 +240,7 @@ const P = [
   "ml": 100,
   "g": "uni",
   "gen": "Unisex",
-  "p": "$ 233.333",
+  "p": "$ 211.111",
   "fam": "Oriental amaderado",
   "top": [
    "Cardamomo",
@@ -267,7 +267,7 @@ const P = [
   "c2": "#1d160f",
   "img": "",
   "frames": [],
-  "pn": 233333
+  "pn": 211111
  },
  {
   "n": "Wolf",
@@ -277,7 +277,7 @@ const P = [
   "ml": 100,
   "g": "el",
   "gen": "Hombre",
-  "p": "$ 222.222",
+  "p": "$ 211.111",
   "fam": "Amaderado oriental",
   "top": [
    "Jengibre"
@@ -293,7 +293,7 @@ const P = [
   "c2": "#111214",
   "img": "",
   "frames": [],
-  "pn": 222222
+  "pn": 211111
  },
  {
   "n": "Black XS",
@@ -303,7 +303,7 @@ const P = [
   "ml": 100,
   "g": "el",
   "gen": "Hombre",
-  "p": "$ 277.777",
+  "p": "$ 255.555",
   "fam": "Oriental especiado",
   "top": [
    "Limón de Calabria",
@@ -322,7 +322,7 @@ const P = [
   "c2": "#050505",
   "img": "",
   "frames": [],
-  "pn": 277777
+  "pn": 255555
  },
  {
   "n": "Pacific Aura",
@@ -332,8 +332,8 @@ const P = [
   "ml": 100,
   "g": "el",
   "gen": "Hombre",
-  "p": "$ 211.111",
-  "pn": 211111,
+  "p": "$ 188.888",
+  "pn": 188888,
   "fam": "Cítrico aromático",
   "top": [
    "Cidra",
