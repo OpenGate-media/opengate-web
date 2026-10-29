@@ -512,3 +512,41 @@ img.ph{display:block;object-fit:contain;background:#fff;border-radius:14px}
 .scroll-hint i::after{content:"";position:absolute;inset:0;background:#fff;transform:translateX(-100%);animation:hintLine 2.2s cubic-bezier(.65,0,.35,1) infinite}
 @keyframes hintLine{0%{transform:translateX(-100%)}55%{transform:translateX(0)}100%{transform:translateX(100%)}}
 .hud{font-size:10.5px}
+
+/* ===== Barra superior: sin rectángulo alrededor de las secciones ===== */
+.tabs,body.studio .tabs{border:0!important;background:none!important;padding:0}
+.nav-act{display:flex;align-items:center;gap:6px}
+
+/* ===== Carrito ===== */
+.cart-btn{display:inline-flex;align-items:center;gap:7px;font:500 11px 'JetBrains Mono';letter-spacing:.14em;text-transform:uppercase;color:var(--bg);background:var(--fg);border:1px solid var(--fg);border-radius:999px;padding:7px 10px 7px 12px;cursor:pointer;transition:transform .3s cubic-bezier(.22,1,.36,1)}
+.cart-btn:hover{transform:translateY(-1px)}
+.cart-count{display:inline-grid;place-items:center;min-width:18px;height:18px;border-radius:9px;background:var(--bg);color:var(--fg);font-size:10px;letter-spacing:0}
+.cart-count.bump,.list-count.bump{animation:bump .5s cubic-bezier(.22,1,.36,1)}
+@keyframes bump{40%{transform:scale(1.45)}}
+@media(max-width:600px){.nav-act .lb-t{display:none}.cart-btn,.list-btn{padding:7px 9px}.nav-act{gap:4px}}
+/* + rápido en la tarjeta */
+.q-add{position:absolute;right:12px;bottom:12px;z-index:4;width:34px;height:34px;border-radius:50%;border:1px solid var(--fg);background:var(--bg);color:var(--fg);font:400 20px/1 'Archivo';display:grid;place-items:center;cursor:pointer;transition:transform .35s cubic-bezier(.22,1,.36,1),background .25s,color .25s}
+.q-add:hover{background:var(--fg);color:var(--bg);transform:scale(1.08)}
+.q-add.done{background:var(--fg);color:var(--bg);transform:scale(1.15) rotate(90deg)}
+.badge.enc{right:12px;top:12px;bottom:auto}
+/* panel del carrito */
+.cart-ul{list-style:none;margin:0 0 14px;padding:0;border-top:1px solid #0A0A0A}
+.cart-ul li{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #d6d3cc}
+.cart-ul .mini{height:76px;display:grid;place-items:center}
+.cart-ul .c-mid .mono{font-size:9px;color:#6b6964}
+.cart-ul .c-mid b{display:block;font:400 19px/1 var(--display);margin:3px 0 8px;color:#0A0A0A}
+.qty.sm{display:inline-flex;align-items:center;border:1px solid #c9c6bf;border-radius:999px}
+.qty.sm button{width:30px;height:30px;font-size:16px}
+.qty.sm output{min-width:16px;text-align:center;font:600 13px 'Archivo';color:#0A0A0A}
+.c-end{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.c-price{font:600 14px 'Archivo';color:#0A0A0A;white-space:nowrap}
+.c-rm{border:0;background:none;color:#8a867f;font:500 11px 'Archivo';text-decoration:underline;cursor:pointer;padding:0}
+.cart-body .btn{width:100%;margin-bottom:8px;justify-content:center}
+.cart-body .c-more{background:none;color:#0A0A0A;border-color:#0A0A0A}
+.cart-body .c-more:hover{background:#0A0A0A;color:#F2F0EC}
+.drawer .btn.pay{background:none;color:#0A0A0A;border-color:#0A0A0A;justify-content:center}
+.drawer .btn.pay:hover{background:#0A0A0A;color:#F2F0EC}
+.drawer .btn.add-cart{width:100%;justify-content:center;margin-bottom:8px}
+/* aviso con acción */
+.toast:has(.toast-act){pointer-events:auto}
+.toast-act{margin-left:12px;border:0;background:#0A0A0A;color:#F2F0EC;border-radius:999px;padding:6px 12px;font:600 11px 'Archivo';letter-spacing:.04em;text-transform:uppercase;cursor:pointer}

@@ -29,6 +29,21 @@
     $$('.save-btn').forEach(b => { const on = list.includes(+b.dataset.i); b.classList.toggle('on', on); b.querySelector('span').textContent = on ? 'en tu lista' : 'guardar en mi lista'; });
   }
 
+  // ---------- Carrito ----------
+  let cart = [];
+  try { cart = JSON.parse(localStorage.getItem('og-carrito') || '[]').filter(o => P[o.i]); } catch (e) {}
+  const saveCart = () => { try { localStorage.setItem('og-carrito', JSON.stringify(cart)); } catch (e) {} paintCart(); };
+  const cartN = () => cart.reduce((s, o) => s + o.q, 0);
+  function paintCart(bump) {
+    $$('.cart-count').forEach(el => { el.textContent = cartN(); el.parentElement.classList.toggle('has', cart.length > 0); if (bump) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); } });
+  }
+  function addToCart(i, q = 1) {
+    const o = cart.find(x => x.i === i);
+    if (o) o.q = Math.min(9, o.q + q); else cart.push({ i, q });
+    saveCart(); paintCart(true);
+    toastAction(`${P[i].n} en tu carrito`, 'ver carrito', () => openCart());
+  }
+
   // ---------- Pago: checkout de Shopify con los productos ya en el carrito ----------
   // Cupón: se valida aquí para mostrar el precio y se envía a Shopify, que aplica el descuento real
   let coupon = '';
@@ -70,6 +85,9 @@
     else { fallbackCopy(text); done(); }
   }
   function fallbackCopy(t) { const a = document.createElement('textarea'); a.value = t; a.style.position = 'fixed'; a.style.opacity = '0'; document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (e) {} a.remove(); }
+  function toastAction(t, label, fn) {
+    toast(t); const el = $('.toast'); const b = document.createElement('button'); b.className = 'toast-act'; b.textContent = label; b.onclick = () => { el.classList.remove('on'); fn(); }; el.appendChild(b);
+  }
   function toast(t) {
     let el = $('.toast'); if (!el) { el = document.createElement('div'); el.className = 'toast'; document.body.appendChild(el); }
     el.textContent = t; el.classList.add('on'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('on'), 4200);
@@ -93,6 +111,7 @@
       <div class="img"><span class="badge">${p.cat.toUpperCase()}</span>${p.enc ? '<span class="badge enc">ENCARGO</span>' : ''}${p.enc ? '' : `<span class="num mono">${String(i + 1).padStart(3, '0')}</span>`}
         <div class="stage">${visual(p)}</div>
         <span class="explore mono">explorar ↗</span>
+        <button class="q-add" data-i="${i}" aria-label="Agregar ${p.n} al carrito">+</button>
       </div>
       <div class="info"><span class="mono">${p.b}</span><h4>${p.n}</h4><div class="i-row"><span class="fam">${p.c}${mlTxt(p)}</span><span class="price${p.pn ? '' : ' tbd'}">${p.p}</span></div></div></article>`;
     const grid2 = $('#grid2');
@@ -111,6 +130,7 @@
         });
         card.addEventListener('pointerleave', () => { st.style.removeProperty('--ry'); st.style.removeProperty('--rx'); if (fr) fr.src = JSON.parse(fr.dataset.frames)[0]; });
       }
+      const qa = $('.q-add', card); if (qa) qa.addEventListener('click', e => { e.stopPropagation(); addToCart(i, 1); qa.classList.add('done'); setTimeout(() => qa.classList.remove('done'), 900); });
       card.addEventListener('click', () => open(i));
       card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); } });
     });
@@ -206,7 +226,7 @@
             <input class="city" placeholder="Tu ciudad (opcional)" autocomplete="address-level2">
           </div>
           <pre class="msg" aria-live="polite"></pre>
-          ${p.vid ? `${couponBox()}<button class="btn solid pay"></button>
+          ${p.vid ? `<button class="btn solid add-cart"></button><button class="btn pay"></button>${couponBox()}
           <div class="pay-note mono">Pago seguro con Mercado Pago · tarjeta, PSE y más</div>` : `<div class="pay-note mono" style="margin:0">Precio y disponibilidad por confirmar · pregúntanos</div>`}
           <button class="btn send">${WHATSAPP ? 'Preguntar por WhatsApp' : 'Preguntar por Instagram'} →</button>
           <button class="save-btn" data-i="${i}"><b>♡</b><span>guardar en mi lista</span></button>
@@ -234,9 +254,11 @@
     const payBtn = $('.pay', body), priceEl = $('.dr-price', body);
     const paintPay = () => {
       priceEl.innerHTML = p.pn ? (coupon ? `<s>${p.p}</s><b>${fmt(disc(p.pn))}</b><span class="mono">con ${coupon}</span>` : `<b>${p.p}</b><span class="mono">COP · aprox.</span>`) : `<b class="tbd">${p.p}</b>`;
-      if (payBtn) payBtn.textContent = `Pagar ahora · ${fmt(disc(p.pn) * qty)}`;
+      if (payBtn) payBtn.textContent = `Comprar ya · ${fmt(disc(p.pn) * qty)}`;
+      const ac = $('.add-cart', body); if (ac) ac.textContent = `Agregar al carrito · ${qty > 1 ? qty + ' × ' : ''}${fmt(disc(p.pn))}`;
     };
     if (payBtn) { payBtn.onclick = () => checkout([{ p, q: qty }]); wireCoupon(body, () => { paintPay(); compose(); }); }
+    const acb = $('.add-cart', body); if (acb) acb.onclick = () => { addToCart(i, qty); close(); };
     paintPay();
     $('.save-btn', body).onclick = () => { list = list.includes(i) ? list.filter(x => x !== i) : [...list, i]; saveList(); toast(list.includes(i) ? `${p.n} guardado en tu lista` : `${p.n} salió de tu lista`); };
     $$('.rel-it', body).forEach(b => b.onclick = () => { body.scrollTop = 0; $('.dr-panel', dr).scrollTop = 0; open(+b.dataset.j); });
@@ -272,19 +294,55 @@
     b.innerHTML = `<span class="mono">og.prdct</span><h3>mi lista</h3>${items.length ? `
       <ul class="lp-ul">${list.map(i => `<li><div class="mini">${P[i].img ? visual(P[i]) : bottle3d(P[i], false)}</div><div><b>${P[i].n}</b><span class="mono">${P[i].b} · ${P[i].c}${mlTxt(P[i])}</span></div><span>${P[i].p}</span><button data-i="${i}" aria-label="Quitar">×</button></li>`).join('')}</ul>
       <div class="lp-tot"><span class="mono">total aprox.</span><b class="lp-total"></b></div>
-      ${payable.length ? `${couponBox()}<button class="btn solid lp-pay"></button>
-      <div class="pay-note mono">Pago seguro con Mercado Pago${payable.length < items.length ? ' · los perfumes con precio por confirmar se consultan aparte' : ''}</div>` : ''}
+      ${payable.length ? `<button class="btn solid lp-pay"></button>` : ''}
       <button class="btn lp-send">${WHATSAPP ? 'Preguntar por WhatsApp' : 'Preguntar por Instagram'} →</button>` : `<p class="lp-empty">Todavía no guardas perfumes. Abre uno y toca <b>♡ guardar en mi lista</b>.</p>`}`;
     $$('.lp-ul button', b).forEach(x => x.onclick = () => { list = list.filter(i => i !== +x.dataset.i); saveList(); openList(); });
     const pb = $('.lp-pay', b);
-    const paintTot = () => { const t = $('.lp-total', b); if (t) t.innerHTML = coupon ? `<s>${fmt(total)}</s> ${fmt(disc(total))}` : fmt(total); if (pb) pb.textContent = `Pagar todo · ${fmt(disc(payable.reduce((s, p) => s + p.pn, 0)))}`; };
-    paintTot();
-    if (pb) { pb.onclick = () => checkout(payable.map(p => ({ p, q: 1 }))); wireCoupon(b, paintTot); }
+    const t0 = $('.lp-total', b); if (t0) t0.innerHTML = fmt(total);
+    if (pb) { pb.textContent = 'Pasar todo al carrito →'; pb.onclick = () => { list.forEach(i => { if (P[i].vid && !cart.find(o => o.i === i)) cart.push({ i, q: 1 }); }); saveCart(); closeLp(); openCart(); }; }
     const s = $('.lp-send', b);
     if (s) s.onclick = () => send(`Hola OG 👋 Quiero pedir:\n${items.map(p => `• ${p.n} (${p.b}, ${p.c}${mlTxt(p)}) · ${p.pn ? fmt(disc(p.pn)) : 'precio por confirmar'}`).join('\n')}\nTotal aprox.: ${fmt(disc(total))}${coupon ? ` (cupón ${coupon})` : ''}\n¿Están disponibles?`);
     lp.classList.add('on'); lp.setAttribute('aria-hidden', 'false'); document.documentElement.classList.add('lock');
   }
-  lp.addEventListener('click', e => { if (e.target === lp || e.target.closest('.dr-x')) { lp.classList.remove('on'); lp.setAttribute('aria-hidden', 'true'); document.documentElement.classList.remove('lock'); } });
+  const closeLp = () => { lp.classList.remove('on'); lp.setAttribute('aria-hidden', 'true'); document.documentElement.classList.remove('lock'); };
+  lp.addEventListener('click', e => { if (e.target === lp || e.target.closest('.dr-x')) closeLp(); });
   $$('.list-btn').forEach(b => b.onclick = openList);
   paintList();
+
+  // ---------- Panel del carrito ----------
+  const cp = document.createElement('div');
+  cp.className = 'drawer cart-drawer'; cp.setAttribute('aria-hidden', 'true');
+  cp.innerHTML = `<div class="dr-panel" role="dialog" aria-modal="true" aria-label="Carrito"><button class="dr-x" aria-label="Cerrar">×</button><div class="lp-body cart-body"></div></div>`;
+  document.body.appendChild(cp);
+  const closeCart = () => { cp.classList.remove('on'); cp.setAttribute('aria-hidden', 'true'); document.documentElement.classList.remove('lock'); };
+  function openCart() {
+    const b = $('.cart-body', cp);
+    const sub = cart.reduce((s, o) => s + P[o.i].pn * o.q, 0), hasEnc = cart.some(o => P[o.i].enc);
+    b.innerHTML = `<span class="mono">og.prdct</span><h3>carrito</h3>${cart.length ? `
+      <ul class="cart-ul">${cart.map(o => { const p = P[o.i]; return `<li data-i="${o.i}">
+        <div class="mini">${p.img ? visual(p) : bottle3d(p, false)}</div>
+        <div class="c-mid"><span class="mono">${p.b}${p.enc ? ' · por encargo' : ''}</span><b>${p.n}</b>
+          <div class="qty sm"><button data-d="-1" aria-label="Menos">−</button><output>${o.q}</output><button data-d="1" aria-label="Más">+</button></div></div>
+        <div class="c-end"><span class="c-price">${fmt(p.pn * o.q)}</span><button class="c-rm" aria-label="Quitar">quitar</button></div></li>`; }).join('')}</ul>
+      <div class="lp-tot"><span class="mono">${cartN()} ${cartN() === 1 ? 'perfume' : 'perfumes'} · total</span><b class="lp-total"></b></div>
+      ${couponBox()}
+      <button class="btn solid c-pay"></button>
+      <div class="pay-note mono">Pago seguro con Mercado Pago · tarjeta, PSE y más · envío gratis a toda Colombia${hasEnc ? '<br>Los perfumes por encargo llegan en 10–15 días hábiles' : ''}</div>
+      <button class="btn c-more">Seguir comprando</button>` : `<p class="lp-empty">Tu carrito está vacío. Toca <b>+</b> en un perfume o <b>Agregar al carrito</b> en su ficha.</p><button class="btn c-more">Ver perfumes</button>`}`;
+    const paint = () => { const t = $('.lp-total', b); if (t) t.innerHTML = coupon ? `<s>${fmt(sub)}</s> ${fmt(disc(sub))}` : fmt(sub); const pb = $('.c-pay', b); if (pb) pb.textContent = `Pagar · ${fmt(disc(sub))}`; };
+    paint();
+    $$('.cart-ul li', b).forEach(li => {
+      const i = +li.dataset.i, o = cart.find(x => x.i === i);
+      $$('.qty button', li).forEach(x => x.onclick = () => { o.q = Math.max(1, Math.min(9, o.q + +x.dataset.d)); saveCart(); openCart(); });
+      $('.c-rm', li).onclick = () => { cart = cart.filter(x => x.i !== i); saveCart(); openCart(); };
+    });
+    const pb = $('.c-pay', b); if (pb) { pb.onclick = () => checkout(cart.map(o => ({ p: P[o.i], q: o.q }))); wireCoupon(b, paint); }
+    $('.c-more', b).onclick = () => { closeCart(); const c = $('#coleccion'); if (c) c.scrollIntoView({ behavior: 'smooth' }); };
+    cp.classList.add('on'); cp.setAttribute('aria-hidden', 'false'); document.documentElement.classList.add('lock');
+  }
+  cp.addEventListener('click', e => { if (e.target === cp || e.target.closest('.dr-x')) closeCart(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && cp.classList.contains('on')) closeCart(); });
+  $$('.cart-btn').forEach(b => b.onclick = openCart);
+  paintCart();
+  if (/[?&]carrito/.test(location.search)) openCart();
 })();
