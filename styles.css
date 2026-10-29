@@ -408,3 +408,5 @@ h1 .w{white-space:nowrap}
 /* títulos: 2 líneas máximo y misma altura de mayúscula entre la palabra ancha y la condensada */
 .hero h1,.ph-copy h1{font-size:clamp(52px,8.4vw,124px)}
 h1 .w{font-size:1.25em;line-height:.74;vertical-align:baseline}
+/* 3 líneas: la línea a mano no se monta sobre la de arriba */
+h1 em.drip{margin-top:.12em}
