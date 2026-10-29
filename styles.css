@@ -404,3 +404,7 @@ h1 .w{white-space:nowrap}
 .hero h1,.ph-copy h1{white-space:nowrap}
 @media(min-width:768px){.hero-copy{max-width:calc(100% - 80px)}}
 .scroll-hint{font-family:'Archivo',sans-serif;font-weight:600;font-size:13px;letter-spacing:.14em}
+
+/* títulos: 2 líneas máximo y misma altura de mayúscula entre la palabra ancha y la condensada */
+.hero h1,.ph-copy h1{font-size:clamp(52px,8.4vw,124px)}
+h1 .w{font-size:1.25em;line-height:.74;vertical-align:baseline}
