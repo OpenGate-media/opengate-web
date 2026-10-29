@@ -69,18 +69,28 @@ if (window.gsap && !reduce) {
   if (roto) {
     // Geometría del roto: tamaño base, centro y punto de entrada (dentro del roto, junto a los ojos)
     const st = { intro: .82, zoom: 1 }, OX = .38, OY = .40;
+    // Flotación continua del roto: deriva suave como si estuviera suspendido en el aire
+    const fl = { x: 0, y: 0, s: 1 };
     const hero = document.querySelector('.hero-stick'), eyes = $('eyes');
     function apply() {
       const W = hero.clientWidth, H = hero.clientHeight, vmin = Math.min(W, H), desk = W >= 900;
       const S0 = desk ? Math.min(vmin * .78, 640) : Math.min(vmin * .86, 680);
       const cx = desk ? W - W * .06 - S0 / 2 : W / 2;
       const cy = desk ? H / 2 : H / 2 - H * .13;
-      const k = st.intro * st.zoom, S = S0 * k;
-      const px = cx - S0 / 2 + OX * S0, py = cy - S0 / 2 + OY * S0;
+      const k = st.intro * st.zoom * fl.s, S = S0 * k;
+      const px = cx - S0 / 2 + OX * S0 + fl.x, py = cy - S0 / 2 + OY * S0 + fl.y;
       const x = px - OX * S, y = py - OY * S;
       for (const el of [roto, eyes]) { el.style.setProperty('--ms', S + 'px'); el.style.setProperty('--mx', x + 'px'); el.style.setProperty('--my', y + 'px'); }
     }
     apply(); addEventListener('resize', apply);
+    (function float() {
+      const t = performance.now() / 1000, d = Math.min(innerWidth, innerHeight) / 100;
+      fl.x = Math.sin(t * .55) * 1.1 * d + Math.sin(t * 1.3) * .3 * d;
+      fl.y = Math.sin(t * .8 + 1) * 1.6 * d;
+      fl.s = 1 + Math.sin(t * .65) * .018;
+      if (st.zoom < 30) apply();
+      requestAnimationFrame(float);
+    })();
 
     const tl = gsap.timeline();
     if (intro) {
@@ -90,7 +100,7 @@ if (window.gsap && !reduce) {
     }
     tl.to(st, { intro: 1, duration: 1.3, ease: E, onUpdate: apply }, '<')
       .from('.hero h1', { yPercent: 30, opacity: 0, duration: 1.1, ease: E }, '-=1')
-      .from('.hero-copy .btn,.hero-copy .mono', { y: 16, opacity: 0, stagger: .07, duration: .8, ease: E }, '-=.8');
+      .from('.hero-copy .kick', { y: 12, opacity: 0, duration: .8, ease: E }, '-=.8');
 
     // Scroll: entrar por el roto hasta la imagen de adentro (sin transformar capas gigantes)
     const z = gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom bottom', scrub: .6 } });
