@@ -410,3 +410,11 @@ h1 .w{white-space:nowrap}
 h1 .w{font-size:1.25em;line-height:.74;vertical-align:baseline}
 /* 3 líneas: la línea a mano no se monta sobre la de arriba */
 h1 em.drip{margin-top:.12em}
+
+/* Productos: disponible / por encargo */
+.sub-h{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:56px 0 20px;padding-top:18px;border-top:1px solid var(--line)}
+.sub-h:first-of-type{margin-top:28px}
+.sub-h h3{font-size:clamp(34px,4.6vw,64px)}
+.badge.enc{left:auto;right:12px;top:auto;bottom:12px;background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.enc-note{display:inline-block;margin:6px 0 2px;padding:6px 10px;border:1px solid #0A0A0A;font:600 12px 'Archivo';letter-spacing:.04em;text-transform:uppercase;color:#0A0A0A}
+.enc-note.ok{background:#0A0A0A;color:#F2F0EC}

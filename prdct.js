@@ -89,15 +89,18 @@
   // ---------- Tarjetas ----------
   const grid = $('#grid');
   if (grid) {
-    grid.innerHTML = P.map((p, i) => `<article class="card" data-g="${p.g}" data-i="${i}" tabindex="0" aria-label="${p.n}, ${p.b}. Ver ficha">
-      <div class="img"><span class="badge">${p.cat.toUpperCase()}</span><span class="num mono">${String(i + 1).padStart(3, '0')}</span>
+    const card = (p, i) => `<article class="card" data-g="${p.g}" data-i="${i}" tabindex="0" aria-label="${p.n}, ${p.b}. Ver ficha">
+      <div class="img"><span class="badge">${p.cat.toUpperCase()}</span>${p.enc ? '<span class="badge enc">POR ENCARGO</span>' : ''}<span class="num mono">${String(i + 1).padStart(3, '0')}</span>
         <div class="stage">${visual(p)}</div>
         <span class="explore mono">explorar ↗</span>
       </div>
-      <div class="info"><div><h4>${p.n}</h4><div class="mono">${p.b} · ${p.c}${mlTxt(p)}</div><div class="fam">${p.fam}</div></div><div class="price${p.pn ? '' : ' tbd'}">${p.p}</div></div></article>`).join('');
+      <div class="info"><div><h4>${p.n}</h4><div class="mono">${p.b} · ${p.c}${mlTxt(p)}</div><div class="fam">${p.fam}</div></div><div class="price${p.pn ? '' : ' tbd'}">${p.p}</div></div></article>`;
+    const grid2 = $('#grid2');
+    grid.innerHTML = P.map((p, i) => p.enc ? '' : card(p, i)).join('');
+    if (grid2) grid2.innerHTML = P.map((p, i) => p.enc ? card(p, i) : '').join('');
 
     const hoverable = matchMedia('(hover: hover)').matches;
-    $$('.card', grid).forEach(card => {
+    $$('#coleccion .card').forEach(card => {
       const st = $('.stage', card), i = +card.dataset.i, fr = $('.frames', card);
       if (hoverable) {
         card.addEventListener('pointermove', e => {
@@ -114,13 +117,14 @@
 
     $$('#coleccion .chip').forEach(c => c.onclick = () => {
       $$('#coleccion .chip').forEach(x => x.classList.remove('on')); c.classList.add('on');
-      $$('.card', grid).forEach(k => k.classList.toggle('hide', c.dataset.f !== 'all' && k.dataset.g !== c.dataset.f));
+      $$('#coleccion .card').forEach(k => k.classList.toggle('hide', c.dataset.f !== 'all' && k.dataset.g !== c.dataset.f));
     });
     const sort = $('#sort');
     if (sort) sort.onchange = () => {
-      const cards = $$('.card', grid), v = sort.value;
+      const v = sort.value;
+      [grid, grid2].filter(Boolean).forEach(G => { const cards = $$('.card', G);
       cards.sort((a, b) => { const A = P[a.dataset.i], B = P[b.dataset.i]; const a1 = A.pn || 1e9, b1 = B.pn || 1e9; return v === 'pa' ? a1 - b1 : v === 'pd' ? B.pn - A.pn : v === 'az' ? A.n.localeCompare(B.n) : a.dataset.i - b.dataset.i; });
-      cards.forEach(c => grid.appendChild(c));
+      cards.forEach(c => G.appendChild(c)); });
     };
   }
 
@@ -143,7 +147,7 @@
       <div class="dr-info">
         <span class="mono">${p.cat} · ${p.b}</span>
         <h3 id="drName">${p.n}</h3>
-        <p class="dr-meta">${p.fam} · ${p.gen} · ${p.c}${mlTxt(p)}</p>
+        <p class="dr-meta">${p.fam} · ${p.gen} · ${p.c}${mlTxt(p)}</p>${p.enc ? '<p class="enc-note">Por encargo · lo traemos para ti en 10–15 días hábiles</p>' : '<p class="enc-note ok">Disponible · entrega inmediata</p>'}
         <div class="dr-price"></div>
 
         <div class="pyr" role="tablist" aria-label="Notas">
