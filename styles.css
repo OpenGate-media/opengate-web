@@ -360,3 +360,13 @@ nav.topbar .wrap{gap:12px}
 .portal,.eyes{-webkit-transform:translateZ(0)}
 .dr-turn,.dr-turn *{-webkit-user-select:none;user-select:none}
 .ph-copy h1 em{paint-order:stroke fill}
+.cpn{display:flex;gap:6px}
+.cpn-in{flex:1;min-width:0;border:1px dashed #9a968f;border-radius:999px;padding:11px 14px;font:600 13px 'JetBrains Mono';letter-spacing:.12em;text-transform:uppercase;background:none;color:#0A0A0A}
+.cpn-in::placeholder{text-transform:none;letter-spacing:0;font-family:'Archivo';font-weight:500}
+.cpn-btn{border:1px solid #0A0A0A;border-radius:999px;background:none;padding:0 16px;font:500 11px 'JetBrains Mono';letter-spacing:.14em;text-transform:uppercase;cursor:pointer;color:#0A0A0A}
+.cpn-btn:hover{background:#0A0A0A;color:#F2F0EC}
+.cpn-msg{font-size:10px;color:#2f6b3a!important;min-height:12px;margin-top:-4px}
+.dr-price s,.lp-total s{color:#9a968f;font-size:.6em;margin-right:6px}
+.dr-price .tbd,.price.tbd{font-size:15px;color:var(--mute)}
+.dr-price b.tbd{font-size:20px;color:#6b6964}
+.lp-body .cpn{margin-bottom:8px}

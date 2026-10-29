@@ -30,23 +30,49 @@
   }
 
   // ---------- Pago: checkout de Shopify con los productos ya en el carrito ----------
+  // Cupón: se valida aquí para mostrar el precio y se envía a Shopify, que aplica el descuento real
+  let coupon = '';
+  try { coupon = localStorage.getItem('og-cupon') || ''; } catch (e) {}
+  if (!(typeof COUPONS !== 'undefined' && COUPONS[coupon])) coupon = '';
+  const rate = () => (coupon && COUPONS[coupon]) || 0;
+  const disc = n => Math.round(n * (1 - rate()));
+  const setCoupon = c => { coupon = c; try { c ? localStorage.setItem('og-cupon', c) : localStorage.removeItem('og-cupon'); } catch (e) {} };
+  const mlTxt = p => p.ml ? ` · ${p.ml} ml` : '';
+  const couponBox = () => `<div class="cpn">
+      <input class="cpn-in" placeholder="¿Tienes un cupón?" value="${coupon}" autocapitalize="characters" aria-label="Cupón de descuento">
+      <button class="cpn-btn">${coupon ? 'quitar' : 'aplicar'}</button></div>
+      <div class="cpn-msg mono">${coupon ? `cupón ${coupon} · −${Math.round(rate() * 100)}%` : ''}</div>`;
+  function wireCoupon(root, repaint) {
+    const inp = $('.cpn-in', root), btn = $('.cpn-btn', root), m = $('.cpn-msg', root);
+    const apply = () => {
+      if (coupon) { setCoupon(''); inp.value = ''; btn.textContent = 'aplicar'; m.textContent = ''; repaint(); return; }
+      const c = inp.value.trim().toUpperCase();
+      if (COUPONS[c]) { setCoupon(c); btn.textContent = 'quitar'; m.textContent = `cupón ${c} · −${Math.round(COUPONS[c] * 100)}%`; toast(`Cupón ${c} aplicado`); }
+      else { m.textContent = 'cupón no válido'; }
+      repaint();
+    };
+    btn.onclick = apply; inp.onkeydown = e => { if (e.key === 'Enter') apply(); };
+  }
   const checkout = items => {
     const parts = items.filter(o => o.p.vid).map(o => `${o.p.vid}:${o.q}`);
-    if (!SHOP || !parts.length) { toast('El pago en línea aún no está activo. Escríbenos y te ayudamos.'); return; }
-    location.href = `https://${SHOP}/cart/${parts.join(',')}`;
+    if (!SHOP || !parts.length) { toast('Este perfume aún no tiene pago en línea. Pregúntanos y te ayudamos.'); return; }
+    location.href = `https://${SHOP}/cart/${parts.join(',')}${coupon ? `?discount=${encodeURIComponent(coupon)}` : ''}`;
   };
 
   // ---------- Mensaje y canales ----------
   function send(text) {
     if (WHATSAPP) { window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank', 'noopener'); return; }
     // Instagram no deja precargar texto: lo copiamos y abrimos el chat
-    try { navigator.clipboard.writeText(text); } catch (e) {}
-    toast('Mensaje copiado. Pégalo en el chat de Instagram.');
-    window.open(`https://ig.me/m/${IG}`, '_blank', 'noopener');
+    // Instagram no permite que una web escriba el mensaje dentro del chat: lo copiamos para pegarlo con un toque
+    const go = () => window.open(`https://ig.me/m/${IG}`, '_blank', 'noopener');
+    const done = () => { toast('Mensaje listo y copiado ✓ En el chat de Instagram mantén presionado y toca Pegar.'); setTimeout(go, 900); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, () => { fallbackCopy(text); done(); });
+    else { fallbackCopy(text); done(); }
   }
+  function fallbackCopy(t) { const a = document.createElement('textarea'); a.value = t; a.style.position = 'fixed'; a.style.opacity = '0'; document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (e) {} a.remove(); }
   function toast(t) {
     let el = $('.toast'); if (!el) { el = document.createElement('div'); el.className = 'toast'; document.body.appendChild(el); }
-    el.textContent = t; el.classList.add('on'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('on'), 3200);
+    el.textContent = t; el.classList.add('on'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('on'), 4200);
   }
 
   // ---------- Banner ----------
@@ -54,7 +80,7 @@
   if (hero) {
     const star = P.find(p => p.n === 'Khamrah') || P[0];
     $('#heroBottle').innerHTML = bottle3d(star);
-    $('#heroFrom').textContent = fmt(Math.min(...P.map(p => p.pn)));
+    $('#heroFrom').textContent = fmt(Math.min(...P.filter(p => p.pn).map(p => p.pn)));
     $('#heroCount').textContent = P.length;
     $('#heroName').textContent = `${star.n} · ${star.b}`;
     $('#heroOpen').onclick = () => open(P.indexOf(star));
@@ -68,7 +94,7 @@
         <div class="stage">${visual(p)}</div>
         <span class="explore mono">explorar ↗</span>
       </div>
-      <div class="info"><div><h4>${p.n}</h4><div class="mono">${p.b} · ${p.c} · ${p.ml} ml</div><div class="fam">${p.fam}</div></div><div class="price">${p.p}</div></div></article>`).join('');
+      <div class="info"><div><h4>${p.n}</h4><div class="mono">${p.b} · ${p.c}${mlTxt(p)}</div><div class="fam">${p.fam}</div></div><div class="price${p.pn ? '' : ' tbd'}">${p.p}</div></div></article>`).join('');
 
     const hoverable = matchMedia('(hover: hover)').matches;
     $$('.card', grid).forEach(card => {
@@ -93,7 +119,7 @@
     const sort = $('#sort');
     if (sort) sort.onchange = () => {
       const cards = $$('.card', grid), v = sort.value;
-      cards.sort((a, b) => { const A = P[a.dataset.i], B = P[b.dataset.i]; return v === 'pa' ? A.pn - B.pn : v === 'pd' ? B.pn - A.pn : v === 'az' ? A.n.localeCompare(B.n) : a.dataset.i - b.dataset.i; });
+      cards.sort((a, b) => { const A = P[a.dataset.i], B = P[b.dataset.i]; const a1 = A.pn || 1e9, b1 = B.pn || 1e9; return v === 'pa' ? a1 - b1 : v === 'pd' ? B.pn - A.pn : v === 'az' ? A.n.localeCompare(B.n) : a.dataset.i - b.dataset.i; });
       cards.forEach(c => grid.appendChild(c));
     };
   }
@@ -117,11 +143,11 @@
       <div class="dr-info">
         <span class="mono">${p.cat} · ${p.b}</span>
         <h3 id="drName">${p.n}</h3>
-        <p class="dr-meta">${p.fam} · ${p.gen} · ${p.c} · ${p.ml} ml</p>
-        <div class="dr-price"><b>${p.p}</b><span class="mono">COP · aprox.</span></div>
+        <p class="dr-meta">${p.fam} · ${p.gen} · ${p.c}${mlTxt(p)}</p>
+        <div class="dr-price"></div>
 
         <div class="pyr" role="tablist" aria-label="Notas">
-          ${[['01', 'salida', '0–15 min', p.top], ['02', 'corazón', '15 min – 4 h', p.heart], ['03', 'fondo', '4 h +', p.base]].map((t, k) =>
+          ${(p.heart.length || p.base.length ? [['01', 'salida', '0–15 min', p.top], ['02', 'corazón', '15 min – 4 h', p.heart], ['03', 'fondo', '4 h +', p.base]] : [['··', 'notas principales', '', p.top]]).filter(t => t[3].length).map((t, k) =>
             `<button class="tier${k === 0 ? ' on' : ''}" role="tab" aria-selected="${k === 0}"><i>${t[0]} · ${t[1]}</i><b>${t[3].join(' · ')}</b><em>${t[2]}</em></button>`).join('')}
         </div>
 
@@ -135,8 +161,8 @@
             <input class="city" placeholder="Tu ciudad (opcional)" autocomplete="address-level2">
           </div>
           <pre class="msg" aria-live="polite"></pre>
-          <button class="btn solid pay">Pagar ahora · ${p.p}</button>
-          <div class="pay-note mono">Pago seguro con Mercado Pago · tarjeta, PSE y más</div>
+          ${p.vid ? `${couponBox()}<button class="btn solid pay"></button>
+          <div class="pay-note mono">Pago seguro con Mercado Pago · tarjeta, PSE y más</div>` : `<div class="pay-note mono" style="margin:0">Precio y disponibilidad por confirmar · pregúntanos</div>`}
           <button class="btn send">${WHATSAPP ? 'Preguntar por WhatsApp' : 'Preguntar por Instagram'} →</button>
           <button class="save-btn" data-i="${i}"><b>♡</b><span>guardar en mi lista</span></button>
         </div>
@@ -154,15 +180,19 @@
     const compose = () => {
       const qs = $$('.q.on', body).map(b => '• ' + b.textContent);
       const city = $('.city', body).value.trim();
-      msg.textContent = `Hola OG 👋 Me interesa:\n${qty} × ${p.n} (${p.b}, ${p.c} ${p.ml} ml) · ${p.p}${city ? `\nCiudad: ${city}` : ''}${qs.length ? '\n' + qs.join('\n') : ''}`;
+      msg.textContent = `Hola OG 👋 Me interesa:\n${qty} × ${p.n} (${p.b}, ${p.c}${mlTxt(p)})${p.pn ? ' · ' + fmt(disc(p.pn) * qty) + (coupon ? ` (cupón ${coupon})` : '') : ''}${city ? `\nCiudad: ${city}` : ''}${qs.length ? '\n' + qs.join('\n') : ''}`;
     };
     $$('.q', body).forEach(b => b.onclick = () => { b.classList.toggle('on'); compose(); });
     $$('.qty button', body).forEach(b => b.onclick = () => { qty = Math.max(1, Math.min(9, qty + +b.dataset.d)); $('.qty output', body).textContent = qty; compose(); paintPay(); });
     $('.city', body).oninput = compose;
     $('.send', body).onclick = () => send(msg.textContent);
-    $('.pay', body).onclick = () => checkout([{ p, q: qty }]);
-    const payBtn = $('.pay', body);
-    const paintPay = () => payBtn.textContent = `Pagar ahora · ${fmt(p.pn * qty)}`;
+    const payBtn = $('.pay', body), priceEl = $('.dr-price', body);
+    const paintPay = () => {
+      priceEl.innerHTML = p.pn ? (coupon ? `<s>${p.p}</s><b>${fmt(disc(p.pn))}</b><span class="mono">con ${coupon}</span>` : `<b>${p.p}</b><span class="mono">COP · aprox.</span>`) : `<b class="tbd">${p.p}</b>`;
+      if (payBtn) payBtn.textContent = `Pagar ahora · ${fmt(disc(p.pn) * qty)}`;
+    };
+    if (payBtn) { payBtn.onclick = () => checkout([{ p, q: qty }]); wireCoupon(body, () => { paintPay(); compose(); }); }
+    paintPay();
     $('.save-btn', body).onclick = () => { list = list.includes(i) ? list.filter(x => x !== i) : [...list, i]; saveList(); toast(list.includes(i) ? `${p.n} guardado en tu lista` : `${p.n} salió de tu lista`); };
     $$('.rel-it', body).forEach(b => b.onclick = () => { body.scrollTop = 0; $('.dr-panel', dr).scrollTop = 0; open(+b.dataset.j); });
     compose(); paintList();
@@ -193,18 +223,20 @@
   document.body.appendChild(lp);
   function openList() {
     const b = $('.lp-body', lp), items = list.map(i => P[i]).filter(Boolean);
-    const total = items.reduce((s, p) => s + p.pn, 0);
+    const total = items.reduce((s, p) => s + p.pn, 0), payable = items.filter(p => p.vid);
     b.innerHTML = `<span class="mono">og.prdct</span><h3>mi lista</h3>${items.length ? `
-      <ul class="lp-ul">${list.map(i => `<li><div class="mini">${bottle3d(P[i], false)}</div><div><b>${P[i].n}</b><span class="mono">${P[i].b} · ${P[i].c} · ${P[i].ml} ml</span></div><span>${P[i].p}</span><button data-i="${i}" aria-label="Quitar">×</button></li>`).join('')}</ul>
-      <div class="lp-tot"><span class="mono">total aprox.</span><b>${fmt(total)}</b></div>
-      <button class="btn solid lp-pay">Pagar todo · ${fmt(total)}</button>
-      <div class="pay-note mono">Pago seguro con Mercado Pago</div>
+      <ul class="lp-ul">${list.map(i => `<li><div class="mini">${bottle3d(P[i], false)}</div><div><b>${P[i].n}</b><span class="mono">${P[i].b} · ${P[i].c}${mlTxt(P[i])}</span></div><span>${P[i].p}</span><button data-i="${i}" aria-label="Quitar">×</button></li>`).join('')}</ul>
+      <div class="lp-tot"><span class="mono">total aprox.</span><b class="lp-total"></b></div>
+      ${payable.length ? `${couponBox()}<button class="btn solid lp-pay"></button>
+      <div class="pay-note mono">Pago seguro con Mercado Pago${payable.length < items.length ? ' · los perfumes con precio por confirmar se consultan aparte' : ''}</div>` : ''}
       <button class="btn lp-send">${WHATSAPP ? 'Preguntar por WhatsApp' : 'Preguntar por Instagram'} →</button>` : `<p class="lp-empty">Todavía no guardas perfumes. Abre uno y toca <b>♡ guardar en mi lista</b>.</p>`}`;
     $$('.lp-ul button', b).forEach(x => x.onclick = () => { list = list.filter(i => i !== +x.dataset.i); saveList(); openList(); });
     const pb = $('.lp-pay', b);
-    if (pb) pb.onclick = () => checkout(items.map(p => ({ p, q: 1 })));
+    const paintTot = () => { const t = $('.lp-total', b); if (t) t.innerHTML = coupon ? `<s>${fmt(total)}</s> ${fmt(disc(total))}` : fmt(total); if (pb) pb.textContent = `Pagar todo · ${fmt(disc(payable.reduce((s, p) => s + p.pn, 0)))}`; };
+    paintTot();
+    if (pb) { pb.onclick = () => checkout(payable.map(p => ({ p, q: 1 }))); wireCoupon(b, paintTot); }
     const s = $('.lp-send', b);
-    if (s) s.onclick = () => send(`Hola OG 👋 Quiero pedir:\n${items.map(p => `• ${p.n} (${p.b}, ${p.c} ${p.ml} ml) · ${p.p}`).join('\n')}\nTotal aprox.: ${fmt(total)}\n¿Están disponibles?`);
+    if (s) s.onclick = () => send(`Hola OG 👋 Quiero pedir:\n${items.map(p => `• ${p.n} (${p.b}, ${p.c}${mlTxt(p)}) · ${p.pn ? fmt(disc(p.pn)) : 'precio por confirmar'}`).join('\n')}\nTotal aprox.: ${fmt(disc(total))}${coupon ? ` (cupón ${coupon})` : ''}\n¿Están disponibles?`);
     lp.classList.add('on'); lp.setAttribute('aria-hidden', 'false'); document.documentElement.classList.add('lock');
   }
   lp.addEventListener('click', e => { if (e.target === lp || e.target.closest('.dr-x')) { lp.classList.remove('on'); lp.setAttribute('aria-hidden', 'true'); document.documentElement.classList.remove('lock'); } });

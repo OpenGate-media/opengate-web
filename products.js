@@ -7,6 +7,8 @@ const WHATSAPP = '';
 const IG = 'og.prdct';
 // Tienda Shopify (checkout con Mercado Pago). "vid" = id de la variante en Shopify.
 const SHOP = 'w9akid-2m.myshopify.com';
+// Cupones válidos (también deben existir en Shopify → Descuentos con el mismo código)
+const COUPONS = { DULCE: 0.99 };
 const P = [
  {
   "n": "9 PM Rebel",
@@ -321,5 +323,177 @@ const P = [
   "img": "",
   "frames": [],
   "pn": 277777
+ },
+ {
+  "n": "Pacific Aura",
+  "vid": 67852551225709,
+  "b": "Rayhaan",
+  "c": "EDP",
+  "ml": 100,
+  "g": "el",
+  "gen": "Hombre",
+  "p": "$ 211.111",
+  "pn": 211111,
+  "fam": "Cítrico aromático",
+  "top": [
+   "Cidra",
+   "mandarina",
+   "menta",
+   "bergamota",
+   "grosella negra",
+   "cilantro"
+  ],
+  "heart": [
+   "Albahaca",
+   "rosa",
+   "semilla de zanahoria"
+  ],
+  "base": [
+   "Ámbar",
+   "higo",
+   "ambroxan"
+  ],
+  "cat": "Árabe",
+  "c1": "#6f97a8",
+  "c2": "#14242c",
+  "img": "",
+  "frames": []
+ },
+ {
+  "n": "Kiss",
+  "b": "Rayhaan",
+  "c": "EDP",
+  "ml": 100,
+  "g": "el",
+  "gen": "Hombre",
+  "p": "Precio por confirmar",
+  "pn": 0,
+  "fam": "Aromático gourmand",
+  "top": [
+   "Menta",
+   "bergamota"
+  ],
+  "heart": [
+   "Lavanda",
+   "benjuí"
+  ],
+  "base": [
+   "Vainilla",
+   "haba tonka"
+  ],
+  "cat": "Árabe",
+  "c1": "#a3445a",
+  "c2": "#2a0d14",
+  "vid": 0,
+  "img": "",
+  "frames": []
+ },
+ {
+  "n": "Imperia",
+  "b": "Rayhaan",
+  "c": "EDP",
+  "ml": 100,
+  "g": "el",
+  "gen": "Hombre",
+  "p": "Precio por confirmar",
+  "pn": 0,
+  "fam": "Oriental floral",
+  "top": [
+   "Bergamota",
+   "orquídea negra",
+   "buchu",
+   "lino",
+   "macarons"
+  ],
+  "heart": [
+   "Ámbar",
+   "cedro",
+   "láudano",
+   "petitgrain"
+  ],
+  "base": [
+   "Ámbar",
+   "cuero",
+   "almizcle",
+   "whisky"
+  ],
+  "cat": "Árabe",
+  "c1": "#b08d4c",
+  "c2": "#2b200c",
+  "vid": 0,
+  "img": "",
+  "frames": []
+ },
+ {
+  "n": "Dreamscape",
+  "b": "Mykonos",
+  "c": "EDP",
+  "ml": 100,
+  "g": "uni",
+  "gen": "Por confirmar",
+  "p": "Precio por confirmar",
+  "pn": 0,
+  "fam": "Frutal tropical especiado",
+  "top": [
+   "Mango",
+   "jengibre",
+   "ámbar"
+  ],
+  "heart": [],
+  "base": [],
+  "cat": "Árabe",
+  "c1": "#d98b3a",
+  "c2": "#3a1e08",
+  "vid": 0,
+  "img": "",
+  "frames": []
+ },
+ {
+  "n": "Reflection",
+  "b": "Mykonos",
+  "c": "EDP",
+  "ml": null,
+  "g": "uni",
+  "gen": "Unisex",
+  "p": "Precio por confirmar",
+  "pn": 0,
+  "fam": "Cítrico fresco",
+  "top": [
+   "Pomelo",
+   "jengibre",
+   "pachulí"
+  ],
+  "heart": [],
+  "base": [],
+  "cat": "Árabe",
+  "c1": "#9fb8c8",
+  "c2": "#1f2c35",
+  "vid": 0,
+  "img": "",
+  "frames": []
+ },
+ {
+  "n": "Inception",
+  "b": "Mykonos",
+  "c": "EDP",
+  "ml": null,
+  "g": "uni",
+  "gen": "Por confirmar",
+  "p": "Precio por confirmar",
+  "pn": 0,
+  "fam": "Cítrico fresco amaderado",
+  "top": [
+   "Bergamota",
+   "jengibre",
+   "notas ambaradas"
+  ],
+  "heart": [],
+  "base": [],
+  "cat": "Árabe",
+  "c1": "#c9c2b0",
+  "c2": "#3b372d",
+  "vid": 0,
+  "img": "",
+  "frames": []
  }
 ];
