@@ -33,7 +33,7 @@
   // Disponibles: 1 unidad en stock. Por encargo: hasta 9.
   const maxQ = p => p.enc ? 9 : 1;
   let cart = [];
-  try { cart = JSON.parse(localStorage.getItem('og-carrito') || '[]').filter(o => P[o.i]); } catch (e) {}
+  try { cart = JSON.parse(localStorage.getItem('og-carrito') || '[]').filter(o => P[o.i]).map(o => ({ i: o.i, q: Math.max(1, Math.min(maxQ(P[o.i]), o.q)) })); } catch (e) {}
   const saveCart = () => { try { localStorage.setItem('og-carrito', JSON.stringify(cart)); } catch (e) {} paintCart(); };
   const cartN = () => cart.reduce((s, o) => s + o.q, 0);
   function paintCart(bump) {
