@@ -370,3 +370,11 @@ nav.topbar .wrap{gap:12px}
 .dr-price .tbd,.price.tbd{font-size:15px;color:var(--mute)}
 .dr-price b.tbd{font-size:20px;color:#6b6964}
 .lp-body .cpn{margin-bottom:8px}
+
+/* ---- Tipografía de marca: Anton (principal / títulos) + Archivo (texto corrido) ---- */
+:root{--display:'Anton','Archivo',Impact,sans-serif;--text:'Archivo',system-ui,sans-serif}
+h1,h2,h3,.brand,.track span,.pf .it b,.reel .cap b,.door b,.info h4,.sheet-card h4,footer ul.f-big a,.b3d .lbl b,.b3d .lbl.og,.dr-price b,.lp-tot b,.det-bot span:last-child,.det li b,.tier b{font-family:var(--display);font-weight:400;letter-spacing:.005em}
+h1,h2{line-height:.92}
+.brand{font-size:21px}
+.info h4{font-size:19px}
+.det li b,.tier b{letter-spacing:.01em}
