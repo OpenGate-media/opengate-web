@@ -143,3 +143,19 @@ if (window.gsap && !reduce) {
   };
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
 })();
+
+// Títulos de portada: nunca más de 3 líneas — si una línea no cabe, se reduce el tamaño
+(() => {
+  const hs = [...document.querySelectorAll('.hero h1,.ph-copy h1')];
+  if (!hs.length) return;
+  const fit = () => hs.forEach(h => {
+    h.style.fontSize = '';
+    const box = h.closest('.hero-copy') || h.parentElement;
+    const gut = innerWidth >= 768 ? 80 : 32;
+    const max = Math.min(box.clientWidth || innerWidth, innerWidth - gut);
+    const w = h.scrollWidth;
+    if (w > max) h.style.fontSize = (parseFloat(getComputedStyle(h).fontSize) * max / w * .98) + 'px';
+  });
+  fit(); addEventListener('resize', fit);
+  if (document.fonts) document.fonts.ready.then(fit);
+})();

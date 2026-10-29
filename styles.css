@@ -399,3 +399,8 @@ footer .brand img.wm{height:44px}
 .tabs a.on.away{color:var(--fg)}
 h1 .w{white-space:nowrap}
 .door b{font-family:'Archivo',sans-serif;font-weight:900;font-stretch:100%;font-variation-settings:'wdth' 100;text-transform:lowercase;letter-spacing:-.04em}
+
+/* títulos: máximo 3 líneas (cada línea sin cortes, el tamaño se ajusta al ancho) */
+.hero h1,.ph-copy h1{white-space:nowrap}
+@media(min-width:768px){.hero-copy{max-width:calc(100% - 80px)}}
+.scroll-hint{font-family:'Archivo',sans-serif;font-weight:600;font-size:13px;letter-spacing:.14em}
