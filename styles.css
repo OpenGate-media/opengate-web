@@ -444,3 +444,17 @@ img.ph{display:block;object-fit:contain;background:#fff;border-radius:14px}
 .card:hover .img img.ph,.card.open .img img.ph{filter:none}
 .dr-turn img.ph{width:min(78%,360px);aspect-ratio:1;margin:0 auto;box-shadow:0 24px 60px rgba(0,0,0,.25)}
 .mini img.ph{width:100%;height:100%;border-radius:8px}
+
+/* Frascos más pequeños (sobre todo en celular) */
+.card .stage .b3d{--w:84px;--h:122px;--d:40px;--cw:38px;--ch:34px;--cd:30px}
+@media(min-width:900px){.card .stage .b3d{--w:92px;--h:134px;--d:44px;--cw:42px;--ch:37px;--cd:32px}}
+@media(max-width:600px){
+  .card .stage .b3d{--w:58px;--h:84px;--d:28px;--cw:27px;--ch:24px;--cd:20px}
+  .card .stage .b3d .lbl b{font-size:10px}.card .stage .b3d .lbl small{font-size:5px}
+  .ph-bottle .b3d{--w:104px;--h:150px;--d:48px;--cw:46px;--ch:40px;--cd:36px}
+  .ph-bottle .lbl b{font-size:13px}
+  .dr-turn .b3d{--w:104px;--h:150px;--d:50px;--cw:46px;--ch:42px;--cd:36px}
+  .card .stage img.ph{width:72%}
+}
+@media(min-width:900px){.ph-bottle .b3d{--w:160px;--h:228px;--d:72px;--cw:70px;--ch:60px;--cd:54px}}
+.card .stage img.ph{width:70%}
