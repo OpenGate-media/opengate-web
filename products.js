@@ -12,7 +12,6 @@ const COUPONS = { DULCE: 0.99 };
 const P = [
  {
   "n": "9 PM Rebel",
-  "cut": "/img/9pm-rebel.webp",
   "vid": 67842845213037,
   "b": "Afnan",
   "c": "EDP",
@@ -1036,7 +1035,7 @@ const P = [
   "c1": "#d9d9d6",
   "c2": "#6e6e6b",
   "vid": 67856326590829,
-  "img": "/img/afnan-supremacy-silver-set.jpg",
+  "img": "",
   "frames": []
  },
  {
@@ -1060,7 +1059,7 @@ const P = [
   "c1": "#3fa9f5",
   "c2": "#ff7a1a",
   "vid": 67856326623597,
-  "img": "https://cdn2.jomashop.com/media/catalog/product/cache/b3e31d40bbb1abcc90b26106659d5d3f/j/o/jo-milano-unisex-collection-ii-gift-set-fragrances-810224740046.jpg?width=800&height=800",
+  "img": "",
   "frames": []
  },
  {
@@ -1140,7 +1139,7 @@ const P = [
   "c1": "#e9e4da",
   "c2": "#8a1c1c",
   "vid": 67856328982893,
-  "img": "https://cdn2.jomashop.com/media/catalog/product/cache/b3e31d40bbb1abcc90b26106659d5d3f/l/a/lattafa-mini-set-gift-set-fragrances-6290362348078.jpg?width=800&height=800",
+  "img": "",
   "frames": []
  },
  {

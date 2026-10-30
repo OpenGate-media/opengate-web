@@ -10,7 +10,7 @@
       <div class="b3d-cap"><i class="f fr"></i><i class="f bk"></i><i class="f lf"></i><i class="f rt"></i><i class="f tp"></i></div>
       <div class="b3d-neck"></div>
       <div class="b3d-body">
-        <i class="f fr">${label ? `<span class="lbl"><small>${p.b}</small><b>${p.n}</b><small>${p.c} · ${p.ml} ml</small></span>` : ''}</i>
+        <i class="f fr">${label ? `<span class="lbl"><small>${p.b}</small><b>${p.n}</b><small>${p.ml ? `${p.c} · ${p.ml} ml` : p.c}</small></span>` : ''}</i>
         <i class="f bk"><span class="lbl og">og</span></i><i class="f lf"></i><i class="f rt"></i><i class="f tp"></i><i class="f bt"></i>
       </div></div>`;
   }
