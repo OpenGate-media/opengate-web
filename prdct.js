@@ -14,7 +14,13 @@
         <i class="f bk"><span class="lbl og">og</span></i><i class="f lf"></i><i class="f rt"></i><i class="f tp"></i><i class="f bt"></i>
       </div></div>`;
   }
+  // Frasco real recortado (sin fondo) con profundidad: capas para dar grosor al girar
+  function cut3d(p) {
+    const layers = [6, 5, 4, 3, 2, 1].map(z => `<img class="cl" src="${p.cut}" alt="" aria-hidden="true" style="--z:${z}">`).join('');
+    return `<div class="cut3d">${layers}<img class="cf" src="${p.cut}" alt="${p.n}"><i class="sheen" style="-webkit-mask-image:url(${p.cut});mask-image:url(${p.cut})"></i></div><span class="cut-floor" aria-hidden="true"></span>`;
+  }
   function visual(p) {
+    if (p.cut) return cut3d(p);
     if (p.frames && p.frames.length) return `<img class="ph frames" src="${p.frames[0]}" alt="${p.n}" data-frames='${JSON.stringify(p.frames)}'>`;
     if (p.img) return `<img class="ph" src="${p.img}" alt="${p.n}">`;
     return bottle3d(p);
@@ -249,7 +255,7 @@
     const rel = P.map((q, j) => ({ q, j })).filter(o => o.j !== i).sort((a, b) => (b.q.fam.split(' ')[0] === p.fam.split(' ')[0]) - (a.q.fam.split(' ')[0] === p.fam.split(' ')[0]) || Math.abs(a.q.pn - p.pn) - Math.abs(b.q.pn - p.pn)).slice(0, 3);
     body.innerHTML = `
       <div class="dr-view">
-        <div class="dr-turn" title="Arrastra para girar">${p.frames && p.frames.length ? visual(p) : p.img ? visual(p) : bottle3d(p)}</div>
+        <div class="dr-turn" title="Arrastra para girar">${p.cut || (p.frames && p.frames.length) || p.img ? visual(p) : bottle3d(p)}</div>
         <span class="mono dr-hint">↔ arrastra para girar</span>
       </div>
       <div class="dr-info">
@@ -313,13 +319,14 @@
     compose(); paintList();
 
     // girar arrastrando (con inercia tipo stop motion)
-    const turn = $('.dr-turn', body), b3 = $('.b3d', turn), fr = $('.frames', turn);
-    let ry = -20, drag = false, sx = 0, sr = 0;
-    const setR = () => { if (b3) b3.style.setProperty('--ry', ry + 'deg'); if (fr) { const F = JSON.parse(fr.dataset.frames); fr.src = F[((Math.round(ry / (360 / F.length)) % F.length) + F.length) % F.length]; } };
+    const turn = $('.dr-turn', body), cutEl = $('.cut3d', turn), b3 = $('.b3d', turn) || cutEl, fr = $('.frames', turn);
+    let ry = cutEl ? -14 : -20, drag = false, sx = 0, sr = 0;
+    const setR = () => { if (cutEl) ry = Math.max(-55, Math.min(55, ry)); if (b3) b3.style.setProperty('--ry', ry + 'deg'); if (fr) { const F = JSON.parse(fr.dataset.frames); fr.src = F[((Math.round(ry / (360 / F.length)) % F.length) + F.length) % F.length]; } };
     setR();
     turn.onpointerdown = e => { drag = true; sx = e.clientX; sr = ry; turn.setPointerCapture(e.pointerId); turn.classList.add('grab'); };
     turn.onpointermove = e => { if (drag) { ry = sr + (e.clientX - sx) * .8; setR(); } };
-    turn.onpointerup = turn.onpointercancel = () => { drag = false; turn.classList.remove('grab'); };
+    turn.onpointerup = turn.onpointercancel = () => { drag = false; turn.classList.remove('grab');
+      if (cutEl && window.gsap) { const o = { v: ry }; gsap.to(o, { v: -14, duration: 1.4, ease: 'elastic.out(1, .45)', onUpdate: () => { ry = o.v; setR(); } }); } };
 
     dr.classList.add('on'); dr.setAttribute('aria-hidden', 'false'); document.documentElement.classList.add('lock');
     setTimeout(() => $('.dr-x', dr).focus(), 50);

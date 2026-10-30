@@ -12,6 +12,7 @@ const COUPONS = { DULCE: 0.99 };
 const P = [
  {
   "n": "9 PM Rebel",
+  "cut": "/img/9pm-rebel.webp",
   "vid": 67842845213037,
   "b": "Afnan",
   "c": "EDP",
