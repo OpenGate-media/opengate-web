@@ -85,8 +85,18 @@
   };
 
   // ---------- Mensaje y canales ----------
+  // Canal elegido para escribir: WhatsApp o Instagram (se recuerda)
+  let canal = 'wa';
+  try { canal = localStorage.getItem('og-canal') || (WHATSAPP ? 'wa' : 'ig'); } catch (e) {}
+  if (!WHATSAPP) canal = 'ig';
+  const chLabel = () => canal === 'wa' ? 'Escribir por WhatsApp →' : 'Escribir por Instagram →';
+  const chSwitch = () => WHATSAPP ? `<div class="ch-sw" role="radiogroup" aria-label="Canal"><button data-c="wa" class="${canal === 'wa' ? 'on' : ''}">WhatsApp</button><button data-c="ig" class="${canal === 'ig' ? 'on' : ''}">Instagram</button><i></i></div>` : '';
+  function wireSwitch(root, btn) {
+    $$('.ch-sw button', root).forEach(b => b.onclick = () => { canal = b.dataset.c; try { localStorage.setItem('og-canal', canal); } catch (e) {} $$('.ch-sw button', root).forEach(x => x.classList.toggle('on', x === b)); $('.ch-sw', root).dataset.c = canal; if (btn) btn.textContent = chLabel(); });
+    const sw = $('.ch-sw', root); if (sw) sw.dataset.c = canal; if (btn) btn.textContent = chLabel();
+  }
   function send(text) {
-    if (WHATSAPP) { window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank', 'noopener'); return; }
+    if (WHATSAPP && canal === 'wa') { window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`, '_blank', 'noopener'); return; }
     // Instagram no deja precargar texto: lo copiamos y abrimos el chat
     // Instagram no permite que una web escriba el mensaje dentro del chat: lo copiamos para pegarlo con un toque
     const go = () => window.open(`https://ig.me/m/${IG}`, '_blank', 'noopener');
@@ -282,7 +292,7 @@
           <pre class="msg" aria-live="polite"></pre>
           ${p.vid ? `<button class="btn solid add-cart"></button><button class="btn pay"></button>${couponBox()}
           <div class="pay-note mono">Pago seguro con Mercado Pago · tarjeta, PSE y más</div>` : `<div class="pay-note mono" style="margin:0">Precio y disponibilidad por confirmar · pregúntanos</div>`}
-          <button class="btn send">${WHATSAPP ? 'Preguntar por WhatsApp' : 'Preguntar por Instagram'} →</button>
+          <div class="ch-row">${chSwitch()}<button class="btn send"></button></div>
           <button class="save-btn" data-i="${i}"><b>♡</b><span>guardar en mi lista</span></button>
         </div>
 
@@ -304,7 +314,7 @@
     $$('.q', body).forEach(b => b.onclick = () => { b.classList.toggle('on'); compose(); });
     $$('.qty button', body).forEach(b => b.onclick = () => { if (+b.dataset.d > 0 && qty >= maxQ(p)) { toast(`Solo hay ${maxQ(p)} unidad disponible de ${p.n}`); return; } qty = Math.max(1, Math.min(maxQ(p), qty + +b.dataset.d)); $('.qty output', body).textContent = qty; compose(); paintPay(); });
     $('.city', body).oninput = compose;
-    $('.send', body).onclick = () => send(msg.textContent);
+    $('.send', body).onclick = () => send(msg.textContent); wireSwitch(body, $('.send', body));
     const payBtn = $('.pay', body), priceEl = $('.dr-price', body);
     const paintPay = () => {
       priceEl.innerHTML = p.pn ? (coupon ? `<s>${p.p}</s><b>${fmt(disc(p.pn))}</b><span class="mono">con ${coupon}</span>` : `<b>${p.p}</b><span class="mono">COP · aprox.</span>`) : `<b class="tbd">${p.p}</b>`;
@@ -350,12 +360,12 @@
       <ul class="lp-ul">${list.map(i => `<li><div class="mini">${P[i].img ? visual(P[i]) : bottle3d(P[i], false)}</div><div><b>${P[i].n}</b><span class="mono">${P[i].b} · ${P[i].c}${mlTxt(P[i])}</span></div><span>${P[i].p}</span><button data-i="${i}" aria-label="Quitar">×</button></li>`).join('')}</ul>
       <div class="lp-tot"><span class="mono">total aprox.</span><b class="lp-total"></b></div>
       ${payable.length ? `<button class="btn solid lp-pay"></button>` : ''}
-      <button class="btn lp-send">${WHATSAPP ? 'Preguntar por WhatsApp' : 'Preguntar por Instagram'} →</button>` : `<p class="lp-empty">Todavía no guardas productos. Abre uno y toca <b>♡ guardar en mi lista</b>.</p>`}`;
+      <div class="ch-row">${chSwitch()}<button class="btn lp-send"></button></div>` : `<p class="lp-empty">Todavía no guardas productos. Abre uno y toca <b>♡ guardar en mi lista</b>.</p>`}`;
     $$('.lp-ul button', b).forEach(x => x.onclick = () => { list = list.filter(i => i !== +x.dataset.i); saveList(); openList(); });
     const pb = $('.lp-pay', b);
     const t0 = $('.lp-total', b); if (t0) t0.innerHTML = fmt(total);
     if (pb) { pb.textContent = 'Pasar todo al carrito →'; pb.onclick = () => { list.forEach(i => { if (P[i].vid && !cart.find(o => o.i === i)) cart.push({ i, q: 1 }); }); saveCart(); closeLp(); openCart(); }; }
-    const s = $('.lp-send', b);
+    const s = $('.lp-send', b); if (s) wireSwitch(b, s);
     if (s) s.onclick = () => send(`Hola OG 👋 Quiero pedir:\n${items.map(p => `• ${p.n} (${p.b}, ${p.c}${mlTxt(p)}) · ${p.pn ? fmt(disc(p.pn)) : 'precio por confirmar'}`).join('\n')}\nTotal aprox.: ${fmt(disc(total))}${coupon ? ` (cupón ${coupon})` : ''}\n¿Están disponibles?`);
     lp.classList.add('on'); lp.setAttribute('aria-hidden', 'false'); document.documentElement.classList.add('lock');
   }

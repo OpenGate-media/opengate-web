@@ -635,3 +635,25 @@ img.ph{display:block;object-fit:contain;background:#fff;border-radius:14px}
 .hero ~ .wa-float,body:has(.hero) .wa-float{bottom:64px}
 @media(min-width:768px){body:has(.hero) .wa-float{bottom:72px}}
 footer ul a{color:inherit}
+
+/* Canal: WhatsApp / Instagram en un solo botón */
+.wa-float{display:none}
+.ch-float{position:fixed;right:18px;bottom:18px;z-index:90;display:flex;align-items:center;gap:4px;padding:4px;border-radius:999px;background:var(--fg);color:var(--bg);box-shadow:0 10px 30px rgba(0,0,0,.35);font:600 13px 'Archivo',sans-serif}
+@media(min-width:768px){.ch-float{right:40px;bottom:24px}}
+body:has(.hero) .ch-float{bottom:64px}@media(min-width:768px){body:has(.hero) .ch-float{bottom:72px}}
+html.lock .ch-float{opacity:0;pointer-events:none}
+.chf-sw,.ch-sw{position:relative;display:flex;border-radius:999px}
+.chf-sw{background:color-mix(in srgb,var(--bg) 14%,transparent);padding:3px}
+.chf-sw button{position:relative;z-index:1;width:34px;height:30px;border:0;border-radius:999px;background:none;color:var(--bg);display:grid;place-items:center;cursor:pointer;transition:color .3s}
+.chf-sw button.on{color:var(--fg)}
+.chf-sw i{position:absolute;top:3px;bottom:3px;left:3px;width:34px;border-radius:999px;background:var(--bg);transition:transform .45s cubic-bezier(.22,1,.36,1)}
+.ch-float[data-c="ig"] .chf-sw i{transform:translateX(34px)}
+.chf-go{padding:8px 12px 8px 8px;color:var(--bg);white-space:nowrap}
+@media(max-width:600px){.chf-t{display:none}.chf-go{padding:8px 10px 8px 6px}}
+/* en la ficha / lista */
+.ch-row{display:flex;flex-direction:column;gap:8px}
+.ch-sw{background:#e6e3dc;padding:3px;align-self:stretch}
+.ch-sw button{position:relative;z-index:1;flex:1;border:0;background:none;padding:9px 10px;border-radius:999px;font:600 13px 'Archivo';color:#6b6964;cursor:pointer;transition:color .3s}
+.ch-sw button.on{color:#F2F0EC}
+.ch-sw i{position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);border-radius:999px;background:#0A0A0A;transition:transform .45s cubic-bezier(.22,1,.36,1)}
+.ch-sw[data-c="ig"] i{transform:translateX(100%)}
