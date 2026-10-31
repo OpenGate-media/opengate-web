@@ -3,7 +3,7 @@
 // Giro 360 real: pon 12-24 fotos alrededor del frasco en "frames" (en orden) y la tarjeta las recorre con el cursor.
 // Sin foto, se muestra el frasco 3D de muestra con los colores c1/c2.
 // Número de WhatsApp para pedidos (con indicativo, sin +). Vacío = se usa Instagram.
-const WHATSAPP = '';
+const WHATSAPP = '573001087938';
 const IG = 'og.prdct';
 // Tienda Shopify (checkout con Mercado Pago). "vid" = id de la variante en Shopify.
 const SHOP = 'w9akid-2m.myshopify.com';
