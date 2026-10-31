@@ -171,7 +171,8 @@ if (window.gsap && !reduce) {
 })();
 
 // Botón flotante: alternar entre WhatsApp e Instagram en el mismo botón
-(() => {
+(function chInit() {
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', chInit); return; }
   const f = document.querySelector('.ch-float'); if (!f) return;
   const go = f.querySelector('.chf-go'), t = f.querySelector('.chf-t'), bs = [...f.querySelectorAll('.chf-sw button')];
   let c = 'wa'; try { c = localStorage.getItem('og-canal') || 'wa'; } catch (e) {}
