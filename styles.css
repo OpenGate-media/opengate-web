@@ -687,3 +687,4 @@ html.lock .ch-float{opacity:0;pointer-events:none}
 .jjs-cta{justify-self:start}
 @media(min-width:900px){.jjs-cta{grid-column:1/-1}}
 .cat-by{font-weight:600!important;border-color:var(--fg)!important}
+@media(max-width:420px){.topbar .wrap{gap:6px}.tabs a{padding:6px 8px;font-size:12.5px}.brand img.wm{height:24px}.cart-btn,.list-btn{padding:6px 7px;gap:5px}}
