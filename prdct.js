@@ -252,6 +252,27 @@
       <p class="st-src">Encuesta a ${t.v} compradores verificados en EE. UU.</p>
     </div>`;
   }
+  // ---------- By Juan José Sotelo (marca invitada) ----------
+  (() => {
+    const g = $('#jjsGrid'), cats = $('.jjs-cats'); if (!g || typeof JJS === 'undefined') return;
+    const C = [['all', 'Todo'], ['gafas', 'Gafas'], ['pantalones', 'Pantalones'], ['bermudas', 'Bermudas'], ['accesorios', 'Accesorios']];
+    const ico = {
+      gafas: '<svg viewBox="0 0 120 60"><circle cx="34" cy="34" r="20"/><circle cx="86" cy="34" r="20"/><path d="M54 32q6-6 12 0M14 30 4 20M106 30l10-10"/></svg>',
+      pantalones: '<svg viewBox="0 0 80 120"><path d="M14 6h52l6 108H48L40 46l-8 68H8z"/><path d="M14 18h52"/></svg>',
+      bermudas: '<svg viewBox="0 0 90 80"><path d="M10 8h70l8 62H54L45 34l-9 36H2z"/><path d="M10 20h70"/></svg>',
+      accesorios: '<svg viewBox="0 0 100 100"><circle cx="50" cy="56" r="30"/><circle cx="50" cy="56" r="20"/><path d="M38 26 44 8h12l6 18"/></svg>'
+    };
+    cats.innerHTML = C.map(([k, l], i) => `<button class="cat${i ? '' : ' on'}" data-k="${k}">${l}</button>`).join('');
+    const paint = k => {
+      const items = JJS.filter(x => k === 'all' || x.cat === k);
+      if (items.length) g.innerHTML = items.map(x => `<article class="jjs-card"><div class="jjs-img">${x.img ? `<img src="${x.img}" alt="${x.n}">` : ico[x.cat] || ''}</div><div class="jjs-info"><span class="mono">${x.cat}</span><h4>${x.n}</h4><span class="price">${x.p}</span></div></article>`).join('');
+      else g.innerHTML = (k === 'all' ? C.slice(1) : C.filter(c => c[0] === k)).map(([c, l]) => `<article class="jjs-card soon"><div class="jjs-img">${ico[c]}</div><div class="jjs-info"><span class="mono">próximamente</span><h4>${l}</h4><span class="soon-t">colección en camino</span></div></article>`).join('');
+      if (window.gsap) gsap.fromTo($$('.jjs-card', g), { opacity: 0, y: 24, filter: 'blur(8px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: .8, ease: 'expo.out', stagger: .06, clearProps: 'filter,transform' });
+    };
+    $$('.cat', cats).forEach(b => b.onclick = () => { $$('.cat', cats).forEach(x => x.classList.toggle('on', x === b)); paint(b.dataset.k); });
+    paint('all');
+  })();
+
   // ---------- Ficha (drawer) ----------
   const dr = document.createElement('div');
   dr.className = 'drawer'; dr.setAttribute('aria-hidden', 'true');

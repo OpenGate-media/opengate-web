@@ -9,6 +9,9 @@ const IG = 'og.prdct';
 const SHOP = 'w9akid-2m.myshopify.com';
 // Cupones válidos (también deben existir en Shopify → Descuentos con el mismo código)
 const COUPONS = { DULCE: 0.99 };
+// Marca invitada: Juan José Sotelo. Agrega productos aquí (cat: gafas | pantalones | bermudas | accesorios).
+// Ejemplo: { n: 'Gafas Aviador', cat: 'gafas', p: '$ 111.111', pn: 111111, img: '/img/jjs/aviador.webp', vid: 0, tallas: '' }
+const JJS = [];
 const P = [
  {
   "n": "9 PM Rebel",
