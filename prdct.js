@@ -414,6 +414,7 @@
       ${couponBox()}
       <button class="btn solid c-pay"></button>
       <div class="pay-note mono">Pago seguro con Mercado Pago · tarjeta, PSE y más · envío gratis a toda Colombia${hasEnc ? '<br>Los productos por encargo llegan en 10–15 días hábiles' : ''}</div>
+      <button class="btn c-inv">Ver mi pedido como factura</button>
       <button class="btn c-more">Seguir comprando</button>` : `<p class="lp-empty">Tu carrito está vacío. Toca <b>+</b> en un producto o <b>Agregar al carrito</b> en su ficha.</p><button class="btn c-more">Ver perfumes</button>`}`;
     const paint = () => { const t = $('.lp-total', b); if (t) t.innerHTML = coupon ? `<s>${fmt(sub)}</s> ${fmt(disc(sub))}` : fmt(sub); const pb = $('.c-pay', b); if (pb) pb.textContent = `Pagar · ${fmt(disc(sub))}`; };
     paint();
@@ -423,6 +424,7 @@
       $('.c-rm', li).onclick = () => { cart = cart.filter(x => x.i !== i); saveCart(); openCart(); };
     });
     const pb = $('.c-pay', b); if (pb) { pb.onclick = () => checkout(cart.map(o => ({ p: P[o.i], q: o.q }))); wireCoupon(b, paint); }
+    const ci = $('.c-inv', b); if (ci) ci.onclick = () => { closeCart(); window.OGInvoice && OGInvoice.open(); };
     $('.c-more', b).onclick = () => { closeCart(); const c = $('#coleccion'); if (c) c.scrollIntoView({ behavior: 'smooth' }); };
     cp.classList.add('on'); cp.setAttribute('aria-hidden', 'false'); document.documentElement.classList.add('lock');
   }
@@ -431,4 +433,7 @@
   $$('.cart-btn').forEach(b => b.onclick = openCart);
   paintCart();
   if (/[?&]carrito/.test(location.search)) openCart();
+  // API para factura y vitrina
+  window.OG = { P, fmt, disc, get coupon() { return coupon; }, get cart() { return cart; }, setCart(c) { cart = c; saveCart(); }, addToCart, open, openCart, closeCart, bottle3d, visual, maxQ, checkout };
+  document.dispatchEvent(new Event('og:ready'));
 })();
