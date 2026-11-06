@@ -883,3 +883,25 @@ html.music-on .sb-grooves,html.music-on .sb-label{animation-play-state:running}
 .v-tag{bottom:-74px}
 .v-refl{display:none}
 @media(max-width:600px){.v-item{height:150px}}
+
+/* ===== Burbuja de música v2: pausa, silencio, minimizar a vinilo ===== */
+.og-player{gap:10px;padding:6px 10px 6px 6px;background:color-mix(in srgb,var(--bg) 82%,var(--fg) 18%);border:1px solid color-mix(in srgb,var(--fg) 22%,transparent);color:var(--fg);box-shadow:0 12px 34px rgba(0,0,0,.28);max-width:min(380px,calc(100vw - 32px));transition:padding .5s cubic-bezier(.22,1,.36,1),border-radius .5s,background .4s}
+@supports not (color-mix(in srgb,red 50%,blue)){.og-player{background:var(--bg)}}
+.op-disc{flex:none;width:44px;height:44px;border:0;padding:0;background:none;cursor:pointer;border-radius:50%}
+.op-vinyl{position:relative;display:block;width:100%;height:100%;border-radius:50%;background:repeating-radial-gradient(circle,#0c0c0c 0 1.4px,#202020 1.4px 2.6px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),0 4px 12px rgba(0,0,0,.35);animation:spin 2.4s linear infinite;animation-play-state:paused}
+.op-vinyl::after{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 20deg,transparent 0 12%,rgba(255,255,255,.16) 16%,transparent 22% 62%,rgba(255,255,255,.1) 66%,transparent 72%)}
+.op-lbl{position:absolute;left:50%;top:50%;width:46%;height:46%;transform:translate(-50%,-50%);border-radius:50%;background:var(--fg);overflow:hidden}
+.op-lbl::before{content:"";position:absolute;inset:8%;background:var(--bg);-webkit-mask:url(/hole.png) center/contain no-repeat;mask:url(/hole.png) center/contain no-repeat}
+.og-player.on .op-vinyl{animation-play-state:running}
+.op-body{display:flex;align-items:center;gap:10px;min-width:0;overflow:hidden;transition:max-width .5s cubic-bezier(.22,1,.36,1),opacity .3s;max-width:320px}
+.op-ctrls{display:flex;align-items:center;gap:2px;flex:none}
+.op-ctrls button{width:30px;height:30px;border:0;border-radius:50%;background:none;color:var(--fg);display:grid;place-items:center;cursor:pointer;font-size:13px;transition:background .25s}
+.op-ctrls button:hover{background:color-mix(in srgb,var(--fg) 14%,transparent)}
+.op-ctrls .op-play{background:var(--fg);color:var(--bg);font-size:11px}
+.op-ctrls .op-next{font-size:20px}
+.op-mute .x{display:none}.og-player.silent .op-mute .x{display:inline}.og-player.silent .op-mute .w{display:none}
+.og-player.min{padding:4px;border-radius:50%;gap:0}
+.og-player.min .op-body{max-width:0;opacity:0;pointer-events:none}
+.og-player.min .op-disc{width:52px;height:52px}
+.og-player .op-toggle{display:none}
+@media(max-width:600px){.op-meta{max-width:96px}.op-ctrls .op-next{display:none}}

@@ -12,7 +12,7 @@ const WA_MUSIC = '573001087938';
 (function musicInit() {
   if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', musicInit); return; }
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
-  let st = { i: 0, t: 0, muted: false };
+  let st = { i: 0, t: 0, muted: false, silent: false, min: false };
   try { Object.assign(st, JSON.parse(localStorage.getItem('og-music') || '{}')); } catch (e) {}
   const save = () => { try { localStorage.setItem('og-music', JSON.stringify(st)); } catch (e) {} };
   const audio = new Audio(); audio.preload = 'auto'; audio.volume = 0;
@@ -25,23 +25,26 @@ const WA_MUSIC = '573001087938';
   const load = (i, t = 0) => { st.i = (i + TRACKS.length) % TRACKS.length; audio.src = TRACKS[st.i].src; audio.currentTime = t; paint(); };
   audio.addEventListener('ended', () => { load(st.i + 1); play(); });
   audio.addEventListener('timeupdate', () => { st.t = audio.currentTime; });
+  ['play', 'pause'].forEach(ev => audio.addEventListener(ev, () => paint()));
   setInterval(save, 2000); addEventListener('pagehide', save);
 
   // ---- mini reproductor fijo ----
   const mini = document.createElement('div');
   mini.className = 'og-player'; mini.setAttribute('role', 'region'); mini.setAttribute('aria-label', 'Música de Open Gate');
-  mini.innerHTML = `<button class="op-toggle" aria-label="Silenciar música"><span class="eq"><i></i><i></i><i></i><i></i></span></button>
-    <div class="op-meta"><span class="op-k">side b · sonando</span><span class="op-t"></span></div>
-    <button class="op-next" aria-label="Siguiente tema">›</button>`;
+  mini.innerHTML = `<button class="op-disc" aria-label="Abrir reproductor"><span class="op-vinyl"><span class="op-lbl"></span></span></button>
+    <div class="op-body"><div class="op-meta"><span class="op-k">side b · sonando</span><span class="op-t"></span></div>
+    <div class="op-ctrls"><button class="op-play" aria-label="Pausar">❚❚</button><button class="op-mute" aria-label="Silenciar"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path class="w" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="x" d="M16 9l5 6M21 9l-5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><button class="op-next" aria-label="Siguiente tema">›</button><button class="op-min" aria-label="Minimizar">–</button></div></div>`;
   document.body.appendChild(mini);
   const playing = () => !audio.paused && !st.muted;
   function paint() {
     const tr = TRACKS[st.i];
     $('.op-t', mini).textContent = `${tr.t} — ${tr.a}`;
     mini.classList.toggle('on', playing());
-    $('.op-toggle', mini).setAttribute('aria-label', st.muted ? 'Activar música' : 'Silenciar música');
-    $('.op-k', mini).textContent = st.muted ? 'side b · en silencio' : 'side b · sonando';
+    $('.op-k', mini).textContent = st.muted ? 'side b · en pausa' : st.silent ? 'side b · en silencio' : 'side b · sonando';
     document.documentElement.classList.toggle('music-on', playing());
+    mini.classList.toggle('min', !!st.min); mini.classList.toggle('silent', !!st.silent);
+    const pb = $('.op-play', mini); pb.textContent = st.muted || audio.paused ? '▶' : '❚❚'; pb.setAttribute('aria-label', st.muted || audio.paused ? 'Reproducir' : 'Pausar');
+    $('.op-mute', mini).setAttribute('aria-label', st.silent ? 'Activar sonido' : 'Silenciar'); audio.muted = !!st.silent;
     $$('.sb-row').forEach(r => r.classList.toggle('cur', +r.dataset.i === st.i));
     $$('.sb-row .sb-play').forEach(b => { const on = +b.closest('.sb-row').dataset.i === st.i && playing(); b.textContent = on ? '❚❚' : '▶'; b.setAttribute('aria-label', on ? 'Pausar' : 'Reproducir'); });
   }
@@ -54,7 +57,10 @@ const WA_MUSIC = '573001087938';
     if (m) fadeTo(0, 500, () => { audio.pause(); paint(); }); else play();
     paint();
   }
-  $('.op-toggle', mini).onclick = e => { e.stopPropagation(); if (!started && !st.muted) { play(); return; } mute(!st.muted); };
+  $('.op-play', mini).onclick = e => { e.stopPropagation(); if (!started && !st.muted) { play(); return; } mute(!st.muted); };
+  $('.op-mute', mini).onclick = e => { e.stopPropagation(); st.silent = !st.silent; save(); if (!started && !st.muted) play(); paint(); };
+  $('.op-min', mini).onclick = e => { e.stopPropagation(); st.min = true; save(); paint(); };
+  $('.op-disc', mini).onclick = e => { e.stopPropagation(); if (st.min) { st.min = false; save(); paint(); } else { if (!started && !st.muted) play(); else mute(!st.muted); } };
   $('.op-next', mini).onclick = e => { e.stopPropagation(); load(st.i + 1); if (st.muted) { st.muted = false; } play(); };
   load(st.i, st.t || 0);
   // Los navegadores no dejan sonar sin una interacción: arranca con el primer toque / tecla
