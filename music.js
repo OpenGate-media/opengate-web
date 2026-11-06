@@ -58,7 +58,7 @@ const WA_MUSIC = '573001087938';
   $('.op-next', mini).onclick = e => { e.stopPropagation(); load(st.i + 1); if (st.muted) { st.muted = false; } play(); };
   load(st.i, st.t || 0);
   // Los navegadores no dejan sonar sin una interacción: arranca con el primer toque / tecla
-  const kick = e => { if (e && e.target && e.target.closest && e.target.closest('.og-player')) return; if (!started && !st.muted) play(); };
+  const kick = e => { if (e && e.target && e.target.closest && e.target.closest('.og-player, .sb-play')) return; if (!started && !st.muted) play(); };
   ['pointerdown', 'keydown', 'touchend'].forEach(ev => addEventListener(ev, kick, { once: false, passive: true }));
   addEventListener('pointerdown', function off() { if (started || st.muted) removeEventListener('pointerdown', off); });
 
