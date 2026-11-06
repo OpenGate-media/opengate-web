@@ -4,10 +4,10 @@
   const O = window.OG, $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const wall = $('#vitrinaWall'); if (!wall) return;
   const items = O.P.map((p, i) => ({ p, i })).filter(x => !x.p.enc);
-  const PER = 5;
+  const PER = matchMedia("(max-width:600px)").matches ? 3 : 5;
   wall.innerHTML = Array.from({ length: Math.ceil(items.length / PER) }, (_, r) =>
     `<div class="v-shelf">${items.slice(r * PER, r * PER + PER).map(({ p, i }, k) =>
-      `<button class="v-item" data-i="${i}" style="--d:${(r * PER + k) * 40}ms" aria-label="Ver ${p.n}"><span class="v-obj">${p.img ? O.visual(p) : O.bottle3d(p, false)}</span><span class="v-tag">${p.n}</span></button>`).join('')}<i class="v-glass"></i></div>`).join('');
+      `<button class="v-item" data-i="${i}" style="--d:${(r * PER + k) * 40}ms" aria-label="Ver ${p.n}"><span class="v-obj">${p.img ? O.visual(p) : O.bottle3d(p, false)}</span><span class="v-spot"></span><span class="v-refl">${p.img ? O.visual(p) : O.bottle3d(p, false)}</span><span class="v-tag"><b>${p.n}</b><small>${p.p}</small></span></button>`).join('')}<i class="v-glass"></i></div>`).join('');
 
   const fv = document.createElement('div');
   fv.className = 'v-focus'; fv.setAttribute('aria-hidden', 'true');
