@@ -921,3 +921,12 @@ html.music-on .sb-grooves,html.music-on .sb-label{animation-play-state:running}
 .v-dots i{width:8px;height:8px;border-radius:50%;background:rgba(237,232,223,.3);cursor:pointer;transition:.3s}
 .v-dots i.on{background:#EDE8DF;width:24px;border-radius:4px}
 @media(max-width:600px){.v-page .v-shelf{grid-template-columns:repeat(3,1fr)}.v-rk{font-size:9px;left:4px}}
+
+/* burbuja de música: mismo alto que la de contacto (44px) y el mismo tamaño al agruparse */
+.og-player,.og-player.min{height:44px;box-sizing:border-box;padding:4px 8px 4px 4px;min-height:0}
+.og-player.min{padding:4px;width:44px}
+.og-player .op-disc,.og-player.min .op-disc{width:36px;height:36px}
+.og-player .op-ctrls button{width:28px;height:28px}
+.op-meta{line-height:1.15}
+.op-meta span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+@media(max-width:767px){.og-player{bottom:18px}}
