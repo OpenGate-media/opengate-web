@@ -930,3 +930,57 @@ html.music-on .sb-grooves,html.music-on .sb-label{animation-play-state:running}
 .op-meta{line-height:1.15}
 .op-meta span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
 @media(max-width:767px){.og-player{bottom:18px}}
+
+/* ===== Vitrina de lujo (sobria) ===== */
+.v-wall{background:
+  radial-gradient(70% 50% at 50% 0%,rgba(255,222,180,.10),transparent 70%),
+  repeating-linear-gradient(90deg,rgba(255,255,255,.012) 0 1px,transparent 1px 120px),
+  linear-gradient(180deg,#191715 0%,#100f0e 60%,#0b0a09 100%);
+  border:1px solid rgba(201,169,110,.22);box-shadow:inset 0 0 0 10px #0c0b0a,inset 0 0 0 11px rgba(201,169,110,.25),inset 0 0 140px rgba(0,0,0,.8);padding:52px clamp(14px,3vw,50px) 30px}
+.v-spot{background:radial-gradient(40% 70% at 50% 0%,rgba(255,232,196,.16),transparent 72%)}
+.v-glass{height:6px;background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,.05));border-top:1px solid rgba(255,255,255,.55);border-bottom:1px solid #c9a96e;box-shadow:0 18px 30px rgba(0,0,0,.7),0 1px 0 rgba(201,169,110,.5)}
+.v-glass::after{height:18px;background:linear-gradient(180deg,rgba(0,0,0,.5),transparent)}
+.v-tag{background:transparent;border:0;border-top:1px solid rgba(201,169,110,.45);padding:6px 4px 0;border-radius:0}
+.v-tag b{font:500 clamp(10px,.95vw,12.5px) 'Archivo';letter-spacing:.06em;text-transform:uppercase}
+.v-tag small{color:#c9a96e}
+.v-item:hover .v-tag{background:transparent}.v-item:hover .v-tag b{color:#fff}.v-item:hover .v-tag small{color:#e2c48d}
+.v-rk{color:#c9a96e!important;font-size:10px}
+.v-car button{border-color:rgba(201,169,110,.45)}.v-dots i.on{background:#c9a96e}
+
+/* ficha en foco: descripción a un lado, ocasión al otro, el perfume al centro */
+.v-focus{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) minmax(0,1fr);align-items:center;gap:clamp(16px,3vw,48px);padding:80px clamp(70px,7vw,120px) 60px;background:radial-gradient(55% 60% at 50% 45%,color-mix(in srgb,var(--c1,#333) 22%,#141210),#090807 75%);overflow:auto}
+.v-mid{position:relative;display:flex;flex-direction:column;align-items:center}
+.v-stage{width:100%;height:min(48vh,440px)}
+.v-plate{position:relative;left:auto;bottom:auto;transform:none;width:80%;height:6px;margin-top:-6px;background:linear-gradient(90deg,transparent,#c9a96e,transparent);box-shadow:0 0 40px rgba(201,169,110,.35)}
+.v-buy{text-align:center;margin-top:22px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.v-buy .v-k{opacity:.7;color:#c9a96e}
+.v-buy .v-n{font-family:var(--display,'Anton');font-size:clamp(34px,4.4vw,64px);line-height:.95;margin:0;text-transform:uppercase}
+.v-buy .v-price{font:300 15px 'Archivo';letter-spacing:.06em}
+.v-btns{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;justify-content:center}
+.v-pan{align-self:center;max-width:340px;font:300 14px/1.55 'Archivo'}
+.v-l{justify-self:end}.v-r{justify-self:start}
+.v-pan .vh{display:block;color:#c9a96e;margin-bottom:8px}
+.v-pan h4{font:800 clamp(18px,1.6vw,22px)/1.15 'Archivo';margin:0 0 10px}
+.vd{opacity:.85;margin:0 0 16px}
+.vn{display:grid;grid-template-columns:70px 1fr;gap:8px;padding:8px 0;border-top:1px solid rgba(237,232,223,.12)}
+.vn span{font:300 10px 'Archivo';letter-spacing:.14em;text-transform:uppercase;opacity:.6;padding-top:4px}
+.vn p{margin:0;display:flex;flex-wrap:wrap;gap:5px}
+.vn em{font-style:normal;font-size:12px;padding:3px 9px;border:1px solid rgba(201,169,110,.35);border-radius:99px}
+.vm{opacity:.55;margin-top:12px}
+.vo{list-style:none;margin:0 0 14px;padding:0}
+.vo li{display:flex;flex-direction:column;padding:8px 0;border-top:1px solid rgba(237,232,223,.12)}
+.vo b{font:700 14px 'Archivo'}.vo small{opacity:.7;font-size:12.5px}
+.vbs{display:grid;gap:6px;margin-top:12px}
+.vb{display:grid;grid-template-columns:70px 1fr;align-items:center;gap:8px}
+.vb span{font:300 10px 'Archivo';letter-spacing:.14em;text-transform:uppercase;opacity:.65}
+.vb i{height:3px;background:rgba(237,232,223,.12);border-radius:2px;overflow:hidden}
+.vb b{display:block;height:100%;width:var(--v);background:linear-gradient(90deg,#8a6d3f,#e2c48d);transform-origin:left}
+.v-count{color:#c9a96e}
+@media(max-width:900px){
+  .v-focus{grid-template-columns:1fr;align-items:start;padding:70px 18px 90px;gap:22px}
+  .v-mid{order:-1}.v-stage{height:36vh}
+  .v-l,.v-r{justify-self:stretch;max-width:none}
+  .v-nav{top:26vh}.v-nav.prev{left:8px}.v-nav.next{right:8px}
+  .v-count{position:fixed}
+}
+@media(max-width:900px){.v-count{display:none}}
