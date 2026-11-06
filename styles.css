@@ -905,3 +905,19 @@ html.music-on .sb-grooves,html.music-on .sb-label{animation-play-state:running}
 .og-player.min .op-disc{width:52px;height:52px}
 .og-player .op-toggle{display:none}
 @media(max-width:600px){.op-meta{max-width:96px}.op-ctrls .op-next{display:none}}
+
+/* ===== Vitrina: carrusel de mostrarios de 2 repisas ===== */
+.v-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+.v-track::-webkit-scrollbar{display:none}
+.v-page{flex:0 0 100%;scroll-snap-align:start;padding:0 clamp(6px,2vw,30px);box-sizing:border-box}
+.v-page .v-shelf{grid-template-columns:repeat(4,1fr)}
+.v-rk{position:absolute;top:6px;left:8px;z-index:3;font:300 11px 'Archivo';letter-spacing:.08em;color:#cfc8bb}
+.v-item:nth-child(-n+3) .v-rk{color:#EDE8DF}
+.v-car{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:6px}
+.v-car button{width:42px;height:42px;border-radius:50%;border:1px solid rgba(237,232,223,.3);background:rgba(10,10,10,.5);color:#EDE8DF;font-size:22px;cursor:pointer;transition:.25s}
+.v-car button:hover:not(:disabled){background:#EDE8DF;color:#0A0A0A}
+.v-car button:disabled{opacity:.25;cursor:default}
+.v-dots{display:flex;gap:8px}
+.v-dots i{width:8px;height:8px;border-radius:50%;background:rgba(237,232,223,.3);cursor:pointer;transition:.3s}
+.v-dots i.on{background:#EDE8DF;width:24px;border-radius:4px}
+@media(max-width:600px){.v-page .v-shelf{grid-template-columns:repeat(3,1fr)}.v-rk{font-size:9px;left:4px}}

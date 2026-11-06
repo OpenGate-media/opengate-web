@@ -3,11 +3,23 @@
   if (!window.OG) { document.addEventListener('og:ready', init, { once: true }); return; }
   const O = window.OG, $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const wall = $('#vitrinaWall'); if (!wall) return;
-  const items = O.P.map((p, i) => ({ p, i })).filter(x => !x.p.enc);
-  const PER = matchMedia("(max-width:600px)").matches ? 3 : 5;
-  wall.innerHTML = Array.from({ length: Math.ceil(items.length / PER) }, (_, r) =>
-    `<div class="v-shelf">${items.slice(r * PER, r * PER + PER).map(({ p, i }, k) =>
-      `<button class="v-item" data-i="${i}" style="--d:${(r * PER + k) * 40}ms" aria-label="Ver ${p.n}"><span class="v-obj">${p.img ? O.visual(p) : O.bottle3d(p, false)}</span><span class="v-spot"></span><span class="v-refl">${p.img ? O.visual(p) : O.bottle3d(p, false)}</span><span class="v-tag"><b>${p.n}</b><small>${p.p}</small></span></button>`).join('')}<i class="v-glass"></i></div>`).join('');
+  // Solo perfumes de nicho y de diseñador, del más vendido al menos vendido
+  // (ranking por popularidad en Colombia; cambiar el orden aquí cuando haya ventas reales)
+  const RANK = ['Sauvage', 'Acqua di Giò Parfum', 'Y Eau de Parfum', 'Good Girl', 'La Vie Est Belle', 'Le Male Elixir', 'Eros Flame', 'Black XS', 'Born in Roma Uomo', 'Donna Born in Roma', 'Aventus', 'Baccarat Rouge 540', 'Layton', 'Erba Pura', 'Collection II · Set'];
+  const pos = n => { const k = RANK.indexOf(n); return k < 0 ? 999 : k; };
+  const items = O.P.map((p, i) => ({ p, i })).filter(x => x.p.cat === 'Nicho' || x.p.cat === 'Diseñador').sort((a, b) => pos(a.p.n) - pos(b.p.n));
+  const PER = matchMedia("(max-width:600px)").matches ? 3 : 4, PAGE = PER * 2;
+  const cell = ({ p, i }, n) => `<button class="v-item" data-i="${i}" style="--d:${n * 40}ms" aria-label="Ver ${p.n}"><span class="v-rk">#${n + 1}</span><span class="v-obj">${p.img ? O.visual(p) : O.bottle3d(p, false)}</span><span class="v-spot"></span><span class="v-tag"><b>${p.n}</b><small>${p.enc ? 'por encargo · ' : ''}${p.p}</small></span></button>`;
+  const pages = Math.ceil(items.length / PAGE);
+  wall.innerHTML = `<div class="v-track">${Array.from({ length: pages }, (_, g) => `<div class="v-page">${[0, 1].map(r => { const a = g * PAGE + r * PER; return `<div class="v-shelf">${items.slice(a, a + PER).map((x, k) => cell(x, a + k)).join('')}<i class="v-glass"></i></div>`; }).join('')}</div>`).join('')}</div>
+    <div class="v-car"><button class="v-cp" aria-label="Mostrario anterior">‹</button><span class="v-dots">${Array.from({ length: pages }, (_, g) => `<i data-g="${g}"></i>`).join('')}</span><button class="v-cn" aria-label="Mostrario siguiente">›</button></div>`;
+  const track = $('.v-track', wall), dots = $$('.v-dots i', wall);
+  const go = g => track.scrollTo({ left: Math.max(0, Math.min(pages - 1, g)) * track.clientWidth, behavior: 'smooth' });
+  const curPage = () => Math.round(track.scrollLeft / track.clientWidth);
+  const mark = () => { const g = curPage(); dots.forEach((d, k) => d.classList.toggle('on', k === g)); $('.v-cp', wall).disabled = g === 0; $('.v-cn', wall).disabled = g === pages - 1; };
+  track.addEventListener('scroll', () => requestAnimationFrame(mark)); mark();
+  $('.v-cp', wall).onclick = () => go(curPage() - 1); $('.v-cn', wall).onclick = () => go(curPage() + 1);
+  dots.forEach(d => d.onclick = () => go(+d.dataset.g));
 
   const fv = document.createElement('div');
   fv.className = 'v-focus'; fv.setAttribute('aria-hidden', 'true');
