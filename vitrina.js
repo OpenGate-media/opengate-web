@@ -49,7 +49,7 @@
   fv.className = 'v-focus'; fv.setAttribute('aria-hidden', 'true');
   fv.innerHTML = `<button class="v-x" aria-label="Cerrar">×</button>
     <aside class="v-pan v-l"></aside>
-    <div class="v-mid"><div class="v-stage"></div><i class="v-plate"></i>
+    <div class="v-mid"><span class="v-num"></span><div class="v-stage"></div><i class="v-plate"></i>
       <div class="v-buy"><span class="mono v-k"></span><h3 class="v-n"></h3><b class="v-price"></b><div class="v-btns"><button class="btn solid v-add">Agregar al carrito</button><button class="btn v-more">Ver ficha</button></div></div></div>
     <aside class="v-pan v-r"></aside>
     <button class="v-nav prev" aria-label="Anterior">‹</button><button class="v-nav next" aria-label="Siguiente">›</button><span class="mono v-count"></span>`;
@@ -57,7 +57,7 @@
   let cur = 0;
   const show = (k, dir = 0) => {
     cur = (k + items.length) % items.length; const { p, i } = items[cur];
-    $('.v-k', fv).textContent = `#${cur + 1} más vendido · ${p.b}`; $('.v-n', fv).textContent = p.n;
+    $('.v-k', fv).textContent = `#${cur + 1} más vendido · ${p.b}`; $('.v-n', fv).textContent = p.n; $('.v-num', fv).textContent = String(cur + 1).padStart(2, '0');
     $('.v-price', fv).textContent = p.p + (p.enc ? ' · por encargo' : '');
     $('.v-count', fv).textContent = `${String(cur + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
     const ICO = { Oficina: 'M4 8h16v11H4zM9 8V5h6v3', 'Día de calor': 'M12 4v2M12 18v2M4 12h2M18 12h2M6.3 6.3l1.4 1.4M16.3 16.3l1.4 1.4M6.3 17.7l1.4-1.4M16.3 7.7l1.4-1.4M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z', Cita: 'M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z', 'Noche fría': 'M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z', 'Evento formal': 'M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.6 7.1 18.2 8 12.7 4 8.8 9.5 8z', Cena: 'M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 2-2 6 0 8v10', 'Celebración de día': 'M5 21l4-12 6 6-10 6zM14 4l1 2M19 5l-2 1M20 10h-2', 'Día a día': 'M5 6h14v14H5zM5 10h14M9 3v4M15 3v4', Salida: 'M12 21s6-5.7 6-11a6 6 0 0 0-12 0c0 5.3 6 11 6 11zM12 8v4' };

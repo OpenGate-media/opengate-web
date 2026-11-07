@@ -1056,3 +1056,30 @@ html.music-on .sb-grooves,html.music-on .sb-label{animation-play-state:running}
 .ts-r{display:grid;grid-template-columns:minmax(110px,38%) 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
 .ts-r dt{font:300 10.5px 'Archivo';letter-spacing:.16em;text-transform:uppercase;opacity:.6;padding-top:2px}
 .ts-r dd{margin:0;font:500 13.5px/1.45 'Archivo'}
+
+/* ===== Foco v3: anotaciones editoriales que apuntan al perfume (sin cajas) ===== */
+.v-pan{background:none!important;border:0!important;backdrop-filter:none;padding:0!important;max-width:320px}
+.v-pan::before,.v-pan::after{display:none}
+.v-pan .vh{justify-content:flex-start}.v-pan .vh i:first-child{display:none}
+.v-l{text-align:right}.v-l .vh{flex-direction:row-reverse}.v-l .vh i:last-child{background:linear-gradient(270deg,rgba(201,169,110,.6),transparent)}
+/* notas con líneas guía hacia el frasco */
+.v-l .vt{position:relative;align-items:flex-end;padding:12px 0!important;border-top:0!important}
+.v-l .vt::after{content:"";position:absolute;top:50%;left:100%;width:clamp(30px,5vw,90px);height:1px;margin-left:14px;background:linear-gradient(90deg,#c9a96e,transparent)}
+.v-l .vt::before{content:"";position:absolute;top:50%;left:100%;margin-left:10px;width:7px;height:7px;border-radius:50%;background:#c9a96e;transform:translateY(-3px);box-shadow:0 0 10px #c9a96e}
+.v-l .vt b{font-size:clamp(22px,2vw,30px)!important}
+.v-l .vfam{margin-bottom:10px}
+/* derecha: riel vertical dorado */
+.v-r{padding-left:22px!important;border-left:1px solid rgba(201,169,110,.35)!important;position:relative}
+.v-r::before{display:block!important;content:"";position:absolute;left:-4px;top:0;width:7px;height:7px;border-radius:50%;background:#c9a96e;border:0;box-shadow:0 0 10px #c9a96e}
+.v-r .vo{border-bottom:0}.v-r .vrs{border-top:0;padding-top:4px}
+.v-r .vo svg{background:rgba(201,169,110,.08)}
+/* número del ranking gigante detrás del perfume */
+.v-mid{isolation:isolate}
+.v-num{position:absolute;top:2%;left:50%;transform:translateX(-50%);z-index:-1;font:400 clamp(160px,22vw,320px)/.8 'Anton','Archivo';color:transparent;-webkit-text-stroke:1px rgba(201,169,110,.22);letter-spacing:-.02em;pointer-events:none;user-select:none}
+
+/* el perfume nunca invade el nombre: el frasco se ajusta al alto disponible */
+.v-stage{height:min(46vh,430px)!important;overflow:visible}
+.v-big .b3d{--h:min(28vh,300px)!important;--w:calc(var(--h) * .69)!important;--d:calc(var(--h) * .31)!important;--ch:calc(var(--h) * .27)!important;--cw:calc(var(--h) * .31)!important;--cd:calc(var(--h) * .24)!important}
+.v-big{transform-origin:50% 100%}
+.v-buy{position:relative;z-index:2;margin-top:28px!important}
+@media(max-width:900px){.v-r{border-left:0!important;padding-left:0!important;border-top:1px solid rgba(201,169,110,.35)!important;padding-top:20px!important}.v-r::before{left:0;top:-4px}.v-l{text-align:left}.v-l .vh{flex-direction:row}.v-l .vt{align-items:flex-start}.v-l .vt::before,.v-l .vt::after{display:none}.v-num{font-size:150px}.v-stage{height:34vh!important}.v-big .b3d{--h:22vh!important}}
