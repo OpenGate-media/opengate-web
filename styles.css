@@ -1142,3 +1142,8 @@ html.music-on .sb-grooves,html.music-on .sb-label{animation-play-state:running}
 .v-focus.on~.og-player,.v-focus.on~.ch-float{display:none}
 html.lock .og-player,html.lock .ch-float{opacity:0;pointer-events:none}
 @media(max-width:900px){.v-btns{background:linear-gradient(180deg,rgba(9,8,7,0),#090807 26%)!important;padding-top:26px!important}}
+
+/* 3D en tarjetas: mismo tamaño que los frascos dibujados, sin tapar etiquetas ni botones */
+.card .stage .og3d{width:62%;height:58%;min-height:0;margin:auto;position:absolute;inset:0}
+.card .stage{position:relative}
+@media(max-width:600px){.card .stage .og3d{width:66%;height:52%}}
