@@ -1833,6 +1833,7 @@ const P = [
  },
  {
   "n": "Sauvage",
+  "glb": "/models/sauvage.glb",
   "b": "Dior",
   "c": "EDT",
   "ml": 100,

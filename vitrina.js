@@ -74,7 +74,7 @@
       <div class="vdn"><span>☀</span><i><b></b></i><span>☾</span></div>
       <ul class="vo">${f.moments.slice(0, 3).map(([a]) => `<li>${svg(ICO[a] || ICO['Día a día'])}<b>${a}</b></li>`).join('')}</ul>
       <div class="vrs">${Object.entries(f.sea).map(([a, val]) => ring(a, val)).join('')}</div>`;
-    const stg = $('.v-stage', fv); stg.innerHTML = `<div class="v-big">${p.img ? O.visual(p) : O.bottle3d(p, false)}</div>`;
+    const stg = $('.v-stage', fv); stg.innerHTML = `<div class="v-big">${p.img ? O.visual(p) : O.bottle3d(p, false, true)}</div>`;
     fv.style.setProperty('--c1', p.c1 || '#555');
     if (window.gsap) {
       gsap.fromTo($('.v-big', stg), { x: dir * 220, opacity: 0, rotateY: dir * -40, scale: .9 }, { x: 0, opacity: 1, rotateY: 0, scale: 1, duration: .9, ease: 'expo.out' });
