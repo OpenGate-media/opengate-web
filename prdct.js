@@ -118,7 +118,7 @@
   // ---------- Banner ----------
   const hero = $('#prdHero');
   if (hero) {
-    const star = P.find(p => p.glb) || P.find(p => p.n === 'Khamrah') || P[0];
+    const star = P.find(p => p.n === 'Sauvage' && p.glb) || P.find(p => p.glb) || P.find(p => p.n === 'Khamrah') || P[0];
     $('#heroBottle').innerHTML = bottle3d(star, true, true);
     $('#heroFrom').textContent = fmt(Math.min(...P.filter(p => p.pn).map(p => p.pn)));
     $('#heroCount').textContent = P.length;
