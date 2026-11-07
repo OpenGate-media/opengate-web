@@ -984,3 +984,15 @@ html.music-on .sb-grooves,html.music-on .sb-label{animation-play-state:running}
   .v-count{position:fixed}
 }
 @media(max-width:900px){.v-count{display:none}}
+
+/* Vitrina: diagramación en flujo (frasco → repisa → nombre), nada se superpone */
+.v-shelf{--oh:clamp(150px,17vw,220px);padding:16px 0 18px!important;margin-bottom:26px;align-items:start;transform:none!important}
+.v-item{height:auto!important;padding:0!important;display:flex!important;flex-direction:column;align-items:center;justify-content:flex-start;gap:0;overflow:visible}
+.v-obj{height:var(--oh);display:flex;align-items:flex-end;justify-content:center;width:100%}
+.v-glass{top:calc(16px + var(--oh));bottom:auto!important}
+.v-tag{position:static!important;transform:none!important;margin-top:22px;max-width:100%;width:max-content;white-space:normal!important;text-align:center}
+.v-tag b{display:block;line-height:1.2;overflow:visible!important;text-overflow:clip!important;max-width:none!important;white-space:normal}
+.v-spot{top:0;height:var(--oh)}
+.v-rk{top:0}
+@media(max-width:600px){.v-shelf{--oh:130px}.v-tag b{font-size:9.5px!important;letter-spacing:.04em}.v-tag small{font-size:8.5px}}
+@media(max-width:600px){.v-page{padding:0 2px}.v-shelf{gap:4px!important}.v-tag{width:auto;padding:6px 0 0}}
