@@ -31,7 +31,7 @@ const getModel = url => {
     });
     // centrar y normalizar a 2 unidades de alto
     const box = new THREE.Box3().setFromObject(root), size = box.getSize(new THREE.Vector3()), c = box.getCenter(new THREE.Vector3());
-    root.position.sub(c); const wrap = new THREE.Group(); wrap.add(root); wrap.scale.setScalar(2 / size.y);
+    root.position.sub(c); const wrap = new THREE.Group(); wrap.add(root); wrap.scale.setScalar(2 / Math.max(size.y, size.x * 1.25, size.z * 1.25)); // frascos anchos no se salen del encuadre
     ok(wrap);
   }, undefined, ko)));
   return cache.get(url);

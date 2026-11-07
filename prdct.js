@@ -395,11 +395,11 @@
     compose(); paintList();
 
     // girar arrastrando (con inercia tipo stop motion)
-    const turn = $('.dr-turn', body), cutEl = $('.cut3d', turn), b3 = $('.b3d', turn) || cutEl, fr = $('.frames', turn);
+    const turn = $('.dr-turn', body), cutEl = $('.cut3d', turn), b3 = $('.og3d', turn) ? null : ($('.b3d', turn) || cutEl), fr = $('.frames', turn);
     let ry = cutEl ? -14 : -20, drag = false, sx = 0, sr = 0;
     const setR = () => { if (cutEl) ry = Math.max(-55, Math.min(55, ry)); if (b3) b3.style.setProperty('--ry', ry + 'deg'); if (fr) { const F = JSON.parse(fr.dataset.frames); fr.src = F[((Math.round(ry / (360 / F.length)) % F.length) + F.length) % F.length]; } };
     setR();
-    turn.onpointerdown = e => { drag = true; sx = e.clientX; sr = ry; turn.setPointerCapture(e.pointerId); turn.classList.add('grab'); };
+    turn.onpointerdown = e => { if (!b3 && !fr) return; drag = true; sx = e.clientX; sr = ry; turn.setPointerCapture(e.pointerId); turn.classList.add('grab'); };
     turn.onpointermove = e => { if (drag) { ry = sr + (e.clientX - sx) * .8; setR(); } };
     turn.onpointerup = turn.onpointercancel = () => { drag = false; turn.classList.remove('grab');
       if (cutEl && window.gsap) { const o = { v: ry }; gsap.to(o, { v: -14, duration: 1.4, ease: 'elastic.out(1, .45)', onUpdate: () => { ry = o.v; setR(); } }); } };
