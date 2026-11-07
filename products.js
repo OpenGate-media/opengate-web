@@ -1551,6 +1551,7 @@ const P = [
  },
  {
   "n": "Donna Born in Roma",
+  "glb": "/models/donna-born-in-roma.glb",
   "b": "Valentino",
   "c": "EDP",
   "ml": 100,

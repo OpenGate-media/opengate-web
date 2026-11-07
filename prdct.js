@@ -6,7 +6,7 @@
 
   // ---------- Frasco: foto real, giro por fotogramas o frasco 3D de muestra ----------
   function bottle3d(p, label = true, drag = false) {
-    if (p.glb) return `<div class="og3d" data-glb="${p.glb}"${drag ? ' data-drag="1"' : ''} role="img" aria-label="${p.n} en 3D">${bottle3d({ ...p, glb: '' }, false)}</div>`;
+    if (p.glb) return `<div class="og3d" data-glb="${p.glb}" data-drag="1" role="img" aria-label="${p.n} en 3D">${bottle3d({ ...p, glb: '' }, false)}</div>`;
     return `<div class="b3d" style="--c1:${p.c1};--c2:${p.c2}">
       <div class="b3d-cap"><i class="f fr"></i><i class="f bk"></i><i class="f lf"></i><i class="f rt"></i><i class="f tp"></i></div>
       <div class="b3d-neck"></div>

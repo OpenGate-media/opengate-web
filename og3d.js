@@ -38,6 +38,8 @@ const getModel = url => {
 };
 
 const views = new Set();
+// un arrastre para girar no debe abrir la ficha / el foco
+addEventListener('click', e => { if (window.__og3dDrag && performance.now() - window.__og3dDrag < 250) { e.stopPropagation(); e.preventDefault(); } }, true);
 class View {
   constructor(el) {
     this.el = el; el.dataset.on = '1';
@@ -53,10 +55,17 @@ class View {
     getModel(el.dataset.glb).then(m => { this.obj = m.clone(); this.scene.add(this.obj); el.classList.add('ready'); }).catch(() => el.classList.add('fail'));
     new IntersectionObserver(e => this.visible = e[0].isIntersecting, { rootMargin: '100px' }).observe(el);
     if (this.drag) {
-      let px = null, py = null;
-      el.addEventListener('pointerdown', e => { px = e.clientX; py = e.clientY; this.vy = 0; el.setPointerCapture && el.setPointerCapture(e.pointerId); });
-      el.addEventListener('pointermove', e => { if (px === null) return; const dx = e.clientX - px; this.ry += dx * .012; this.vy = dx * .012; this.rx = Math.max(-.35, Math.min(.35, this.rx + (e.clientY - py) * .004)); px = e.clientX; py = e.clientY; });
-      const up = () => px = null; el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+      // girar 360° arrastrando (horizontal: vuelta completa · vertical: inclinación). Si se arrastró, no cuenta como clic.
+      let px = null, py = null, moved = 0;
+      el.addEventListener('pointerdown', e => { px = e.clientX; py = e.clientY; moved = 0; this.vy = 0; this.hold = true; });
+      addEventListener('pointermove', e => {
+        if (px === null) return; const dx = e.clientX - px, dy = e.clientY - py; moved += Math.abs(dx) + Math.abs(dy);
+        if (e.pointerType !== 'mouse' && Math.abs(dy) > Math.abs(dx) * 1.2 && moved < 12) { px = null; this.hold = false; return; }
+        this.ry += dx * .014; this.vy = dx * .014; this.rx = Math.max(-.9, Math.min(.9, this.rx + dy * .006)); px = e.clientX; py = e.clientY;
+      });
+      const up = () => { if (px === null && !this.hold) return; px = null; this.hold = false; if (moved > 8) { window.__og3dDrag = performance.now(); } };
+      addEventListener('pointerup', up); addEventListener('pointercancel', up);
+      el.addEventListener('dragstart', e => e.preventDefault());
       el.style.touchAction = 'pan-y'; el.style.cursor = 'grab';
     }
   }
@@ -65,7 +74,7 @@ class View {
     const r = this.el.getBoundingClientRect(); if (r.width < 2 || r.height < 2) return;
     const w = Math.round(r.width * DPR), h = Math.round(r.height * DPR);
     if (this.cv.width !== w || this.cv.height !== h) { this.cv.width = w; this.cv.height = h; }
-    this.vy *= .94; this.ry += this.vy + this.spin * dt; this.rx *= .96;
+    if (!this.hold) { this.vy *= .94; this.ry += this.vy + this.spin * dt; this.rx *= .96; }
     this.obj.rotation.set(this.rx, this.ry, 0);
     this.cam.aspect = w / h;
     // encuadre: el frasco ocupa el alto disponible
