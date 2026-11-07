@@ -480,6 +480,7 @@ const P = [
  },
  {
   "n": "Black XS",
+  "glb": "/models/black-xs.glb",
   "vid": 67842849538413,
   "b": "Paco Rabanne",
   "c": "EDT",
@@ -1498,6 +1499,7 @@ const P = [
  },
  {
   "n": "Born in Roma Uomo",
+  "glb": "/models/born-in-roma-uomo.glb",
   "b": "Valentino",
   "c": "EDT",
   "ml": 100,
@@ -1581,6 +1583,7 @@ const P = [
  },
  {
   "n": "Acqua di Giò Parfum",
+  "glb": "/models/acqua-di-gio-parfum.glb",
   "b": "Giorgio Armani",
   "c": "Parfum",
   "ml": 100,
@@ -1632,6 +1635,7 @@ const P = [
  },
  {
   "n": "Eros Flame",
+  "glb": "/models/eros-flame.glb",
   "b": "Versace",
   "c": "EDP",
   "ml": 100,
@@ -1665,6 +1669,7 @@ const P = [
  },
  {
   "n": "Good Girl",
+  "glb": "/models/good-girl.glb",
   "b": "Carolina Herrera",
   "c": "EDP",
   "ml": 80,
@@ -1695,6 +1700,7 @@ const P = [
  },
  {
   "n": "La Vie Est Belle",
+  "glb": "/models/la-vie-est-belle.glb",
   "b": "Lancôme",
   "c": "EDP",
   "ml": 100,
@@ -1728,6 +1734,7 @@ const P = [
  },
  {
   "n": "Le Male Elixir",
+  "glb": "/models/le-male-elixir.glb",
   "b": "Jean Paul Gaultier",
   "c": "Parfum",
   "ml": 125,
@@ -1779,6 +1786,7 @@ const P = [
  },
  {
   "n": "Y Eau de Parfum",
+  "glb": "/models/y-edp.glb",
   "b": "Yves Saint Laurent",
   "c": "EDP",
   "ml": 60,
@@ -1917,6 +1925,7 @@ const P = [
  },
  {
   "n": "Aventus",
+  "glb": "/models/aventus.glb",
   "b": "Creed",
   "c": "EDP",
   "ml": 100,
@@ -1972,6 +1981,7 @@ const P = [
  },
  {
   "n": "Baccarat Rouge 540",
+  "glb": "/models/baccarat-rouge-540.glb",
   "b": "Maison Francis Kurkdjian",
   "c": "EDP",
   "ml": 70,
