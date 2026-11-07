@@ -60,18 +60,31 @@
     $('.v-k', fv).textContent = `#${cur + 1} más vendido · ${p.b}`; $('.v-n', fv).textContent = p.n;
     $('.v-price', fv).textContent = p.p + (p.enc ? ' · por encargo' : '');
     $('.v-count', fv).textContent = `${String(cur + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
-    const notes = (t, a) => a && a.length ? `<div class="vn"><span>${t}</span><p>${a.map(x => `<em>${x}</em>`).join('')}</p></div>` : '';
-    $('.v-l', fv).innerHTML = `<span class="mono vh">la fragancia</span><h4>${p.fam}</h4><p class="vd">${desc(p)}</p>${notes('salida', p.top)}${notes('corazón', p.heart)}${notes('fondo', p.base)}<p class="mono vm">${p.c}${p.ml ? ' · ' + p.ml + ' ml' : ''} · ${p.gen}</p>`;
-    $('.v-r', fv).innerHTML = `<span class="mono vh">cuándo usarlo</span><h4>${o.line}</h4><ul class="vo">${o.moments.map(([a, b]) => `<li><b>${a}</b><small>${b}</small></li>`).join('')}</ul>
-      <div class="vbs">${bar('Día', o.day)}${bar('Noche', o.night)}</div><div class="vbs">${Object.entries(o.sea).map(([a, v]) => bar(a, v)).join('')}</div>
+    const ICO = { Oficina: 'M4 8h16v11H4zM9 8V5h6v3', 'Día de calor': 'M12 4v2M12 18v2M4 12h2M18 12h2M6.3 6.3l1.4 1.4M16.3 16.3l1.4 1.4M6.3 17.7l1.4-1.4M16.3 7.7l1.4-1.4M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6z', Cita: 'M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z', 'Noche fría': 'M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z', 'Evento formal': 'M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.6 7.1 18.2 8 12.7 4 8.8 9.5 8z', Cena: 'M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 2-2 6 0 8v10', 'Celebración de día': 'M5 21l4-12 6 6-10 6zM14 4l1 2M19 5l-2 1M20 10h-2', 'Día a día': 'M5 6h14v14H5zM5 10h14M9 3v4M15 3v4', Salida: 'M12 21s6-5.7 6-11a6 6 0 0 0-12 0c0 5.3 6 11 6 11zM12 8v4' };
+    const svg = d => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
+    const tier = (t, a, n) => a && a.length ? `<div class="vt vt${n}"><span class="vt-k"><b>0${n}</b>${t}</span><p>${a.map(x => `<em>${x}</em>`).join('')}</p></div>` : '';
+    const ring = (l, v) => `<div class="vr" style="--v:${v}"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5"/><circle class="f" cx="18" cy="18" r="15.5" pathLength="100"/></svg><b>${v}</b><span>${l}</span></div>`;
+    const dn = Math.round(o.night / (o.day + o.night) * 100);
+    $('.v-l', fv).innerHTML = `<div class="vh"><i></i>la fragancia<i></i></div>
+      <h4 class="vf">${p.fam}</h4><p class="vd">${desc(p)}</p>
+      <div class="vpyr">${tier('Salida', p.top, 1)}${tier('Corazón', p.heart, 2)}${tier('Fondo', p.base, 3)}</div>
+      <div class="vm"><span>${p.c}</span>${p.ml ? `<span>${p.ml} ml</span>` : ''}<span>${p.gen}</span></div>`;
+    $('.v-r', fv).innerHTML = `<div class="vh"><i></i>cuándo usarlo<i></i></div>
+      <h4 class="vf drip">${o.line}</h4>
+      <div class="vdn" style="--n:${dn}"><span>☀ día</span><i><b></b></i><span>noche ☾</span></div>
+      <ul class="vo">${o.moments.map(([a, b]) => `<li>${svg(ICO[a] || ICO['Día a día'])}<div><b>${a}</b><small>${b}</small></div></li>`).join('')}</ul>
+      <div class="vrs">${Object.entries(o.sea).map(([a, v]) => ring(a, v)).join('')}</div>
       ${p.st ? `<div class="vbs">${bar('Estela', Math.round(p.st.si))}${bar('Duración', Math.round(p.st.lo))}</div>` : ''}`;
     const stg = $('.v-stage', fv); stg.innerHTML = `<div class="v-big">${p.img ? O.visual(p) : O.bottle3d(p, false)}</div>`;
     fv.style.setProperty('--c1', p.c1 || '#555');
     if (window.gsap) {
       gsap.fromTo($('.v-big', stg), { x: dir * 220, opacity: 0, rotateY: dir * -40, scale: .9 }, { x: 0, opacity: 1, rotateY: 0, scale: 1, duration: .9, ease: 'expo.out' });
       gsap.fromTo($$('.v-l > *, .v-r > *, .v-r li', fv), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .7, ease: 'expo.out', stagger: .045, delay: .15 });
-      gsap.fromTo($$('.vn em', fv), { opacity: 0, scale: .85 }, { opacity: 1, scale: 1, duration: .5, ease: 'back.out(2)', stagger: .03, delay: .35 });
+      gsap.fromTo($$('.vt em', fv), { opacity: 0, scale: .85 }, { opacity: 1, scale: 1, duration: .5, ease: 'back.out(2)', stagger: .03, delay: .35 });
       gsap.fromTo($$('.vb b', fv), { scaleX: 0 }, { scaleX: 1, duration: 1.1, ease: 'expo.out', stagger: .05, delay: .4 });
+      gsap.fromTo($$('.vr .f', fv), { strokeDashoffset: 100 }, { strokeDashoffset: (k, el) => 100 - +el.closest('.vr').style.getPropertyValue('--v'), duration: 1.4, ease: 'expo.out', stagger: .08, delay: .45 });
+      gsap.fromTo($('.vdn b', fv), { left: '50%' }, { left: dn + '%', duration: 1.2, ease: 'expo.out', delay: .4 });
+      gsap.fromTo($$('.vt', fv), { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: .7, ease: 'expo.out', stagger: .1, delay: .25 });
       gsap.fromTo($('.v-buy', fv), { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .6, delay: .2 });
     }
     $('.v-add', fv).onclick = () => O.addToCart(i, 1);

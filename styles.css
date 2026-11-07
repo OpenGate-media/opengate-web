@@ -996,3 +996,40 @@ html.music-on .sb-grooves,html.music-on .sb-label{animation-play-state:running}
 .v-rk{top:0}
 @media(max-width:600px){.v-shelf{--oh:130px}.v-tag b{font-size:9.5px!important;letter-spacing:.04em}.v-tag small{font-size:8.5px}}
 @media(max-width:600px){.v-page{padding:0 2px}.v-shelf{gap:4px!important}.v-tag{width:auto;padding:6px 0 0}}
+
+/* ===== Paneles de la ficha en foco: diseño editorial ===== */
+.v-pan{position:relative;padding:26px 24px 22px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));border:1px solid rgba(201,169,110,.22);backdrop-filter:blur(6px);max-width:360px;width:100%}
+.v-pan::before,.v-pan::after{content:"";position:absolute;width:14px;height:14px;border:1px solid #c9a96e}
+.v-pan::before{top:-4px;left:-4px;border-right:0;border-bottom:0}.v-pan::after{bottom:-4px;right:-4px;border-left:0;border-top:0}
+.v-pan .vh{display:flex;align-items:center;gap:10px;font:300 10px 'Archivo';letter-spacing:.28em;text-transform:uppercase;color:#c9a96e;margin-bottom:14px}
+.v-pan .vh i{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,169,110,.5))}.v-pan .vh i:last-child{background:linear-gradient(90deg,rgba(201,169,110,.5),transparent)}
+.v-pan .vf{font:800 clamp(20px,1.8vw,26px)/1.1 'Archivo';margin:0 0 10px;letter-spacing:-.01em}
+.v-pan .vf.drip{font-family:'Dripdrop','Archivo',cursive;font-weight:400;font-size:clamp(30px,2.8vw,42px);color:#e2c48d;line-height:1}
+.v-pan .vd{font:300 13.5px/1.6 'Archivo';opacity:.82;margin:0 0 18px}
+.vpyr{display:grid;gap:8px}
+.vt{position:relative;padding:10px 12px 10px 14px;border-left:2px solid #c9a96e;background:linear-gradient(90deg,rgba(201,169,110,.10),transparent)}
+.vt2{margin-left:10px;border-left-color:rgba(201,169,110,.7)}.vt3{margin-left:20px;border-left-color:rgba(201,169,110,.45)}
+.vt-k{display:flex;align-items:baseline;gap:8px;font:300 10px 'Archivo';letter-spacing:.2em;text-transform:uppercase;opacity:.75;margin-bottom:6px}
+.vt-k b{font:400 16px 'Anton','Archivo';letter-spacing:0;color:#c9a96e;opacity:1}
+.vt p{margin:0;display:flex;flex-wrap:wrap;gap:4px 10px}
+.vt em{font:500 13px 'Archivo';font-style:normal}
+.vt em+em::before{content:"·";margin-right:10px;color:#c9a96e}
+.v-pan .vm{display:flex;gap:6px;margin-top:16px;opacity:1}
+.v-pan .vm span{font:300 10px 'Archivo';letter-spacing:.16em;text-transform:uppercase;padding:5px 9px;border:1px solid rgba(237,232,223,.18);border-radius:99px}
+.vdn{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;margin:4px 0 16px;font:300 10px 'Archivo';letter-spacing:.14em;text-transform:uppercase;opacity:.9}
+.vdn i{position:relative;height:2px;background:linear-gradient(90deg,#e2c48d,#3b4a7a)}
+.vdn b{position:absolute;top:50%;left:50%;width:12px;height:12px;border-radius:50%;background:#EDE8DF;box-shadow:0 0 0 4px rgba(201,169,110,.25),0 0 14px rgba(226,196,141,.7);transform:translate(-50%,-50%)}
+.v-pan .vo{display:grid;gap:8px;margin:0 0 16px}
+.v-pan .vo li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:center;padding:0;border:0}
+.v-pan .vo svg{width:34px;height:34px;padding:7px;box-sizing:border-box;border:1px solid rgba(201,169,110,.4);border-radius:50%;fill:none;stroke:#e2c48d;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.v-pan .vo b{font:700 13.5px 'Archivo';display:block}.v-pan .vo small{font:300 12px/1.35 'Archivo';opacity:.7}
+.vrs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding-top:14px;border-top:1px solid rgba(237,232,223,.1)}
+.vr{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px}
+.vr svg{width:46px;height:46px;transform:rotate(-90deg)}
+.vr circle{fill:none;stroke:rgba(237,232,223,.12);stroke-width:2.2}
+.vr circle.f{stroke:#c9a96e;stroke-dasharray:100;stroke-dashoffset:calc(100 - var(--v));stroke-linecap:round}
+.vr b{position:absolute;top:14px;font:400 13px 'Anton','Archivo';width:46px;text-align:center}
+.vr span{font:300 9px 'Archivo';letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.v-pan .vbs{margin-top:14px}
+@media(max-width:900px){.v-pan{max-width:none}}
+.v-pan .vf.drip{margin-top:6px;padding-top:4px}
