@@ -1114,3 +1114,31 @@ html.music-on .sb-grooves,html.music-on .sb-label{animation-play-state:running}
   .hud{display:none}
   .v-focus .v-nav{width:42px;height:42px;font-size:22px}
 }
+
+/* ===== Vitrina · vista de foco en celular ===== */
+@media(max-width:900px){
+  .v-focus{padding:64px 16px 110px!important;gap:18px!important}
+  .v-mid{width:100%}
+  .v-stage{height:40vh!important;max-height:360px;width:100%;overflow:hidden}
+  .v-big,.v-big .og3d{width:100%!important;height:100%!important}
+  .v-stage>.v-big{height:100%}
+  .v-num{font-size:120px!important;top:0}
+  .v-plate{width:70%;margin-top:4px}
+  .v-buy{margin-top:14px!important;gap:2px}
+  .v-buy .v-n{font-size:clamp(28px,8vw,38px)!important}
+  .v-nav{top:calc(64px + 20vh)!important;width:40px!important;height:40px!important;font-size:20px!important;background:rgba(10,10,10,.55)!important;backdrop-filter:blur(4px)}
+  /* compra siempre a mano: barra fija abajo */
+  .v-btns{position:fixed;left:0;right:0;bottom:0;z-index:5;margin:0!important;padding:12px 16px calc(12px + env(safe-area-inset-bottom));display:grid!important;grid-template-columns:1.2fr 1fr;gap:8px;background:linear-gradient(180deg,rgba(9,8,7,0),rgba(9,8,7,.92) 30%);}
+  .v-btns .btn{width:100%;padding:14px 8px;font-size:14px}
+  /* paneles compactos */
+  .v-pan{max-width:none!important}
+  .v-l .vpyr{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .v-l .vt{padding:10px 0!important;border-top:1px solid rgba(201,169,110,.25)!important}
+  .v-l .vt b{font-size:17px!important;line-height:1.1}
+  .v-pan .vf.drip{font-size:30px!important}
+  .v-r{padding-top:18px!important}
+  .v-r .vo{grid-template-columns:repeat(3,1fr)}
+}
+.v-focus.on~.og-player,.v-focus.on~.ch-float{display:none}
+html.lock .og-player,html.lock .ch-float{opacity:0;pointer-events:none}
+@media(max-width:900px){.v-btns{background:linear-gradient(180deg,rgba(9,8,7,0),#090807 26%)!important;padding-top:26px!important}}
