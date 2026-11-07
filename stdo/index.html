@@ -17,7 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<link rel="stylesheet" href="/styles.css?v=1794035002">
+<link rel="stylesheet" href="/styles.css?v=1794088337">
 </head>
 <body class="studio">
 <svg width="0" height="0" style="position:absolute"><defs><linearGradient id="gl" x1="0" x2="1"><stop offset="0" stop-color="#e9e7e2" stop-opacity=".9"/><stop offset=".3" stop-color="#6d6c69" stop-opacity=".85"/><stop offset=".75" stop-color="#1c1c1c" stop-opacity=".95"/><stop offset="1" stop-color="#050505"/></linearGradient><linearGradient id="cp" x1="0" x2="1"><stop offset="0" stop-color="#f2f0ec"/><stop offset=".5" stop-color="#7a7a7a"/><stop offset="1" stop-color="#111"/></linearGradient><linearGradient id="sh" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".6"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs></svg>
@@ -32,16 +32,37 @@
   <div class="sh-copy"><span class="mono rec">02 · stdo · estudio audiovisual</span>
     <h1><span class="w">idea.</span><br>rodaje.<br><em class="drip">lanzamiento.</em></h1>
     <p class="sh-lead">Video, foto y dirección de arte para marcas que quieren verse de cine. Mueve el cursor sobre el roto.</p>
-    <div class="sh-cta"><a class="btn solid" href="#stdo">ver servicios ↓</a><a class="btn" href="#contacto">cotizar proyecto</a></div></div>
+    <div class="sh-cta"><a class="btn solid" href="#stdo">ver la obra ↓</a><a class="btn" href="#contacto">cotizar proyecto</a></div></div>
   <canvas id="ogParticles" aria-label="Símbolo Open Gate en partículas" role="img"></canvas>
 </div></section>
-<section class="sec" id="stdo"><div class="wrap">
-  <div class="head"><div><span class="mono rec">02 · stdo</span><h2 style="margin-top:12px">servicios</h2></div>
-    <a class="btn" href="https://www.instagram.com/og.stdo" target="_blank" rel="noopener">@og.stdo →</a></div>
-  <div class="svc" id="svc"></div>
-  <p class="mono" style="margin:20px 0 60px">* Servicios por definir con el equipo.</p>
-  <div class="reels" id="reels"></div>
-</div></section>
+<section class="obra" id="stdo">
+  <div class="tape t1" aria-hidden="true"><span>EN CONSTRUCCIÓN · COMING SOON · stdo · EN CONSTRUCCIÓN · COMING SOON · stdo · EN CONSTRUCCIÓN · COMING SOON · stdo · EN CONSTRUCCIÓN · COMING SOON · stdo ·&nbsp;</span><span>EN CONSTRUCCIÓN · COMING SOON · stdo · EN CONSTRUCCIÓN · COMING SOON · stdo · EN CONSTRUCCIÓN · COMING SOON · stdo · EN CONSTRUCCIÓN · COMING SOON · stdo ·&nbsp;</span></div>
+  <div class="wrap">
+    <div class="obra-head">
+      <div><span class="mono rec">02 · stdo · set en construcción</span>
+        <h2 class="obra-t"><span class="w">coming</span><br>soon.<br><em class="drip">estamos rodando.</em></h2></div>
+      <div class="obra-side">
+        <p>Estamos armando el set: servicios, reels y casos reales. Mientras tanto, ayúdanos a construir — <b>arrastra, lanza y apila</b> las piezas.</p>
+        <div class="obra-pct" id="obraPct" style="--p:62%"><span class="mono">avance de obra</span><i><u></u></i><b>62%</b></div>
+      </div>
+    </div>
+    <div class="obra-stage">
+      <div class="obra-canvas" id="obraCanvas" aria-label="Zona interactiva: bloques del proceso audiovisual que puedes arrastrar" role="application"></div>
+      <span class="obra-hint mono" aria-hidden="true">✋ arrastra las piezas</span>
+      <div class="obra-ctrls">
+        <button class="btn solid" id="obraCarga">▼ soltar carga</button>
+        <button class="btn" id="obraConstruir">▦ construir</button>
+        <button class="btn" id="obraDerribar">✷ derribar</button>
+      </div>
+    </div>
+    <div class="obra-cta">
+      <p class="mono">¿no puedes esperar?</p>
+      <h3>tu proyecto puede ser el primero en el set.</h3>
+      <div class="row"><a class="btn solid" href="https://wa.me/573001087938?text=Hola%20Open%20Gate%20%F0%9F%91%8B%20Quiero%20cotizar%20un%20proyecto%20audiovisual%20con%20stdo." target="_blank" rel="noopener">Cotizar por WhatsApp</a><a class="btn" href="https://wa.me/573001087938?text=Hola%20Open%20Gate%20%F0%9F%91%8B%20Av%C3%ADsenme%20cuando%20abra%20stdo." target="_blank" rel="noopener">Avísame cuando abra</a><a class="btn" href="https://www.instagram.com/og.stdo" target="_blank" rel="noopener">@og.stdo →</a></div>
+    </div>
+  </div>
+  <div class="tape t2" aria-hidden="true"><span>COMING SOON · NO PASAR · SET EN OBRA · COMING SOON · NO PASAR · SET EN OBRA · COMING SOON · NO PASAR · SET EN OBRA · COMING SOON · NO PASAR · SET EN OBRA ·&nbsp;</span><span>COMING SOON · NO PASAR · SET EN OBRA · COMING SOON · NO PASAR · SET EN OBRA · COMING SOON · NO PASAR · SET EN OBRA · COMING SOON · NO PASAR · SET EN OBRA ·&nbsp;</span></div>
+</section>
 
 <section class="cta" id="contacto"><div class="wrap">
   <span class="mono rec">Contacto</span>
@@ -56,6 +77,8 @@
   <div><h5 class="mono">Canales</h5><ul><li><a href="https://www.instagram.com/og.prdct" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://wa.me/573001087938?text=Hola%20Open%20Gate%20%F0%9F%91%8B%20Quiero%20cotizar%20un%20servicio%20audiovisual." target="_blank" rel="noopener">WhatsApp · 300 108 7938</a></li><li>Mercado Libre</li></ul></div>
 </div></div></footer>
 <script src="/particles.js?v=1793925121"></script>
+<script src="/vendor/matter/matter.min.js"></script>
+<script src="/obra.js?v=1794088337"></script>
 <script src="/app.js?v=1793484892"></script>
 <div class="ch-float" data-c="wa" data-wa="https://wa.me/573001087938?text=Hola%20Open%20Gate%20%F0%9F%91%8B%20Quiero%20cotizar%20un%20servicio%20audiovisual." data-ig="https://ig.me/m/og.stdo">
   <div class="chf-sw" role="radiogroup" aria-label="Elegir canal"><button data-c="wa" class="on" aria-label="WhatsApp"><svg viewBox="0 0 32 32" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Zm0 23.6c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6Zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.8.4 3.6 3.6 0 0 0-1.1 2.6c0 1.5 1.1 3 1.3 3.2.2.2 2.2 3.4 5.4 4.7 2 .9 2.8.9 3.8.8.6-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5-.1-.2-.3-.3-.7-.4Z"/></svg></button><button data-c="ig" aria-label="Instagram"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg></button><i></i></div>
