@@ -1033,3 +1033,26 @@ html.music-on .sb-grooves,html.music-on .sb-label{animation-play-state:running}
 .v-pan .vbs{margin-top:14px}
 @media(max-width:900px){.v-pan{max-width:none}}
 .v-pan .vf.drip{margin-top:6px;padding-top:4px}
+
+/* ===== Foco minimal: solo lo llamativo ===== */
+.v-pan{max-width:300px;padding:26px 22px}
+.v-pan .vf.drip{font-size:clamp(28px,2.6vw,40px);line-height:1.02;margin:6px 0 6px}
+.v-pan .vfam{font:300 10.5px 'Archivo';letter-spacing:.22em;text-transform:uppercase;opacity:.6;margin:0 0 18px}
+.v-pan .vpyr{gap:0}
+.v-pan .vt{display:flex;flex-direction:column;gap:2px;margin:0!important;padding:12px 0;border:0;border-top:1px solid rgba(201,169,110,.2);background:none}
+.v-pan .vt span{font:300 9.5px 'Archivo';letter-spacing:.24em;text-transform:uppercase;color:#c9a96e}
+.v-pan .vt b{font:400 clamp(20px,1.8vw,26px)/1.05 'Anton','Archivo';text-transform:uppercase;letter-spacing:.01em}
+.v-pan .vdn{grid-template-columns:auto 1fr auto;font-size:14px;margin:8px 0 18px}
+.v-pan .vo{grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 16px}
+.v-pan .vo li{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.v-pan .vo li b{font:500 10.5px/1.2 'Archivo';letter-spacing:.04em}
+.v-pan .vo svg{width:42px;height:42px;padding:9px}
+
+/* ===== Ficha técnica completa (drawer) ===== */
+.tsheet{margin:22px 0;padding:20px 0 6px;border-top:1px solid var(--line)}
+.ts-tag{font-family:'Dripdrop','Archivo',cursive;font-size:30px;line-height:1;margin:10px 0 8px}
+.ts-desc{font:300 14px/1.6 'Archivo';opacity:.85;margin:0 0 14px}
+.tsheet dl{margin:0;display:grid}
+.ts-r{display:grid;grid-template-columns:minmax(110px,38%) 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.ts-r dt{font:300 10.5px 'Archivo';letter-spacing:.16em;text-transform:uppercase;opacity:.6;padding-top:2px}
+.ts-r dd{margin:0;font:500 13.5px/1.45 'Archivo'}

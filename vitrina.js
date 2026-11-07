@@ -56,7 +56,7 @@
   document.body.appendChild(fv);
   let cur = 0;
   const show = (k, dir = 0) => {
-    cur = (k + items.length) % items.length; const { p, i } = items[cur], o = occ(p);
+    cur = (k + items.length) % items.length; const { p, i } = items[cur];
     $('.v-k', fv).textContent = `#${cur + 1} más vendido · ${p.b}`; $('.v-n', fv).textContent = p.n;
     $('.v-price', fv).textContent = p.p + (p.enc ? ' · por encargo' : '');
     $('.v-count', fv).textContent = `${String(cur + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
@@ -64,31 +64,29 @@
     const svg = d => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
     const tier = (t, a, n) => a && a.length ? `<div class="vt vt${n}"><span class="vt-k"><b>0${n}</b>${t}</span><p>${a.map(x => `<em>${x}</em>`).join('')}</p></div>` : '';
     const ring = (l, v) => `<div class="vr" style="--v:${v}"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5"/><circle class="f" cx="18" cy="18" r="15.5" pathLength="100"/></svg><b>${v}</b><span>${l}</span></div>`;
-    const dn = Math.round(o.night / (o.day + o.night) * 100);
+    const f = O.profile(p), dn = Math.round(f.night / (f.day + f.night) * 100);
+    const key = (t, a) => a && a.length ? `<div class="vt"><span>${t}</span><b>${a[0]}</b></div>` : '';
     $('.v-l', fv).innerHTML = `<div class="vh"><i></i>la fragancia<i></i></div>
-      <h4 class="vf">${p.fam}</h4><p class="vd">${desc(p)}</p>
-      <div class="vpyr">${tier('Salida', p.top, 1)}${tier('Corazón', p.heart, 2)}${tier('Fondo', p.base, 3)}</div>
-      <div class="vm"><span>${p.c}</span>${p.ml ? `<span>${p.ml} ml</span>` : ''}<span>${p.gen}</span></div>`;
+      <h4 class="vf drip">${f.tag}</h4><p class="vfam">${p.fam}</p>
+      <div class="vpyr">${key('Salida', p.top)}${key('Corazón', p.heart)}${key('Fondo', p.base)}</div>`;
     $('.v-r', fv).innerHTML = `<div class="vh"><i></i>cuándo usarlo<i></i></div>
-      <h4 class="vf drip">${o.line}</h4>
-      <div class="vdn" style="--n:${dn}"><span>☀ día</span><i><b></b></i><span>noche ☾</span></div>
-      <ul class="vo">${o.moments.map(([a, b]) => `<li>${svg(ICO[a] || ICO['Día a día'])}<div><b>${a}</b><small>${b}</small></div></li>`).join('')}</ul>
-      <div class="vrs">${Object.entries(o.sea).map(([a, v]) => ring(a, v)).join('')}</div>
-      ${p.st ? `<div class="vbs">${bar('Estela', Math.round(p.st.si))}${bar('Duración', Math.round(p.st.lo))}</div>` : ''}`;
+      <h4 class="vf drip">${f.line}</h4>
+      <div class="vdn"><span>☀</span><i><b></b></i><span>☾</span></div>
+      <ul class="vo">${f.moments.slice(0, 3).map(([a]) => `<li>${svg(ICO[a] || ICO['Día a día'])}<b>${a}</b></li>`).join('')}</ul>
+      <div class="vrs">${Object.entries(f.sea).map(([a, val]) => ring(a, val)).join('')}</div>`;
     const stg = $('.v-stage', fv); stg.innerHTML = `<div class="v-big">${p.img ? O.visual(p) : O.bottle3d(p, false)}</div>`;
     fv.style.setProperty('--c1', p.c1 || '#555');
     if (window.gsap) {
       gsap.fromTo($('.v-big', stg), { x: dir * 220, opacity: 0, rotateY: dir * -40, scale: .9 }, { x: 0, opacity: 1, rotateY: 0, scale: 1, duration: .9, ease: 'expo.out' });
       gsap.fromTo($$('.v-l > *, .v-r > *, .v-r li', fv), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .7, ease: 'expo.out', stagger: .045, delay: .15 });
-      gsap.fromTo($$('.vt em', fv), { opacity: 0, scale: .85 }, { opacity: 1, scale: 1, duration: .5, ease: 'back.out(2)', stagger: .03, delay: .35 });
-      gsap.fromTo($$('.vb b', fv), { scaleX: 0 }, { scaleX: 1, duration: 1.1, ease: 'expo.out', stagger: .05, delay: .4 });
+            gsap.fromTo($$('.vb b', fv), { scaleX: 0 }, { scaleX: 1, duration: 1.1, ease: 'expo.out', stagger: .05, delay: .4 });
       gsap.fromTo($$('.vr .f', fv), { strokeDashoffset: 100 }, { strokeDashoffset: (k, el) => 100 - +el.closest('.vr').style.getPropertyValue('--v'), duration: 1.4, ease: 'expo.out', stagger: .08, delay: .45 });
       gsap.fromTo($('.vdn b', fv), { left: '50%' }, { left: dn + '%', duration: 1.2, ease: 'expo.out', delay: .4 });
       gsap.fromTo($$('.vt', fv), { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: .7, ease: 'expo.out', stagger: .1, delay: .25 });
       gsap.fromTo($('.v-buy', fv), { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: .6, delay: .2 });
     }
     $('.v-add', fv).onclick = () => O.addToCart(i, 1);
-    $('.v-more', fv).onclick = () => { close(); O.open(i); };
+    $('.v-more', fv).textContent = 'Ver ficha técnica'; $('.v-more', fv).onclick = () => { close(); O.open(i); };
   };
   const openF = (k, from) => {
     show(k); fv.classList.add('on'); fv.setAttribute('aria-hidden', 'false'); document.documentElement.classList.add('lock');

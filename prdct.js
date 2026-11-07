@@ -273,6 +273,48 @@
     paint('all');
   })();
 
+  // ---------- Perfil del perfume (texto corto, ocasión y ficha técnica) ----------
+  function profile(p) {
+    const txt = (p.fam + ' ' + [...(p.top || []), ...(p.heart || []), ...(p.base || [])].join(' ')).toLowerCase(), has = (...w) => w.some(x => txt.includes(x));
+    const low = s => s ? s.charAt(0).toLowerCase() + s.slice(1) : '';
+    const fresh = has('fresc', 'cítric', 'acuát', 'bergamot', 'limón', 'marin', 'aromát'), sweet = has('dulce', 'vainilla', 'gourmand', 'caramel', 'ámbar', 'oriental', 'tonka', 'praliné'), wood = has('amader', 'cuero', 'oud', 'especi', 'tabaco', 'vetiver', 'cedro'), flor = has('floral', 'rosa', 'jazmín', 'flor', 'azahar');
+    const words = []; if (fresh) words.push('Fresco'); if (flor) words.push('Luminoso'); if (sweet) words.push('Seductor'); if (wood) words.push('Magnético');
+    while (words.length < 3) words.push(['Elegante', 'Seguro', 'Inolvidable'][words.length]);
+    const st = p.st && p.st.s, pc = k => Math.round(st[k] || 0);
+    const day = st ? pc('Day') : fresh ? 90 : sweet ? 45 : 65, night = st ? pc('Night') : sweet || wood ? 90 : 55;
+    const sea = st ? { Verano: pc('Summer'), Primavera: pc('Spring'), Otoño: pc('Fall'), Invierno: pc('Winter') } : { Verano: fresh ? 95 : sweet ? 35 : 60, Primavera: fresh || flor ? 90 : 60, Otoño: wood || sweet ? 90 : 60, Invierno: sweet || wood ? 92 : 45 };
+    const mo = [];
+    if (fresh) mo.push(['Oficina', 'limpio y seguro, no invade el espacio'], ['Día de calor', 'ligero aunque suba la temperatura']);
+    if (sweet) mo.push(['Cita', 'cálido y cercano, invita a acercarse'], ['Noche fría', 'brilla cuando el aire está fresco']);
+    if (wood) mo.push(['Evento formal', 'presencia y carácter con traje o vestido'], ['Cena', 'elegante sin decir una palabra']);
+    if (flor) mo.push(['Celebración de día', 'luminoso, alegre, fácil de llevar']);
+    if (mo.length < 2) mo.push(['Día a día', 'versátil, de la mañana a la noche'], ['Salida', 'deja huella al pasar']);
+    const who = p.g === 'el' ? 'para él' : p.g === 'ella' ? 'para ella' : 'para quien lo lleve';
+    const j = a => (a || []).slice(0, 2).map(low).join(' y ');
+    return {
+      tag: words.slice(0, 3).join('. ') + '.',
+      desc: `Un ${low(p.fam)} ${who}. Abre con ${j(p.top)}${p.heart && p.heart.length ? `, se asienta en ${j(p.heart)}` : ''}${p.base && p.base.length ? ` y deja una estela de ${j(p.base)}` : ''}.`,
+      day, night, sea, moments: mo.slice(0, 3),
+      line: night > day + 10 ? 'Brilla de noche' : day > night + 10 ? 'Hecho para el día' : 'Del día a la noche',
+      best: Object.entries(sea).sort((a, b) => b[1] - a[1]).slice(0, 2).map(x => x[0]).join(' y ')
+    };
+  }
+  function techSheet(p) {
+    const f = profile(p), t = p.st, row = (k, v) => v ? `<div class="ts-r"><dt>${k}</dt><dd>${v}</dd></div>` : '';
+    const lvl = v => v >= 75 ? 'Alta' : v >= 55 ? 'Media' : 'Suave';
+    return `<section class="tsheet"><span class="mono">ficha técnica</span>
+      <p class="ts-tag">${f.tag}</p><p class="ts-desc">${f.desc}</p>
+      <dl>
+        ${row('Marca', p.b)}${row('Línea', p.cat)}${row('Familia olfativa', p.fam)}${row('Concentración', { EDP: 'Eau de Parfum (EDP)', EDT: 'Eau de Toilette (EDT)', Parfum: 'Parfum', Elixir: 'Elixir', EDC: 'Eau de Cologne (EDC)' }[p.c] || p.c)}
+        ${row('Contenido', p.ml ? p.ml + ' ml' : '')}${row('Género', p.gen)}
+        ${row('Notas de salida', (p.top || []).join(', '))}${row('Notas de corazón', (p.heart || []).join(', '))}${row('Notas de fondo', (p.base || []).join(', '))}
+        ${row('Momento ideal', f.line)}${row('Mejor temporada', f.best)}${row('Ocasiones', f.moments.map(m => m[0]).join(', '))}
+        ${t ? row('Estela', `${lvl(t.si)} · ${Math.round(t.si)}/100`) + row('Duración', `${lvl(t.lo)} · ${Math.round(t.lo)}/100`) + row('Valoración', `${t.r.toFixed(1)} de 5 · ${t.v} compradores`) : ''}
+        ${row('Disponibilidad', p.enc ? 'Por encargo · 10–15 días hábiles' : 'Disponible · entrega inmediata')}
+        ${row('Envío', 'Gratis a toda Colombia')}${row('Autenticidad', '100% original, sellado de fábrica')}${row('Pago', 'Mercado Pago · tarjeta, PSE y más')}
+      </dl></section>`;
+  }
+
   // ---------- Ficha (drawer) ----------
   const dr = document.createElement('div');
   dr.className = 'drawer'; dr.setAttribute('aria-hidden', 'true');
@@ -299,6 +341,7 @@
           ${(p.heart.length || p.base.length ? [['01', 'salida', '0–15 min', p.top], ['02', 'corazón', '15 min – 4 h', p.heart], ['03', 'fondo', '4 h +', p.base]] : [['··', 'notas principales', '', p.top]]).filter(t => t[3].length).map((t, k) =>
             `<button class="tier${k === 0 ? ' on' : ''}" role="tab" aria-selected="${k === 0}"><i>${t[0]} · ${t[1]}</i><b>${t[3].join(' · ')}</b><em>${t[2]}</em></button>`).join('')}
         </div>
+        ${techSheet(p)}
         ${statsBlock(p)}
 
         <div class="ask">
@@ -434,6 +477,6 @@
   paintCart();
   if (/[?&]carrito/.test(location.search)) openCart();
   // API para factura y vitrina
-  window.OG = { P, fmt, disc, get coupon() { return coupon; }, get cart() { return cart; }, setCart(c) { cart = c; saveCart(); }, addToCart, open, openCart, closeCart, bottle3d, visual, maxQ, checkout };
+  window.OG = { profile,  P, fmt, disc, get coupon() { return coupon; }, get cart() { return cart; }, setCart(c) { cart = c; saveCart(); }, addToCart, open, openCart, closeCart, bottle3d, visual, maxQ, checkout };
   document.dispatchEvent(new Event('og:ready'));
 })();
