@@ -1192,3 +1192,13 @@ html.lock .og-player,html.lock .ch-float{opacity:0;pointer-events:none}
 }
 .obra-ctrls .btn,.obra-ctrls .btn:hover,.obra-ctrls .btn:focus{color:var(--fg)}
 .obra-ctrls .btn.solid,.obra-ctrls .btn.solid:hover,.obra-ctrls .btn.solid:focus{color:var(--bg)}
+
+/* ===== Deals: fotos de producto en fondo blanco ===== */
+.card .img.blanco{background:#fff}
+.card .img.blanco::before{display:none}
+.card .img.blanco .foto{width:100%;height:100%;object-fit:contain;padding:8% 6% 12%;box-sizing:border-box;transition:transform .9s cubic-bezier(.22,1,.36,1)}
+.card:hover .img.blanco .foto{transform:scale(1.06) translateY(-2%)}
+.card .img.blanco .badge{color:#0A0A0A;border-color:#0A0A0A;background:#fff}
+.card .img.blanco .badge.enc{background:#0A0A0A;color:#fff}
+.card .img.blanco .num,.card .img.blanco .explore{color:#8a8780}
+.card .img.blanco .q-add{background:#0A0A0A;color:#fff;border-color:#0A0A0A}

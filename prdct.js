@@ -130,8 +130,8 @@
   const grid = $('#grid');
   if (grid) {
     const card = (p, i) => `<article class="card" data-g="${p.g}" data-k="${p.k || 'perfumes'}" data-i="${i}" tabindex="0" aria-label="${p.n}, ${p.b}. Ver ficha">
-      <div class="img"><span class="badge">${p.cat.toUpperCase()}</span>${p.enc ? '<span class="badge enc">ENCARGO</span>' : ''}${p.enc ? '' : `<span class="num mono">${String(i + 1).padStart(3, '0')}</span>`}
-        <div class="stage">${visual(p)}</div>
+      <div class="img${p.foto ? ' blanco' : ''}"><span class="badge">${p.cat.toUpperCase()}</span>${p.enc ? '<span class="badge enc">ENCARGO</span>' : ''}${p.enc ? '' : `<span class="num mono">${String(i + 1).padStart(3, '0')}</span>`}
+        <div class="stage">${p.foto ? `<img class="foto" src="${p.foto}" alt="${p.n} · ${p.b}" loading="lazy" decoding="async" width="1200" height="1200">` : visual(p)}</div>
         <span class="explore mono">explorar ↗</span>
         <button class="q-add" data-i="${i}" aria-label="Agregar ${p.n} al carrito">+</button>
       </div>
