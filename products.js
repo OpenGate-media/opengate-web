@@ -15,6 +15,7 @@ const JJS = [];
 const P = [
  {
   "n": "9 PM Rebel",
+  "foto": "/img/p/9pm-rebel.webp",
   "vid": 67842845213037,
   "b": "Afnan",
   "c": "EDP",
@@ -68,6 +69,7 @@ const P = [
  },
  {
   "n": "Liquid Brun",
+  "foto": "/img/p/liquid-brun.webp",
   "vid": 67842845245805,
   "b": "French Avenue",
   "c": "EDP",
@@ -121,6 +123,7 @@ const P = [
  },
  {
   "n": "Atlas",
+  "foto": "/img/p/atlas.webp",
   "vid": 67842845278573,
   "b": "Lattafa",
   "c": "EDP",
@@ -172,6 +175,7 @@ const P = [
  },
  {
   "n": "Khamrah",
+  "foto": "/img/p/khamrah.webp",
   "vid": 67842845311341,
   "b": "Lattafa",
   "c": "EDP",
@@ -225,6 +229,7 @@ const P = [
  },
  {
   "n": "Hawas Ice",
+  "foto": "/img/p/hawas-ice.webp",
   "vid": 67842845376877,
   "b": "Rasasi",
   "c": "EDP",
@@ -327,6 +332,7 @@ const P = [
  },
  {
   "n": "Nocturno Elixir",
+  "foto": "/img/p/nocturno-elixir.webp",
   "vid": 67842848751981,
   "b": "Rayhaan",
   "c": "EDP",
@@ -377,6 +383,7 @@ const P = [
  },
  {
   "n": "Terra",
+  "foto": "/img/p/terra.webp",
   "vid": 67842848817517,
   "b": "Rayhaan",
   "c": "EDP",
@@ -434,6 +441,7 @@ const P = [
  },
  {
   "n": "Wolf",
+  "foto": "/img/p/wolf.webp",
   "vid": 67842849309037,
   "b": "Rayhaan",
   "c": "EDP",
@@ -480,6 +488,7 @@ const P = [
  },
  {
   "n": "Black XS",
+  "foto": "/img/p/black-xs.webp",
   "glb": "/models/black-xs.glb",
   "vid": 67842849538413,
   "b": "Paco Rabanne",
@@ -510,6 +519,7 @@ const P = [
  },
  {
   "n": "Pacific Aura",
+  "foto": "/img/p/pacific-aura.webp",
   "vid": 67852551225709,
   "b": "Rayhaan",
   "c": "EDP",
@@ -565,6 +575,7 @@ const P = [
  },
  {
   "n": "Kiss",
+  "foto": "/img/p/kiss.webp",
   "b": "Rayhaan",
   "c": "EDP",
   "ml": 100,
@@ -782,6 +793,7 @@ const P = [
  },
  {
   "n": "Obsidian",
+  "foto": "/img/p/obsidian.webp",
   "b": "Rayhaan",
   "c": "EDP",
   "ml": 100,
@@ -882,6 +894,7 @@ const P = [
  },
  {
   "n": "Club de Nuit Untold",
+  "foto": "/img/p/cdn-untold.webp",
   "b": "Armaf",
   "c": "EDP",
   "ml": 105,
@@ -931,6 +944,7 @@ const P = [
  },
  {
   "n": "Supremacy in Heaven",
+  "foto": "/img/p/supremacy-heaven.webp",
   "b": "Afnan",
   "c": "EDP",
   "ml": 100,
@@ -1148,6 +1162,7 @@ const P = [
  },
  {
   "n": "Asad",
+  "foto": "/img/p/asad.webp",
   "b": "Lattafa",
   "c": "EDP",
   "ml": 100,
@@ -1202,6 +1217,7 @@ const P = [
  },
  {
   "n": "Yara",
+  "foto": "/img/p/yara.webp",
   "b": "Lattafa",
   "c": "EDP",
   "ml": 100,
@@ -1254,6 +1270,7 @@ const P = [
  },
  {
   "n": "Club de Nuit Intense Man",
+  "foto": "/img/p/cdn-intense.webp",
   "b": "Armaf",
   "c": "EDT",
   "ml": 105,
@@ -1361,6 +1378,7 @@ const P = [
  },
  {
   "n": "Odyssey Mandarin Sky",
+  "foto": "/img/p/odyssey-mandarin.webp",
   "b": "Armaf",
   "c": "EDP",
   "ml": 100,
@@ -1412,6 +1430,7 @@ const P = [
  },
  {
   "n": "9 PM",
+  "foto": "/img/p/9pm.webp",
   "b": "Afnan",
   "c": "EDP",
   "ml": 100,
@@ -1499,6 +1518,7 @@ const P = [
  },
  {
   "n": "Born in Roma Uomo",
+  "foto": "/img/p/born-roma-uomo.webp",
   "glb": "/models/born-in-roma-uomo.glb",
   "b": "Valentino",
   "c": "EDT",
@@ -1551,6 +1571,7 @@ const P = [
  },
  {
   "n": "Donna Born in Roma",
+  "foto": "/img/p/donna-born-roma.webp",
   "glb": "/models/donna-born-in-roma.glb",
   "b": "Valentino",
   "c": "EDP",
@@ -1584,6 +1605,7 @@ const P = [
  },
  {
   "n": "Acqua di Giò Parfum",
+  "foto": "/img/p/adg-parfum.webp",
   "glb": "/models/acqua-di-gio-parfum.glb",
   "b": "Giorgio Armani",
   "c": "Parfum",
@@ -1636,6 +1658,7 @@ const P = [
  },
  {
   "n": "Eros Flame",
+  "foto": "/img/p/eros-flame.webp",
   "glb": "/models/eros-flame.glb",
   "b": "Versace",
   "c": "EDP",
@@ -1670,6 +1693,7 @@ const P = [
  },
  {
   "n": "Good Girl",
+  "foto": "/img/p/good-girl.webp",
   "glb": "/models/good-girl.glb",
   "b": "Carolina Herrera",
   "c": "EDP",
@@ -1701,6 +1725,7 @@ const P = [
  },
  {
   "n": "La Vie Est Belle",
+  "foto": "/img/p/la-vie-est-belle.webp",
   "glb": "/models/la-vie-est-belle.glb",
   "b": "Lancôme",
   "c": "EDP",
@@ -1735,6 +1760,7 @@ const P = [
  },
  {
   "n": "Le Male Elixir",
+  "foto": "/img/p/le-male-elixir.webp",
   "glb": "/models/le-male-elixir.glb",
   "b": "Jean Paul Gaultier",
   "c": "Parfum",
@@ -1787,6 +1813,7 @@ const P = [
  },
  {
   "n": "Y Eau de Parfum",
+  "foto": "/img/p/y-edp.webp",
   "glb": "/models/y-edp.glb",
   "b": "Yves Saint Laurent",
   "c": "EDP",
@@ -1842,6 +1869,7 @@ const P = [
  },
  {
   "n": "Sauvage",
+  "foto": "/img/p/sauvage.webp",
   "glb": "/models/sauvage.glb",
   "b": "Dior",
   "c": "EDT",
@@ -1875,6 +1903,7 @@ const P = [
  },
  {
   "n": "Erba Pura",
+  "foto": "/img/p/erba-pura.webp",
   "b": "Xerjoff",
   "c": "EDP",
   "ml": 100,
@@ -1926,6 +1955,7 @@ const P = [
  },
  {
   "n": "Aventus",
+  "foto": "/img/p/aventus.webp",
   "glb": "/models/aventus.glb",
   "b": "Creed",
   "c": "EDP",
@@ -1982,6 +2012,7 @@ const P = [
  },
  {
   "n": "Baccarat Rouge 540",
+  "foto": "/img/p/baccarat-540.webp",
   "glb": "/models/baccarat-rouge-540.glb",
   "b": "Maison Francis Kurkdjian",
   "c": "EDP",
@@ -2013,6 +2044,7 @@ const P = [
  },
  {
   "n": "Layton",
+  "foto": "/img/p/layton.webp",
   "b": "Parfums de Marly",
   "c": "EDP",
   "ml": 125,
