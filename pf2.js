@@ -2,6 +2,7 @@
 if(!document.querySelector(".pf2"))return;
 
 const P=[
+ {n:'Diosprimero',c:'Video',k:'VFX · Texto en fuego',cl:'Diosprimero',y:'2026',d:'0:03',vid:'/vid/fuego-d1.mp4',poster:'/vid/fuego-d1.jpg',g:'#111',t:'El título se enciende en llamas sobre el plano y se mueve con el artista.',w:'Dirección · VFX · Edición'},
  {n:'Supremacy Noir',c:'Video',k:'VFX',cl:'Afnan',y:'2026',d:'0:24',g:'linear-gradient(145deg,#1a1a1a,#3b3b39 60%,#0a0a0a)',t:'La grieta con forma del roto se abre y el frasco cae girando.',w:'Dirección · Blender · Composición'},
  {n:'Spot Perfumería',c:'Video',k:'Comercial',cl:'og.prdct',y:'2026',d:'0:30',g:'linear-gradient(200deg,#2d2c2a,#0c0c0c 70%)',t:'Anuncio vertical para redes, pensado para vender en 3 segundos.',w:'Guion · Rodaje · Edición'},
  {n:'Sesión Aventus',c:'Foto',k:'Producto',cl:'og.prdct',y:'2026',d:'24 fotos',g:'linear-gradient(160deg,#4a4945,#171717)',t:'Luz lateral, vidrio y reflejos. Fondo blanco y fondo oscuro.',w:'Fotografía · Retoque'},
@@ -10,7 +11,7 @@ const P=[
  {n:'Tras cámara',c:'Foto',k:'Proceso',cl:'Open Gate',y:'2026',d:'18 fotos',g:'linear-gradient(190deg,#3a3936,#0e0e0e)',t:'Cómo se hace: set, luces y equipo trabajando.',w:'Fotografía documental'}
 ];
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const art=(p,ej=true)=>`<div class="art" data-l="${p.n[0]}" style="--g:${p.g}"><i></i><i></i><i></i><i></i></div>${ej?'<span class="ej">Ejemplo</span>':''}`;
+const art=(p,ej=true)=>p.vid?`<div class="art vid"><video src="${p.vid}" poster="${p.poster}" muted loop playsinline autoplay preload="metadata"></video><i></i><i></i><i></i><i></i></div>`:`<div class="art" data-l="${p.n[0]}" style="--g:${p.g}"><i></i><i></i><i></i><i></i></div>${ej?'<span class="ej">Ejemplo</span>':''}`;
 const VISTAS=['rollo','grid','indice'],NOM={rollo:'Rollo',grid:'Cuadrícula',indice:'Índice'};
 let cat='Todo',vista='rollo';
 const vis=()=>P.filter(p=>cat==='Todo'||p.c===cat);
@@ -23,14 +24,14 @@ if(matchMedia('(hover:hover)').matches)addEventListener('mousemove',e=>{const r=
 
 /* destacado */
 const f=P[0];
-$('#feat').innerHTML=`${art(f)}<span class="meta"><span><span class="mono rec">Destacado · ${f.d}</span><h3 class="d">${f.n}</h3></span><span class="rb"><span class="roto"></span><span class="tip">Ver</span></span></span>`;
+$('#feat').innerHTML=`${art(f)}<span class="meta"><span><span class="mono rec">Destacado · ${f.d}</span><h3 class="d"${f.vid?' hidden':''}>${f.n}</h3></span><span class="rb"><span class="roto"></span><span class="tip">Ver</span></span></span>`;
 $('#feat').onclick=()=>open(0);
 
 /* ficha */
-function open(i){const p=P[i];$('#box').innerHTML=`<div class="vis">${art(p,false)}</div><div class="txt"><button class="rb pfx" id="cl" aria-label="Cerrar"><span class="roto"></span><span class="tip">Cerrar</span></button><span class="mono rec">${p.c} · ${p.k}</span><h3 class="d">${p.n}</h3><p style="line-height:1.5">${p.t}</p><dl><dt>Cliente</dt><dd>${p.cl}</dd><dt>Año</dt><dd>${p.y}</dd><dt>Duración</dt><dd>${p.d}</dd><dt>Hicimos</dt><dd>${p.w}</dd></dl><a class="btn" target="_blank" rel="noopener" href="${wa('Hola Open Gate, vi el proyecto '+p.n+' y quiero algo así.')}">Quiero algo así →</a><button class="btn o" id="cl2">Seguir viendo</button></div>`;
- $('#sh').classList.add('act');$('#cl').onclick=$('#cl2').onclick=()=>$('#sh').classList.remove('act')}
-$('#sh').addEventListener('click',e=>{if(e.target.id==='sh')$('#sh').classList.remove('act')});
-addEventListener('keydown',e=>{if(e.key==='Escape')$('#sh').classList.remove('act')});
+function open(i){const p=P[i];$('#pfbox').innerHTML=`<div class="vis">${p.vid?`<video src="${p.vid}" poster="${p.poster}" controls autoplay loop playsinline></video>`:art(p,false)}</div><div class="txt"><button class="rb pfx" id="cl" aria-label="Cerrar"><span class="roto"></span><span class="tip">Cerrar</span></button><span class="mono rec">${p.c} · ${p.k}</span><h3 class="d">${p.n}</h3><p style="line-height:1.5">${p.t}</p><dl><dt>Cliente</dt><dd>${p.cl}</dd><dt>Año</dt><dd>${p.y}</dd><dt>Duración</dt><dd>${p.d}</dd><dt>Hicimos</dt><dd>${p.w}</dd></dl><a class="btn" target="_blank" rel="noopener" href="${wa('Hola Open Gate, vi el proyecto '+p.n+' y quiero algo así.')}">Quiero algo así →</a><button class="btn o" id="cl2">Seguir viendo</button></div>`;
+ $('#pfsh').classList.add('act');$('#cl').onclick=$('#cl2').onclick=()=>$('#pfsh').classList.remove('act')}
+$('#pfsh').addEventListener('click',e=>{if(e.target.id==='sh')$('#pfsh').classList.remove('act')});
+addEventListener('keydown',e=>{if(e.key==='Escape')$('#pfsh').classList.remove('act')});
 
 /* vistas */
 function rollo(v){

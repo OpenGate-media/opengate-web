@@ -143,3 +143,7 @@
 .pf2 .pfwrap .pfwrap{padding:0}
 .pf2 .pfstats b,.pf2 .pfn,.pf2 .tile b{letter-spacing:.005em}
 .pf2{--rec:#E5362B;--ease:cubic-bezier(.22,1,.36,1);--s1:8px;--s2:16px;--s3:24px;--s4:40px;--s5:72px;--d:var(--display);--b:var(--text);--roto:url("/hole.png")}
+
+.pf2 .art.vid::before{display:none}
+.pf2 .art video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.pf2 .vis video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
