@@ -3,7 +3,7 @@ if(!document.querySelector(".pf2"))return;
 
 const P=[
  {n:'Diosprimero',c:'Video',k:'VFX · Texto en fuego',cl:'Diosprimero',y:'2026',d:'0:03',vid:'/vid/fuego-d1.mp4',poster:'/vid/fuego-d1.jpg',g:'#111',t:'El título se enciende en llamas sobre el plano y se mueve con el artista.',w:'Dirección · VFX · Edición'},
- {n:'Supremacy Noir',c:'Video',k:'VFX',cl:'Afnan',y:'2026',d:'0:24',g:'linear-gradient(145deg,#1a1a1a,#3b3b39 60%,#0a0a0a)',t:'La grieta con forma del roto se abre y el frasco cae girando.',w:'Dirección · Blender · Composición'},
+ {n:'Supremacy Noir',c:'Video',k:'Anuncio',cl:'Afnan',y:'2026',d:'0:14',vid:'/vid/supremacy-noir.mp4',poster:'/vid/supremacy-noir.jpg',g:'#111',t:'Anuncio del perfume entre luces y texturas oscuras. Cierra con la marca.',w:'Dirección · Rodaje · Edición'},
  {n:'Spot Perfumería',c:'Video',k:'Comercial',cl:'og.prdct',y:'2026',d:'0:30',g:'linear-gradient(200deg,#2d2c2a,#0c0c0c 70%)',t:'Anuncio vertical para redes, pensado para vender en 3 segundos.',w:'Guion · Rodaje · Edición'},
  {n:'Sesión Aventus',c:'Foto',k:'Producto',cl:'og.prdct',y:'2026',d:'24 fotos',g:'linear-gradient(160deg,#4a4945,#171717)',t:'Luz lateral, vidrio y reflejos. Fondo blanco y fondo oscuro.',w:'Fotografía · Retoque'},
  {n:'Identidad OG',c:'Diseño',k:'Marca',cl:'Open Gate',y:'2026',d:'Sistema',g:'linear-gradient(130deg,#6e6c67,#1b1b1a)',t:'Logo, paleta, tipografía y reglas de uso en todas las piezas.',w:'Dirección de arte · Diseño'},
