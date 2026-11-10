@@ -2,10 +2,10 @@
 if(!document.querySelector(".pf2"))return;
 
 const P=[
+ {n:'Supremacy Noir',loc:'Bogotá',c:'Video',k:'Anuncio',cl:'Afnan',y:'2026',d:'0:14',vid:'/vid/supremacy-noir.mp4',poster:'/vid/supremacy-noir.jpg',g:'#111',t:'Anuncio del perfume entre luces y texturas oscuras. Cierra con la marca.',w:'Dirección · Rodaje · Edición'},
  {n:'Diosprimero',noTit:1,loc:'Medellín',c:'Video',k:'VFX · Texto en fuego',cl:'Diosprimero',y:'2026',d:'0:03',vid:'/vid/fuego-d1.mp4',poster:'/vid/fuego-d1.jpg',g:'#111',t:'El título se enciende en llamas sobre el plano y se mueve con el artista.',w:'Dirección · VFX · Edición'},
  {n:'Home Alone',noTit:1,loc:'Medellín',c:'Video',k:'Videoclip · Anime con IA',cl:'Maxii Sala',y:'2026',d:'0:07',vid:'/vid/home-alone-ia.mp4',poster:'/vid/home-alone-ia.jpg',g:'#111',t:'La escena real se transforma en anime hecho con IA.',w:'Dirección · VFX con IA · Edición'},
  {n:'Blam Blam',loc:'Bogotá',c:'Video',k:'Videoclip · VFX',cl:'Open Gate',y:'2026',d:'0:08',vid:'/vid/blam-blam-ia.mp4',poster:'/vid/blam-blam-ia.jpg',vert:1,g:'#111',t:'Las flores florecen sobre el rostro y el plano se abre en un zoom psicodélico.',w:'Dirección · VFX · Edición'},
- {n:'Supremacy Noir',loc:'Bogotá',c:'Video',k:'Anuncio',cl:'Afnan',y:'2026',d:'0:14',vid:'/vid/supremacy-noir.mp4',poster:'/vid/supremacy-noir.jpg',g:'#111',t:'Anuncio del perfume entre luces y texturas oscuras. Cierra con la marca.',w:'Dirección · Rodaje · Edición'},
  {n:'Spot Perfumería',c:'Video',k:'Comercial',cl:'og.prdct',y:'2026',d:'0:30',g:'linear-gradient(200deg,#2d2c2a,#0c0c0c 70%)',t:'Anuncio vertical para redes, pensado para vender en 3 segundos.',w:'Guion · Rodaje · Edición'},
  {n:'Sesión Aventus',c:'Foto',k:'Producto',cl:'og.prdct',y:'2026',d:'24 fotos',g:'linear-gradient(160deg,#4a4945,#171717)',t:'Luz lateral, vidrio y reflejos. Fondo blanco y fondo oscuro.',w:'Fotografía · Retoque'},
  {n:'Identidad OG',c:'Diseño',k:'Marca',cl:'Open Gate',y:'2026',d:'Sistema',g:'linear-gradient(130deg,#6e6c67,#1b1b1a)',t:'Logo, paleta, tipografía y reglas de uso en todas las piezas.',w:'Dirección de arte · Diseño'},
