@@ -18,28 +18,62 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <link rel="stylesheet" href="/styles.css?v=1794106846">
+<link rel="stylesheet" href="/pf2.css?v=1794340748">
 </head>
 <body class="studio">
 <svg width="0" height="0" style="position:absolute"><defs><linearGradient id="gl" x1="0" x2="1"><stop offset="0" stop-color="#e9e7e2" stop-opacity=".9"/><stop offset=".3" stop-color="#6d6c69" stop-opacity=".85"/><stop offset=".75" stop-color="#1c1c1c" stop-opacity=".95"/><stop offset="1" stop-color="#050505"/></linearGradient><linearGradient id="cp" x1="0" x2="1"><stop offset="0" stop-color="#f2f0ec"/><stop offset=".5" stop-color="#7a7a7a"/><stop offset="1" stop-color="#111"/></linearGradient><linearGradient id="sh" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".6"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs></svg>
-<div class="proposal">Prototipo · propuesta para revisión · contenido de ejemplo</div>
+<div class="proposal">Proyectos de ejemplo · aquí van los trabajos reales del equipo</div>
 <nav class="topbar" aria-label="Principal"><div class="wrap">
   <a href="/" class="brand" aria-label="Inicio Open Gate"><img class="b wm" src="/wm-blanco.png" alt="Open Gate"><img class="n wm" src="/wm-negro.png" alt="Open Gate"></a>
   <div class="tabs"><a href="/prtflo/" class="on" aria-current="page">prtflo</a><a href="/stdo/">stdo</a><a href="/prdct/">prdct</a><i class="pill" aria-hidden="true"></i></div>
 </div><div class="prog" aria-hidden="true"><i></i></div></nav>
 <div class="hud mono rec" id="tc">00:00:00:00</div>
 
-<section class="sec page-top" id="prtflo"><div class="wrap">
-  <div class="head"><div><span class="mono rec">01 · prtflo</span><h2 style="margin-top:12px">portafolio</h2></div>
-    <div class="chips"><button class="chip on">Todo</button><button class="chip">Video</button><button class="chip">Foto</button><button class="chip">Diseño</button></div></div>
-  <div class="pf" id="pf"></div>
-  <p class="mono" style="margin-top:20px">* Espacios de ejemplo. Aquí van los proyectos reales del equipo.</p>
-</div></section>
+<div class="pf2" id="prtflo"><div class="pfwrap">
+  <section class="pfhero" id="inicio">
+    <div class="tx">
+      <span class="mono rec">prtflo · portafolio 2026</span>
+      <h1 class="d">lo que<br>rodamos</h1>
+      <p class="l">Video, foto y diseño hechos para vender. Toca el roto para abrir la puerta.</p>
+      <div class="acts"><a class="btn" href="#proyectos">Ver proyectos ↓</a><a class="btn o" href="#contacto">Cotizar</a></div>
+    </div>
+    <div class="lg">
+      <a class="rb" href="#reel" aria-label="Abrir la puerta: ir al reel" id="heroRoto">
+        <svg class="ring" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="c" d="M100 100 m-88 0 a88 88 0 1 1 176 0 a88 88 0 1 1 -176 0"/></defs><text><textPath href="#c">abre la puerta · open gate · abre la puerta · open gate · abre la puerta ·</textPath></text></svg>
+        <span class="roto" id="heroImg"></span>
+      </a>
+    </div>
+  </section>
 
-<section class="cta" id="contacto"><div class="wrap">
-  <span class="mono rec">Contacto</span>
-  <h2>hablemos</h2>
-  <div class="row"><a class="btn solid" href="https://wa.me/573001087938?text=Hola%20Open%20Gate%20%F0%9F%91%8B%20Vi%20su%20portafolio%20y%20quiero%20cotizar%20un%20proyecto." target="_blank" rel="noopener">Escríbenos por WhatsApp</a><a class="btn" href="https://www.instagram.com/og.stdo" target="_blank" rel="noopener">@og.stdo</a><a class="btn" href="https://www.instagram.com/og.prdct" target="_blank" rel="noopener">@og.prdct</a></div>
-</div></section>
+  <section class="pfsec" id="reel">
+    <div class="eyebrow"><span class="mono">01 · Reel</span><span class="mono">2.39 : 1</span></div>
+    <button class="feat hv" id="feat" aria-label="Reproducir Supremacy Noir"></button>
+  </section>
+
+  <section class="pfsec" id="proyectos">
+    <div class="eyebrow"><span class="mono">02 · Proyectos</span><span class="mono" id="vista">Vista · Rollo</span></div>
+    <div class="pfbar"><h2 class="d">proyectos</h2>
+      <div class="ctrls"><div class="chips" id="chips" role="group" aria-label="Filtrar"></div>
+      <button class="rb" id="cyc" aria-label="Cambiar vista de proyectos"><span class="roto"></span><span class="tip" id="cycTip">Vista · Rollo</span></button><div class="seg" id="seg" role="group" aria-label="Cambiar vista"><button data-v="rollo" class="act">Rollo</button><button data-v="grid">Cuadrícula</button><button data-v="indice">Índice</button></div></div></div>
+    <div id="view"></div>
+    <div class="count"><span class="mono" id="cnt"></span><span class="mono">* Proyectos de ejemplo</span></div>
+  </section>
+
+  <section class="pfsec" id="numeros">
+    <div class="eyebrow"><span class="mono">03 · En números</span><span class="mono">Open Gate</span></div>
+    <div class="pfstats"><div><b data-n="40">0</b><span class="mono">Videos</span></div><div><b data-n="12">0</b><span class="mono">Marcas</span></div><div><b data-n="3">0</b><span class="mono">Años</span></div></div>
+  </section>
+
+  <section class="pfsec" id="contacto">
+    <div class="eyebrow"><span class="mono">04 · Contacto</span><span class="mono">Respondemos hoy</span></div>
+    <div class="close">
+      <div class="pft"><h2 class="d">hablemos</h2><p class="l" style="font-size:18px;line-height:1.45;max-width:34ch">Cuéntanos qué quieres vender. Te respondemos con una idea y un precio.</p>
+        <a class="btn" target="_blank" rel="noopener" href="https://wa.me/573001087938?text=Hola%20Open%20Gate%20%F0%9F%91%8B%20Vi%20su%20portafolio%20y%20quiero%20cotizar%20un%20proyecto.">Escríbenos por WhatsApp →</a></div>
+      <a class="rb" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp" href="https://wa.me/573001087938?text=Hola%20Open%20Gate%20%F0%9F%91%8B%20Vi%20su%20portafolio%20y%20quiero%20cotizar%20un%20proyecto."><span class="roto" id="closeImg"></span><span class="tip">Escribir</span></a>
+    </div>
+    <div class="foot"><span class="mono">© Open Gate · 2026</span><span class="mono">prtflo · stdo · prdct</span></div>
+  </section>
+</div><div class="sh" id="sh" role="dialog" aria-modal="true" aria-label="Proyecto"><div class="box" id="box"></div></div><div class="pftoast" id="toast" role="status"></div></div>
 
 <footer><div class="wrap"><div class="cols">
   <div><div class="brand"><img class="b wm" src="/wm-blanco.png" alt="Open Gate"><img class="n wm" src="/wm-negro.png" alt="Open Gate"></div></div>
@@ -47,6 +81,7 @@
   <div><h5 class="mono">Ayuda</h5><ul><li>Envíos</li><li>Autenticidad</li><li>Devoluciones</li></ul></div>
   <div><h5 class="mono">Canales</h5><ul><li><a href="https://www.instagram.com/og.prdct" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://wa.me/573001087938?text=Hola%20Open%20Gate%20%F0%9F%91%8B%20Vi%20su%20portafolio%20y%20quiero%20cotizar%20un%20proyecto." target="_blank" rel="noopener">WhatsApp · 300 108 7938</a></li><li>Mercado Libre</li></ul></div>
 </div></div></footer>
+<script src="/pf2.js?v=1794340748" defer></script>
 <script src="/app.js?v=1793484892"></script>
 <div class="ch-float" data-c="wa" data-wa="https://wa.me/573001087938?text=Hola%20Open%20Gate%20%F0%9F%91%8B%20Vi%20su%20portafolio%20y%20quiero%20cotizar%20un%20proyecto." data-ig="https://ig.me/m/og.stdo">
   <div class="chf-sw" role="radiogroup" aria-label="Elegir canal"><button data-c="wa" class="on" aria-label="WhatsApp"><svg viewBox="0 0 32 32" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Zm0 23.6c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6Zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.8.4 3.6 3.6 0 0 0-1.1 2.6c0 1.5 1.1 3 1.3 3.2.2.2 2.2 3.4 5.4 4.7 2 .9 2.8.9 3.8.8.6-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5-.1-.2-.3-.3-.7-.4Z"/></svg></button><button data-c="ig" aria-label="Instagram"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg></button><i></i></div>
