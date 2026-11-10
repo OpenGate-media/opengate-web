@@ -187,3 +187,6 @@
 .pf2 .feat .loc i{width:8px;height:8px;border-radius:50%;background:var(--rec);animation:pf2bl 1s steps(2) infinite}
 .pf2 .feat .pfsl.act .loc{animation:pf2pop .5s var(--ease) .45s both}
 @keyframes pf2pop{from{transform:translateX(-20px);opacity:0}}
+
+.pf2 .art.vid.vert video{object-fit:contain}
+.pf2 .art.vid.vert::before{display:block;content:"";font-size:0;position:absolute;inset:-12%;right:auto;bottom:auto;width:124%;height:124%;background:var(--bgp) center/cover;filter:blur(26px) brightness(.55);transform:none;color:transparent}
