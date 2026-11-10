@@ -2,8 +2,8 @@
 if(!document.querySelector(".pf2"))return;
 
 const P=[
- {n:'Diosprimero',noTit:1,c:'Video',k:'VFX · Texto en fuego',cl:'Diosprimero',y:'2026',d:'0:03',vid:'/vid/fuego-d1.mp4',poster:'/vid/fuego-d1.jpg',g:'#111',t:'El título se enciende en llamas sobre el plano y se mueve con el artista.',w:'Dirección · VFX · Edición'},
- {n:'Supremacy Noir',c:'Video',k:'Anuncio',cl:'Afnan',y:'2026',d:'0:14',vid:'/vid/supremacy-noir.mp4',poster:'/vid/supremacy-noir.jpg',g:'#111',t:'Anuncio del perfume entre luces y texturas oscuras. Cierra con la marca.',w:'Dirección · Rodaje · Edición'},
+ {n:'Diosprimero',noTit:1,loc:'Medellín',c:'Video',k:'VFX · Texto en fuego',cl:'Diosprimero',y:'2026',d:'0:03',vid:'/vid/fuego-d1.mp4',poster:'/vid/fuego-d1.jpg',g:'#111',t:'El título se enciende en llamas sobre el plano y se mueve con el artista.',w:'Dirección · VFX · Edición'},
+ {n:'Supremacy Noir',loc:'Bogotá',c:'Video',k:'Anuncio',cl:'Afnan',y:'2026',d:'0:14',vid:'/vid/supremacy-noir.mp4',poster:'/vid/supremacy-noir.jpg',g:'#111',t:'Anuncio del perfume entre luces y texturas oscuras. Cierra con la marca.',w:'Dirección · Rodaje · Edición'},
  {n:'Spot Perfumería',c:'Video',k:'Comercial',cl:'og.prdct',y:'2026',d:'0:30',g:'linear-gradient(200deg,#2d2c2a,#0c0c0c 70%)',t:'Anuncio vertical para redes, pensado para vender en 3 segundos.',w:'Guion · Rodaje · Edición'},
  {n:'Sesión Aventus',c:'Foto',k:'Producto',cl:'og.prdct',y:'2026',d:'24 fotos',g:'linear-gradient(160deg,#4a4945,#171717)',t:'Luz lateral, vidrio y reflejos. Fondo blanco y fondo oscuro.',w:'Fotografía · Retoque'},
  {n:'Identidad OG',c:'Diseño',k:'Marca',cl:'Open Gate',y:'2026',d:'Sistema',g:'linear-gradient(130deg,#6e6c67,#1b1b1a)',t:'Logo, paleta, tipografía y reglas de uso en todas las piezas.',w:'Dirección de arte · Diseño'},
@@ -27,14 +27,14 @@ const f=P[0];
 /* reel destacado: carrusel automático de proyectos */
 (function(){
  const F=$('#feat'),N=P.length,reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
- F.innerHTML=P.map((p,i)=>`<div class="pfsl${i?'':' act'}" data-i="${i}">${art(p)}<span class="meta"><span class="mt"><span class="mono rec">${p.c} · ${p.cl} · ${p.d}</span><h3 class="d"${p.noTit?' hidden':''}>${p.n}</h3></span></span></div>`).join('')
+ F.innerHTML=P.map((p,i)=>`<div class="pfsl${i?'':' act'}" data-i="${i}">${art(p)}<span class="meta"><span class="mt"><span class="mono rec">${p.c} · ${p.cl} · ${p.d}</span><h3 class="d"${p.noTit?' hidden':''}>${p.n}</h3>${p.loc?`<span class="loc"><i></i>${p.loc}</span>`:''}</span></span></div>`).join('')
   +`<button class="rb go" aria-label="Ver proyecto"><span class="roto"></span><span class="tip">Ver</span></button>
   <button class="pfar pv" aria-label="Anterior">←</button><button class="pfar nx" aria-label="Siguiente">→</button>
   <div class="pfseg" role="tablist" aria-label="Proyectos del reel">${P.map((p,i)=>`<button role="tab" aria-label="${p.n}" data-i="${i}"><i></i></button>`).join('')}</div><span class="pfct mono"></span>`;
  const sl=[...F.querySelectorAll('.pfsl')],sg=[...F.querySelectorAll('.pfseg button')];
  let k=0,t=null,paused=false,vis=true,left=0,t0=0;
- const dur=i=>{const v=sl[i].querySelector('video');return Math.max(4500,v&&v.duration&&isFinite(v.duration)?v.duration*1000:0)};
- function show(i){k=(i+N)%N;sl.forEach((s,j)=>{s.classList.toggle('act',j===k);const v=s.querySelector('video');if(v){if(j===k){v.currentTime=0;v.play().catch(()=>{})}else v.pause()}});
+ const dur=()=>2800;
+ function show(i){const pr=k;k=(i+N)%N;if(pr!==k){sl[pr].classList.add('prv');setTimeout(()=>sl[pr].classList.remove('prv'),900)}sl.forEach((s,j)=>{s.classList.toggle('act',j===k);const v=s.querySelector('video');if(v){if(j===k){v.currentTime=0;v.play().catch(()=>{})}else v.pause()}});
   sg.forEach((b,j)=>{b.classList.toggle('done',j<k);b.classList.toggle('act',j===k);b.firstChild.style.animation='none';void b.offsetWidth;b.firstChild.style.animation=''});
   F.querySelector('.pfct').textContent=String(k+1).padStart(2,'0')+' / '+String(N).padStart(2,'0');
   left=dur(k);F.style.setProperty('--dur',left+'ms');arm()}
@@ -53,7 +53,7 @@ const f=P[0];
  show(0)})();
 
 /* ficha */
-function open(i){const p=P[i];$('#pfbox').innerHTML=`<div class="vis">${p.vid?`<video src="${p.vid}" poster="${p.poster}" controls autoplay loop playsinline></video>`:art(p,false)}</div><div class="txt"><button class="rb pfx" id="cl" aria-label="Cerrar"><span class="roto"></span><span class="tip">Cerrar</span></button><span class="mono rec">${p.c} · ${p.k}</span><h3 class="d">${p.n}</h3><p style="line-height:1.5">${p.t}</p><dl><dt>Cliente</dt><dd>${p.cl}</dd><dt>Año</dt><dd>${p.y}</dd><dt>Duración</dt><dd>${p.d}</dd><dt>Hicimos</dt><dd>${p.w}</dd></dl><a class="btn" target="_blank" rel="noopener" href="${wa('Hola Open Gate, vi el proyecto '+p.n+' y quiero algo así.')}">Quiero algo así →</a><button class="btn o" id="cl2">Seguir viendo</button></div>`;
+function open(i){const p=P[i];$('#pfbox').innerHTML=`<div class="vis">${p.vid?`<video src="${p.vid}" poster="${p.poster}" controls autoplay loop playsinline></video>`:art(p,false)}</div><div class="txt"><button class="rb pfx" id="cl" aria-label="Cerrar"><span class="roto"></span><span class="tip">Cerrar</span></button><span class="mono rec">${p.c} · ${p.k}</span><h3 class="d">${p.n}</h3><p style="line-height:1.5">${p.t}</p><dl>${p.loc?`<dt>Locación</dt><dd>${p.loc}</dd>`:''}<dt>Cliente</dt><dd>${p.cl}</dd><dt>Año</dt><dd>${p.y}</dd><dt>Duración</dt><dd>${p.d}</dd><dt>Hicimos</dt><dd>${p.w}</dd></dl><a class="btn" target="_blank" rel="noopener" href="${wa('Hola Open Gate, vi el proyecto '+p.n+' y quiero algo así.')}">Quiero algo así →</a><button class="btn o" id="cl2">Seguir viendo</button></div>`;
  $('#pfsh').classList.add('act');$('#cl').onclick=$('#cl2').onclick=()=>$('#pfsh').classList.remove('act')}
 $('#pfsh').addEventListener('click',e=>{if(e.target.id==='sh')$('#pfsh').classList.remove('act')});
 addEventListener('keydown',e=>{if(e.key==='Escape')$('#pfsh').classList.remove('act')});
@@ -61,7 +61,7 @@ addEventListener('keydown',e=>{if(e.key==='Escape')$('#pfsh').classList.remove('
 /* vistas */
 function rollo(v){
  $('#view').innerHTML=`<div class="film fade"><div class="now"><span class="pfn d" id="bn">01</span><div class="pfinfo"><span class="mono rec" id="bm"></span><h3 class="d" id="bt"></h3><button class="btn" id="bo">Ver proyecto →</button></div></div>
- <div class="strip" id="strip">${v.map((p,i)=>`<div class="pffr hv" data-i="${P.indexOf(p)}">${'<span class="perf perfT"></span><span class="perf perfB"></span>'}${art(p)}<span class="tag mono">${p.d} · ${p.k}</span></div>`).join('')}</div>
+ <div class="strip" id="strip">${v.map((p,i)=>`<div class="pffr hv" data-i="${P.indexOf(p)}">${'<span class="perf perfT"></span><span class="perf perfB"></span>'}${art(p)}<span class="tag mono">${p.loc?p.loc+' · ':''}${p.d} · ${p.k}</span></div>`).join('')}</div>
  <div class="ctl"><button class="arr" id="pv" aria-label="Anterior">←</button><div class="pfprog"><i id="bb"></i></div><button class="arr" id="nx" aria-label="Siguiente">→</button></div></div>`;
  const st=$('#strip'),fr=$$('.pffr');let k=0;
  const set=i=>{k=Math.max(0,Math.min(fr.length-1,i));fr.forEach((x,j)=>x.classList.toggle('act',j===k));const p=P[+fr[k].dataset.i];$('#bn').textContent=String(k+1).padStart(2,'0');$('#bm').textContent=p.c+' · '+p.cl;$('#bt').textContent=p.n;$('#bb').style.width=((k+1)/fr.length*100)+'%';$('#bo').onclick=()=>open(+fr[k].dataset.i)};
@@ -73,7 +73,7 @@ function rollo(v){
  addEventListener('pointermove',e=>{if(dn)st.scrollLeft=sl-(e.clientX-sx)});addEventListener('pointerup',()=>{if(dn){dn=0;st.style.scrollSnapType='';go(k)}});
  set(0)}
 function grid(v){
- $('#view').innerHTML=`<div class="pfgrid fade">${v.map((p,j)=>`<button class="tile hv${j===0&&v.length>3?' w':''}" data-i="${P.indexOf(p)}">${art(p)}<span class="pftc">${p.d}</span><span class="pflb"><span class="mono">${p.c} · ${p.cl}</span><b>${p.n}</b></span></button>`).join('')}</div>`;
+ $('#view').innerHTML=`<div class="pfgrid fade">${v.map((p,j)=>`<button class="tile hv${j===0&&v.length>3?' w':''}" data-i="${P.indexOf(p)}">${art(p)}<span class="pftc">${p.d}</span><span class="pflb"><span class="mono">${p.loc?p.loc+' · ':''}${p.c} · ${p.cl}</span><b>${p.n}</b></span></button>`).join('')}</div>`;
  $$('.tile').forEach(e=>e.onclick=()=>open(+e.dataset.i))}
 function indice(v){
  $('#view').innerHTML=`<div class="list fade">${v.map((p,i)=>`<button class="pfrow" data-i="${P.indexOf(p)}"><span class="mono">${String(i+1).padStart(2,'0')}</span><h3 class="d">${p.n}</h3><span class="mono">${p.c}<br>${p.y}</span><span class="in">${art(p,false)}</span></button>`).join('')}</div><div class="float" id="fl"></div>`;

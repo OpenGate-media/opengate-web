@@ -173,3 +173,17 @@
 .pf2 .feat button{background:none;border:0;padding:0;color:inherit}
 .pf2 .feat .pfar{border:1.5px solid #fff;background:rgba(0,0,0,.25)}
 .pf2 .feat .pfseg button{height:18px;padding:0}
+
+/* carrusel v2: más rápido y con cortes de cámara (cortina + zoom) */
+.pf2 .feat .pfsl{opacity:1;visibility:hidden;transform:none;clip-path:inset(0 0 0 100%);transition:clip-path .65s cubic-bezier(.77,0,.18,1),visibility 0s .65s}
+.pf2 .feat .pfsl.act{visibility:visible;clip-path:inset(0);z-index:2;transition:clip-path .65s cubic-bezier(.77,0,.18,1),visibility 0s}
+.pf2 .feat .pfsl.prv{visibility:visible;z-index:1;clip-path:inset(0);transition:none}
+.pf2 .feat .pfsl .art{transform:scale(1.14);transition:transform 3.2s cubic-bezier(.2,.6,.2,1)}
+.pf2 .feat .pfsl.act .art{transform:scale(1)}
+.pf2 .feat .pfsl.prv .art{transform:scale(1.04) translateX(-3%);transition:transform .65s cubic-bezier(.77,0,.18,1)}
+.pf2 .feat .pfsl .mt{transform:translateX(-26px);opacity:0;transition:.6s var(--ease) .3s}
+.pf2 .feat .pfsl.act .mt{transform:none;opacity:1}
+.pf2 .feat .loc{display:inline-flex;align-items:center;gap:8px;align-self:start;width:max-content;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;background:#fff;color:#000;padding:7px 12px}
+.pf2 .feat .loc i{width:8px;height:8px;border-radius:50%;background:var(--rec);animation:pf2bl 1s steps(2) infinite}
+.pf2 .feat .pfsl.act .loc{animation:pf2pop .5s var(--ease) .45s both}
+@keyframes pf2pop{from{transform:translateX(-20px);opacity:0}}
