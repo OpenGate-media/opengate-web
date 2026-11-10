@@ -2,7 +2,7 @@
 if(!document.querySelector(".pf2"))return;
 
 const P=[
- {n:'Diosprimero',c:'Video',k:'VFX · Texto en fuego',cl:'Diosprimero',y:'2026',d:'0:03',vid:'/vid/fuego-d1.mp4',poster:'/vid/fuego-d1.jpg',g:'#111',t:'El título se enciende en llamas sobre el plano y se mueve con el artista.',w:'Dirección · VFX · Edición'},
+ {n:'Diosprimero',noTit:1,c:'Video',k:'VFX · Texto en fuego',cl:'Diosprimero',y:'2026',d:'0:03',vid:'/vid/fuego-d1.mp4',poster:'/vid/fuego-d1.jpg',g:'#111',t:'El título se enciende en llamas sobre el plano y se mueve con el artista.',w:'Dirección · VFX · Edición'},
  {n:'Supremacy Noir',c:'Video',k:'Anuncio',cl:'Afnan',y:'2026',d:'0:14',vid:'/vid/supremacy-noir.mp4',poster:'/vid/supremacy-noir.jpg',g:'#111',t:'Anuncio del perfume entre luces y texturas oscuras. Cierra con la marca.',w:'Dirección · Rodaje · Edición'},
  {n:'Spot Perfumería',c:'Video',k:'Comercial',cl:'og.prdct',y:'2026',d:'0:30',g:'linear-gradient(200deg,#2d2c2a,#0c0c0c 70%)',t:'Anuncio vertical para redes, pensado para vender en 3 segundos.',w:'Guion · Rodaje · Edición'},
  {n:'Sesión Aventus',c:'Foto',k:'Producto',cl:'og.prdct',y:'2026',d:'24 fotos',g:'linear-gradient(160deg,#4a4945,#171717)',t:'Luz lateral, vidrio y reflejos. Fondo blanco y fondo oscuro.',w:'Fotografía · Retoque'},
@@ -24,8 +24,33 @@ if(matchMedia('(hover:hover)').matches)addEventListener('mousemove',e=>{const r=
 
 /* destacado */
 const f=P[0];
-$('#feat').innerHTML=`${art(f)}<span class="meta"><span><span class="mono rec">Destacado · ${f.d}</span><h3 class="d"${f.vid?' hidden':''}>${f.n}</h3></span><span class="rb"><span class="roto"></span><span class="tip">Ver</span></span></span>`;
-$('#feat').onclick=()=>open(0);
+/* reel destacado: carrusel automático de proyectos */
+(function(){
+ const F=$('#feat'),N=P.length,reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ F.innerHTML=P.map((p,i)=>`<div class="pfsl${i?'':' act'}" data-i="${i}">${art(p)}<span class="meta"><span class="mt"><span class="mono rec">${p.c} · ${p.cl} · ${p.d}</span><h3 class="d"${p.noTit?' hidden':''}>${p.n}</h3></span></span></div>`).join('')
+  +`<button class="rb go" aria-label="Ver proyecto"><span class="roto"></span><span class="tip">Ver</span></button>
+  <button class="pfar pv" aria-label="Anterior">←</button><button class="pfar nx" aria-label="Siguiente">→</button>
+  <div class="pfseg" role="tablist" aria-label="Proyectos del reel">${P.map((p,i)=>`<button role="tab" aria-label="${p.n}" data-i="${i}"><i></i></button>`).join('')}</div><span class="pfct mono"></span>`;
+ const sl=[...F.querySelectorAll('.pfsl')],sg=[...F.querySelectorAll('.pfseg button')];
+ let k=0,t=null,paused=false,vis=true,left=0,t0=0;
+ const dur=i=>{const v=sl[i].querySelector('video');return Math.max(4500,v&&v.duration&&isFinite(v.duration)?v.duration*1000:0)};
+ function show(i){k=(i+N)%N;sl.forEach((s,j)=>{s.classList.toggle('act',j===k);const v=s.querySelector('video');if(v){if(j===k){v.currentTime=0;v.play().catch(()=>{})}else v.pause()}});
+  sg.forEach((b,j)=>{b.classList.toggle('done',j<k);b.classList.toggle('act',j===k);b.firstChild.style.animation='none';void b.offsetWidth;b.firstChild.style.animation=''});
+  F.querySelector('.pfct').textContent=String(k+1).padStart(2,'0')+' / '+String(N).padStart(2,'0');
+  left=dur(k);F.style.setProperty('--dur',left+'ms');arm()}
+ function arm(){clearTimeout(t);if(reduce||paused||!vis)return;t0=performance.now();t=setTimeout(()=>show(k+1),left)}
+ function hold(on){if(on===paused)return;paused=on;F.classList.toggle('hold',on);if(on){clearTimeout(t);left=Math.max(300,left-(performance.now()-t0))}else arm()}
+ F.addEventListener('mouseenter',()=>matchMedia('(hover:hover)').matches&&hold(true));F.addEventListener('mouseleave',()=>hold(false));
+ new IntersectionObserver(e=>{vis=e[0].isIntersecting;if(vis){F.classList.remove('off');arm()}else{F.classList.add('off');clearTimeout(t)}},{threshold:.25}).observe(F);
+ F.addEventListener('click',e=>{
+  const a=e.target.closest('.pfar'),s=e.target.closest('.pfseg button');
+  if(a){show(k+(a.classList.contains('nx')?1:-1));return}
+  if(s){show(+s.dataset.i);return}
+  open(k)});
+ let sx=null;F.addEventListener('pointerdown',e=>{sx=e.clientX});
+ F.addEventListener('pointerup',e=>{if(sx===null)return;const d=e.clientX-sx;sx=null;if(Math.abs(d)>50){F.dataset.sw=1;show(k+(d<0?1:-1));setTimeout(()=>delete F.dataset.sw,50)}});
+ F.addEventListener('click',e=>{if(F.dataset.sw)e.stopImmediatePropagation()},true);
+ show(0)})();
 
 /* ficha */
 function open(i){const p=P[i];$('#pfbox').innerHTML=`<div class="vis">${p.vid?`<video src="${p.vid}" poster="${p.poster}" controls autoplay loop playsinline></video>`:art(p,false)}</div><div class="txt"><button class="rb pfx" id="cl" aria-label="Cerrar"><span class="roto"></span><span class="tip">Cerrar</span></button><span class="mono rec">${p.c} · ${p.k}</span><h3 class="d">${p.n}</h3><p style="line-height:1.5">${p.t}</p><dl><dt>Cliente</dt><dd>${p.cl}</dd><dt>Año</dt><dd>${p.y}</dd><dt>Duración</dt><dd>${p.d}</dd><dt>Hicimos</dt><dd>${p.w}</dd></dl><a class="btn" target="_blank" rel="noopener" href="${wa('Hola Open Gate, vi el proyecto '+p.n+' y quiero algo así.')}">Quiero algo así →</a><button class="btn o" id="cl2">Seguir viendo</button></div>`;
