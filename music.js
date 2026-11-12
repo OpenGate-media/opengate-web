@@ -1,6 +1,7 @@
 // ===== SIDE B · música de Open Gate (supported by JOTiK Music) =====
 // Temas de ejemplo (audio de prueba). Reemplazar por los temas reales / playlist de Juan Duarte.
 const TRACKS = [
+  { t: 'Moon (feat. Ylam)', a: 'DJ Fronter, Christan L, Ninyo', g: 'tech-house', bpm: 0, key: '', p: '$ 11.111', src: '/audio/moon.mp3' },
   { t: 'Del Otro Lado', a: 'JOTiK', g: 'tech-house', bpm: 124, key: 'Am', p: '$ 11.111', src: '/audio/demo-1.mp3' },
   { t: 'Open Gate', a: 'JOTiK', g: 'tech-house', bpm: 126, key: 'Cm', p: '$ 11.111', src: '/audio/demo-3.mp3' },
   { t: 'Sensor Apagado', a: 'JOTiK', g: 'house', bpm: 122, key: 'Dm', p: '$ 11.111', src: '/audio/demo-2.mp3' },
@@ -13,8 +14,8 @@ const WA_MUSIC = '573001087938';
   if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', musicInit); return; }
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   let st = { i: 0, t: 0, muted: false, silent: false, min: false };
-  try { Object.assign(st, JSON.parse(localStorage.getItem('og-music') || '{}')); } catch (e) {}
-  const save = () => { try { localStorage.setItem('og-music', JSON.stringify(st)); } catch (e) {} };
+  try { Object.assign(st, JSON.parse(localStorage.getItem('og-music2') || '{}')); } catch (e) {}
+  const save = () => { try { localStorage.setItem('og-music2', JSON.stringify(st)); } catch (e) {} };
   const audio = new Audio(); audio.preload = 'auto'; audio.volume = 0;
   const VOL = .55;
   let started = false, fadeT;
@@ -78,7 +79,7 @@ const WA_MUSIC = '573001087938';
       <button class="sb-play" aria-label="Reproducir">▶</button>
       <span class="sb-n">${String(i + 1).padStart(2, '0')}</span>
       <span class="sb-tt"><b>${x.t}</b><small>${x.a} · ${GENRES.find(g => g[0] === x.g)[1]}</small></span>
-      <span class="sb-meta">${x.bpm} BPM · ${x.key}</span>
+      <span class="sb-meta">${x.bpm ? x.bpm + ' BPM · ' + x.key : 'Original Mix'}</span>
       <span class="sb-p">${x.p}</span>
       <a class="sb-buy" target="_blank" rel="noopener" href="https://wa.me/${WA_MUSIC}?text=${encodeURIComponent(`Hola Open Gate 👋 Quiero comprar el tema "${x.t}" de ${x.a} (SIDE B).`)}">comprar</a></li>` : '').join('');
     $$('.sb-row', list).forEach(r => {
